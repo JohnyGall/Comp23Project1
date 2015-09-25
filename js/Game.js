@@ -26,8 +26,10 @@ SideScroller.Game.prototype = {
     this.createCoins();
 
     //create player
-    this.player = this.game.add.sprite(100, 300, 'player');
-
+    this.player = this.game.add.sprite(this.game.width/2, this.game.height/2, 'player');
+    this.player.scale.setTo(0.5,0.5);
+    this.player.anchor.setTo(.5,.5);
+      
     //enable physics on the player
     this.game.physics.arcade.enable(this.player);
 
@@ -83,12 +85,30 @@ SideScroller.Game.prototype = {
     
     //only respond to keys and keep the speed if the player is alive
     if(this.player.alive) {
-      this.player.body.velocity.x = 300;  
+      this.player.body.velocity.x = 0;  
 
+      if(this.cursors.right.isDown) {
+        if (this.player.scale.x <= 0) {
+            this.player.scale.x *= -1;
+        }
+       this.player.body.velocity.x = 300;  
+      }
+        else if(this.cursors.left.isDown) {
+            if (this.player.scale.x >= 0) {
+                this.player.scale.x *= -1;
+            }
+            
+            this.player.body.velocity.x = -300;
+        }
       if(this.cursors.up.isDown) {
         this.playerJump();
       }
-      else if(this.cursors.down.isDown) {
+      else if(!this.cursors.up.isDown){
+          if (this.player.body.velocity.y < -200) {          
+            this.player.body.velocity.y *= .8;
+          }
+      }
+      if(this.cursors.down.isDown) {
         this.playerDuck();
       }
 
@@ -104,7 +124,6 @@ SideScroller.Game.prototype = {
         this.game.state.start('Game');
       }
     }
-
   },
   playerHit: function(player, blockedLayer) {
     //if hits on the right side, die
@@ -198,6 +217,16 @@ SideScroller.Game.prototype = {
       
       //we use this to keep track whether it's ducked or not
       this.player.isDucked = true;
+      if(!this.player.body.blocked.down) {
+        this.player.body.velocity.y = 700;
+        if (this.player.scale.x > 0) {
+            this.player.body.velocity.x = 200;
+        }
+        else if (this.player.scale.x < 0) {
+            this.player.body.velocity.x = -200;
+        }
+      }    
+      
   },
   render: function()
     {
