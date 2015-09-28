@@ -7,12 +7,14 @@ function preload () {
         game.load.image('hgrass', 'assets/grass_h.png');
         game.load.image('tgrass', 'assets/grass_t.png');
         game.load.image('vgrass', 'assets/grass_v.png');
+        game.load.image('boulder', 'assets/boulder.png')
 }
 
 var player;
 var wasd;
 var platforms;
 var cursors;
+var boulder;
 
 function create() {
         game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -26,10 +28,8 @@ function create() {
         player.body.gravity.y = 1000;
         player.body.collideWorldBounds = true;
 
-        this.game.scale.pageAlignHorizontally = true;
-        this.game.scale.pageAlignVertically = true;
-        this.game.scale.refresh();
-        
+        boulder = new Boulder(game, 500, 150);
+
         game.world.setBounds(0, 0, 1920, 600);
         game.camera.follow(player);
 
@@ -78,5 +78,5 @@ function update() {
 function showHitboxes() {
 
         game.debug.body(player);
-        platforms.forEachAlive(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
+        platforms.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
 }
