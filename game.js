@@ -26,6 +26,12 @@ function create() {
         player.body.gravity.y = 1000;
         player.body.collideWorldBounds = true;
 
+        this.game.scale.pageAlignHorizontally = true;
+        this.game.scale.pageAlignVertically = true;
+        this.game.scale.refresh();
+        
+        game.world.setBounds(0, 0, 1920, 600);
+        game.camera.follow(player);
 
         wasd = {
                 up: game.input.keyboard.addKey(Phaser.Keyboard.W),
@@ -46,6 +52,7 @@ function create() {
 }
 
 function update() {
+
         showHitboxes();
         game.physics.arcade.collide(player, platforms);
 
@@ -63,12 +70,13 @@ function update() {
         }
 
         //Jump
-        if ((cursors.up.isDown || wasd.up.isDown) && player.body.touching.down) {
+        if ((cursors.up.isDown || wasd.up.isDown) && (player.body.touching.down || player.body.blocked.down)) {
                 player.body.velocity.y = -600;
         }
 }
 
 function showHitboxes() {
-                game.debug.body(player);
-                platforms.forEachAlive(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
+
+        game.debug.body(player);
+        platforms.forEachAlive(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
 }
