@@ -7,7 +7,7 @@ function preload () {
         game.load.image('hgrass', 'assets/grass_h.png');
         game.load.image('tgrass', 'assets/grass_t.png');
         game.load.image('vgrass', 'assets/grass_v.png');
-        game.load.image('boulder', 'assets/boulder.png')
+        game.load.image('boulder', 'assets/boulder.png');
 }
 
 var player;
@@ -27,9 +27,7 @@ function create() {
         player.body.bounce.x = 0.05;
         player.body.gravity.y = 1000;
         player.body.collideWorldBounds = true;
-
-        boulder = new Boulder(game, 500, 150);
-
+        
         game.world.setBounds(0, 0, 1920, 600);
         game.camera.follow(player);
 
@@ -49,34 +47,41 @@ function create() {
                 ground.body.setSize(252, 60, 0, 6);
         }
 
+        boulder = new Boulder(game, 500, 150);
+
 }
 
 function update() {
-
-        showHitboxes();
+        
         game.physics.arcade.collide(player, platforms);
+        game.physics.arcade.collide(platforms, boulder);
+        game.physics.arcade.collide(player, boulder);
 
         player.body.velocity.x = 0;
         
         if (cursors.left.isDown || wasd.left.isDown) {
                 player.body.velocity.x = -150;
-                player.animations.play('left');
+               //player.animations.play('left');
         } else if (cursors.right.isDown || wasd.right.isDown) { //Movement right
                 player.body.velocity.x = 150;
-                player.animations.play('right');
+                //player.animations.play('right');
         } else { //No Movement
-                player.animations.stop();
-                player.frame = 4;
+                //player.animations.stop();
+                //player.frame = 4;
         }
 
         //Jump
         if ((cursors.up.isDown || wasd.up.isDown) && (player.body.touching.down || player.body.blocked.down)) {
                 player.body.velocity.y = -600;
         }
+
+        showHitboxes();
+
 }
 
 function showHitboxes() {
 
         game.debug.body(player);
+        game.debug.body(boulder);
         platforms.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
 }
