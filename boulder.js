@@ -16,7 +16,7 @@ function Boulder(game, x, y) {
 Boulder.prototype.update = function() {
         
         if (this.body.velocity.x < 0) {
-                this.angle -= this.body.velocity.x / 25;
+                this.angle += this.body.velocity.x / 25;
                 this.body.velocity.x += 1.5;
         }
 

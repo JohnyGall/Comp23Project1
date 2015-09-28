@@ -1,5 +1,5 @@
 var gameWidth = 800, gameHeight = 600;
-var game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, "game", {preload:preload, update:update, create:create});
+var game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, "game", {preload:preload, update:update, create:create, render:render});
 
 function preload () {
         game.load.image('sky', 'assets/sky.png');
@@ -15,6 +15,8 @@ var wasd;
 var platforms;
 var cursors;
 var boulder;
+
+var debug_toggle = 0;
 
 function create() {
         game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -36,6 +38,7 @@ function create() {
                 down: game.input.keyboard.addKey(Phaser.Keyboard.S),
                 left: game.input.keyboard.addKey(Phaser.Keyboard.A),
                 right: game.input.keyboard.addKey(Phaser.Keyboard.D),
+                tilde: game.input.keyboard.addKey(Phaser.Keyboard.TILDE)
         };
 
         platforms = game.add.group();
@@ -48,6 +51,11 @@ function create() {
         }
 
         boulder = new Boulder(game, 500, 150);
+
+        wasd.tilde.onDown.add(function() {
+                debug_toggle = debug_toggle ? false : true;
+                game.debug.reset();
+        }, this);
 
 }
 
@@ -74,14 +82,15 @@ function update() {
         if ((cursors.up.isDown || wasd.up.isDown) && (player.body.touching.down || player.body.blocked.down)) {
                 player.body.velocity.y = -600;
         }
-
-        showHitboxes();
+        
 
 }
 
-function showHitboxes() {
-
-        game.debug.body(player);
-        game.debug.body(boulder);
-        platforms.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
+function render() {
+        
+        if (debug_toggle == true) { 
+                game.debug.body(player);
+                game.debug.body(boulder);
+                platforms.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
+        }
 }
