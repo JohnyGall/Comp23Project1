@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="25" height="25" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="dummyTiles" tilewidth="32" tileheight="32">
+  <image source="dummyTileSet.png" width="1120" height="736"/>
+ </tileset>
+ <layer name="layer1" width="25" height="25">
+  <data encoding="base64" compression="zlib">
+   eJzt0bkNwlAQhOF1GeZshMO4EXM2wunY1IANdgwFAK0AHXAH/CFyvE6sDT7tSCO9CZ7riFRQhVtQLupd27AN27AN2yj3xl1EHnjihTc++Ipe979ZQx0NNB29roU2OujCQw++YhegjwGGGGGMiWI3xQxzLLDECqFit0GMBFvskCJT7E78+xlH0ckR1rl7xQ0XpbzHIXd/gsOc5A==
+  </data>
+ </layer>
+ <objectgroup name="floorCollision" width="25" height="25">
+  <object x="0" y="734" width="799" height="114"/>
+  <object x="865" y="371"/>
+ </objectgroup>
+</map>
