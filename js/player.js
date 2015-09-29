@@ -1,6 +1,6 @@
 //js
 //contains code for player actions and sprite
-//requires preloading: this.game.load.spritesheet('dude','assets/dude.png',32,48);
+//requires preloading: this.game.load.spritesheet('player','assets/dude.png',32,48);
 
 player.prototype = Object.create(Phaser.Sprite.prototype);
 player.prototype.constructor = player;
@@ -19,7 +19,7 @@ var vkey;
 
 //Creates a player at x and y
 function player(game, x, y) {
-    Phaser.Sprite.call(this, game, x, y, 'dude');
+    Phaser.Sprite.call(this, game, x, y, 'player');
     game.camera.follow(this);
     this.anchor.setTo(.5,.5);
     
@@ -39,7 +39,7 @@ function player(game, x, y) {
 }
 
 //function for updating the player's actions. returns whether or not world is shifted.
-player.prototype.update = function() {
+update = function() {
     //  Collide the player and the stars with the platforms
     game.physics.arcade.collide(this, platforms);
 
