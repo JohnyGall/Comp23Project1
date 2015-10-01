@@ -29,9 +29,7 @@ function create() {
         game.physics.startSystem(Phaser.Physics.ARCADE);
         game.add.sprite(0, 0, 'sky');        
         game.world.setBounds(0, 0, 1920, 600);
-        game.add.sprite(0, 300, 'backgrass');
         game.add.sprite(1019, 300, 'backgrass');
-
 
         platforms = game.add.group();
         platforms.enableBody = true;

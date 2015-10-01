@@ -21,7 +21,6 @@ var shifted = false;
 function Player(game, x, y) {
     console.log('creating player...\n');
     Phaser.Sprite.call(this, game, x, y, 'player');
-    this.scale.setTo(.5, .5);
     this.anchor.setTo(.5,.5);
     game.physics.arcade.enable(this);
 
@@ -38,7 +37,6 @@ function Player(game, x, y) {
 //    this.animations.add('highrez', [6], 10, true);
 //    this.animations.play('highrez');
 
-    console.log('created player!\n');
 }
 
 //function for updating the player's actions. returns whether or not world is shifted.
@@ -86,21 +84,16 @@ Player.prototype.update = function() {
     
     //  Decays upward momentum if player is not holding up key
     if (cursors.up.isDown && (this.body.touching.down || this.body.blocked.down)) {
-    console.log('jumping!\n');
-
-        this.body.velocity.y = JUMP_SPEED; }
+        this.body.velocity.y = JUMP_SPEED; 
+    }
     else if (!cursors.up.isDown && this.body.velocity.y <= UP_DECAY_THRESH) 
     {
-    console.log('falling!\n');
-
         this.body.velocity.y *= UP_DECAY_FACTOR;
     }  
     
     //  Allows player to rapidly descend if airborne
     if (cursors.down.isDown && !this.body.touching.down)
     {
-    console.log('fast falling!\n');
-
         if (this.body.velocity.y < DOWN_SPEED)
             this.body.velocity.y = DOWN_SPEED;
 
