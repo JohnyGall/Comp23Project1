@@ -33,7 +33,7 @@ function create() {
         for(var i = 0; i < 2; i++) {
                 var ground = platforms.create(252 * i, game.world.height - 350, 'hgrass');
                 ground.body.immovable = true;
-                ground.body.setSize(252, 60, 0, 6);
+                ground.body.setSize(252, 80, 0, 6);
         }
         
         var ground = platforms.create(875, game.world.height - 300, 'hgrass');
@@ -48,7 +48,11 @@ function create() {
     
 
         boulder = new Boulder(game, 500, 150);
+<<<<<<< HEAD
         player = new Player(game, 200, 100);
+=======
+        player = new Player(game, 200, 400);
+>>>>>>> origin/dev
 
         tilde.onDown.add(function() {
                 debug_toggle = debug_toggle ? false : true;

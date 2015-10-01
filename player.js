@@ -1,5 +1,9 @@
 //js
 //contains code for player actions and sprite
+//requires preloading: this.game.load.spritesheet('player','assets/dude.png',32,48);
+
+Player.prototype = Object.create(Phaser.Sprite.prototype);
+Player.prototype.constructor = Player;
 
 Player.prototype = Object.create(Phaser.Sprite.prototype);
 Player.prototype.constructor = Player;
@@ -11,12 +15,16 @@ var UP_DECAY_THRESH = -100;
 var SIDE_DECAY_NUM = 5;
 var DOWN_SPEED = 400;
 var VTEST_SPEED = 300;
+var shifted = false;
 
 //Creates a player at x and y
 function Player(game, x, y) {
     console.log('creating player...\n');
     Phaser.Sprite.call(this, game, x, y, 'player');
+<<<<<<< HEAD
     this.scale.setTo(.5, .5);
+=======
+>>>>>>> origin/dev
     this.anchor.setTo(.5,.5);
     game.physics.arcade.enable(this);
 
@@ -37,10 +45,14 @@ Player.prototype.update = function() {
     //  Reset the players velocity if not going too fast (movement)
     if (Math.abs(this.body.velocity.x) <= DEFAULT_SPEED) 
         this.body.velocity.x = 0;
+<<<<<<< HEAD
     if (this.body.touching.down) {
         this.body.velocity.y = 0;
     }
     
+=======
+
+>>>>>>> origin/dev
     //  If player is being a smartass do nothing
     if (cursors.right.isDown && cursors.left.isDown) {}
     // Handles right arrow input
@@ -87,9 +99,12 @@ Player.prototype.update = function() {
 
         if (this.body.velocity.y < DOWN_SPEED)
             this.body.velocity.y = DOWN_SPEED;
+<<<<<<< HEAD
         if (this.body.touching.down) {
             this.body.velocity.y = 0;
         }
+=======
+>>>>>>> origin/dev
     }
 }
 
@@ -103,8 +118,16 @@ function bitshift() {
 //        this.animations.play('lowrez');
     }
 }
+<<<<<<< HEAD
 
 function vtest(p) {
     player.body.velocity.x += 2*player.scale.x * VTEST_SPEED;
 }
 
+=======
+
+function vtest(p) {
+    player.body.velocity.x += player.scale.x * VTEST_SPEED;
+}
+
+>>>>>>> origin/dev
