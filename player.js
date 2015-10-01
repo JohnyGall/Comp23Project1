@@ -53,7 +53,7 @@ Player.prototype.update = function() {
     //  If player is being a smartass do nothing
     if (cursors.right.isDown && cursors.left.isDown) {
         player.animations.stop();
-        player.frame = 8;
+        player.frame = 9;
     }
     // Handles right arrow input
     else if (cursors.right.isDown) {
