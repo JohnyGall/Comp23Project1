@@ -19,7 +19,6 @@ var shifted = false;
 
 //Creates a player at x and y
 function Player(game, x, y) {
-    console.log('creating player...\n');
     Phaser.Sprite.call(this, game, x, y, 'player');
     this.anchor.setTo(.5,.5);
     game.physics.arcade.enable(this);
