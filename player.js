@@ -20,6 +20,7 @@ var shifted = false;
 //Creates a player at x and y
 function Player(game, x, y) {
     console.log('creating player...\n');
+    //changed "Sprite" to "Spritesheet"
     Phaser.Sprite.call(this, game, x, y, 'player');
     this.scale.setTo(.5, .5);
     this.anchor.setTo(.5,.5);
@@ -29,6 +30,10 @@ function Player(game, x, y) {
     this.body.gravity.y  = 500;
     this.body.collideWorldBounds = true;
     game.camera.follow(this);
+
+    //  walking left and right animations
+    this.animations.add('left', [0, 1, 2, 3, 4, 5, 6, 7, ], 10, true);
+    this.animations.add('right', [10, 11, 12, 13, 14, 15, 16, 17], 10, true);
 
 //    this.animations.add('lowrez', [5], 10, true);
 //    this.animations.add('highrez', [6], 10, true);
@@ -47,12 +52,18 @@ Player.prototype.update = function() {
     }
     
     //  If player is being a smartass do nothing
-    if (cursors.right.isDown && cursors.left.isDown) {}
+    if (cursors.right.isDown && cursors.left.isDown) {
+        player.animations.stop();
+        player.frame = 8;
+    }
     // Handles right arrow input
     else if (cursors.right.isDown) {
-        //face right
+        player.animations.play('right');
+        /*
+        //face right (i just commented these out to avoid reversing the sprite.
+                      fix if I was wrong.)
         if (this.scale.x < 0)
-            this.scale.x *= -1;
+            this.scale.x *= -1;*/
         
         //if going too fast to the left, slide to stop. Otherwise, go right
         if (this.body.velocity.x < -1*DEFAULT_SPEED)
@@ -62,9 +73,11 @@ Player.prototype.update = function() {
     }
     // Handles left arrow input
     else if (cursors.left.isDown) {
+        player.animations.play('left');
+        /*
         //face left
         if (this.scale.x > 0)
-            this.scale.x *= -1;
+            this.scale.x *= -1;*/
         
         //if going too fast to the right, slide to stop. Otherwise, go left
         if (this.body.velocity.x > DEFAULT_SPEED)
