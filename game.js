@@ -3,7 +3,7 @@ var game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, "game", {preload:
 
 function preload () {
         game.load.image('sky', 'assets/sky.png');
-        game.load.image('player', 'assets/protag2.png');
+        game.load.image('player', 'assets/protag3.png');
         game.load.image('hgrass', 'assets/grass_h.png');
         game.load.image('tgrass', 'assets/grass_t.png');
         game.load.image('vgrass', 'assets/grass_v.png');
@@ -48,12 +48,8 @@ function create() {
     
 
         boulder = new Boulder(game, 500, 150);
-<<<<<<< HEAD
-        player = new Player(game, 200, 100);
-=======
-        player = new Player(game, 200, 400);
->>>>>>> origin/dev
 
+        player = new Player(game, 200, 100);
         tilde.onDown.add(function() {
                 debug_toggle = debug_toggle ? false : true;
                 game.debug.reset();
