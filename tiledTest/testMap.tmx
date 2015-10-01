@@ -2,14 +2,40 @@
 <map version="1.0" orientation="orthogonal" width="25" height="25" tilewidth="32" tileheight="32">
  <tileset firstgid="1" name="dummyTiles" tilewidth="32" tileheight="32">
   <image source="dummyTileSet.png" width="1120" height="736"/>
+  <tile id="142">
+   <properties>
+    <property name="the important one" value=""/>
+   </properties>
+  </tile>
+  <tile id="178">
+   <properties>
+    <property name="lessImportant" value=""/>
+   </properties>
+  </tile>
+  <tile id="193">
+   <properties>
+    <property name="ground" value=""/>
+   </properties>
+  </tile>
+  <tile id="194">
+   <properties>
+    <property name="ground" value=""/>
+   </properties>
+  </tile>
+  <tile id="195">
+   <properties>
+    <property name="ground" value="stillGround"/>
+   </properties>
+  </tile>
  </tileset>
- <layer name="layer1" width="25" height="25">
+ <layer name="back" width="25" height="25">
   <data encoding="base64" compression="zlib">
-   eJzt0bkNwlAQhOF1GeZshMO4EXM2wunY1IANdgwFAK0AHXAH/CFyvE6sDT7tSCO9CZ7riFRQhVtQLupd27AN27AN2yj3xl1EHnjihTc++Ipe979ZQx0NNB29roU2OujCQw++YhegjwGGGGGMiWI3xQxzLLDECqFit0GMBFvskCJT7E78+xlH0ckR1rl7xQ0XpbzHIXd/gsOc5A==
+   eJztzdkNgkAURuFLGYhLIyBqIy5AIwhKI4BLf6LAA8c3Cri8kDvJl8zkT+a4jsgCHtyJ7lP9aw1rWMMa1ph34yMiDb74oUWHXvS2cXOJFdbYOHqbjwBbhNhhj4PidsQJZ1wQIUaiuKW4IkOOG+4oFLcSFWo88MQLb8Xt/57DGQCaAXXt
   </data>
  </layer>
- <objectgroup name="floorCollision" width="25" height="25">
-  <object x="0" y="734" width="799" height="114"/>
-  <object x="865" y="371"/>
- </objectgroup>
+ <layer name="floor" width="25" height="25">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjIJRMApGwSgYOaAfiI9QEU8C4slI9GYgfgbEz4H4KZXYW4F4GxoNAGRJJ50=
+  </data>
+ </layer>
 </map>
