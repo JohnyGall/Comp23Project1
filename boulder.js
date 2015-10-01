@@ -9,19 +9,26 @@ function Boulder(game, x, y) {
         this.anchor.setTo(0.5, 0.5);
         game.physics.enable(this, Phaser.Physics.ARCADE);
         game.add.existing(this);
-        this.body.gravity.y = 8000;
+        this.body.gravity.y = 1000;
         this.body.collideWorldBounds = true;
 }
 
 Boulder.prototype.update = function() {
-        
-        if (this.body.velocity.x < 0) {
+        if (!shifted) {
+            this.body.moves = true;
+
+            if (this.body.velocity.x < 0) {
                 this.angle += this.body.velocity.x / 25;
                 this.body.velocity.x += 1.5;
-        }
-
-        if (this.body.velocity.x > 0) {
+            }
+            if (this.body.velocity.x > 0) {
                 this.angle += this.body.velocity.x / 25;
                 this.body.velocity.x -= 1.5;
+            }
+        }
+        else {
+                this.body.velocity.x = 0;
+                this.body.velocity.y = 0;
+                this.body.moves = false;
         }
 }
