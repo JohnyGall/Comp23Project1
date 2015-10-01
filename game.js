@@ -3,6 +3,7 @@ var game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, "game", {preload:
 
 function preload () {
         game.load.image('sky', 'assets/sky.png');
+        game.load.image('backgrass', 'assets/background_grass_pattern.png');
         game.load.spritesheet('player', 'assets/spritesheet_walk.png',37, 64);
         game.load.image('hgrass', 'assets/grass_h.png');
         game.load.image('tgrass', 'assets/grass_t.png');
@@ -23,7 +24,9 @@ var debug_toggle = 0;
 
 function create() {
         game.physics.startSystem(Phaser.Physics.ARCADE);
-        game.add.sprite(0, 0, 'sky');        
+        game.add.sprite(0, 0, 'sky');  
+        game.add.sprite(0, 300, 'backgrass');  
+        game.add.sprite(1019, 300, 'backgrass');        
         game.world.setBounds(0, 0, 1920, 600);
 
         platforms = game.add.group();
