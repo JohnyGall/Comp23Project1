@@ -53,7 +53,7 @@ Player.prototype.update = function() {
     //  If player is being a smartass do nothing
     if (cursors.right.isDown && cursors.left.isDown) {
         player.animations.stop();
-        player.frame = 9;
+        player.frame = 8;
     }
     // Handles right arrow input
     else if (cursors.right.isDown) {
@@ -79,9 +79,9 @@ Player.prototype.update = function() {
     // so player doesn't moonwalk when idle
     if (!cursors.left.isDown && !cursors.right.isDown && player.animations.currentAnim != null) {
         if(player.animations.currentAnim === player.animations.getAnimation('left'))
-            player.frame = 9;
-        else
             player.frame = 8;
+        else
+            player.frame = 9;
     }
     
     //  Decays upward momentum if player is not holding up key
