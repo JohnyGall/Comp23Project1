@@ -20,7 +20,6 @@ var shifted = false;
 //Creates a player at x and y
 function Player(game, x, y) {
     console.log('creating player...\n');
-    //changed "Sprite" to "Spritesheet"
     Phaser.Sprite.call(this, game, x, y, 'player');
     this.scale.setTo(.5, .5);
     this.anchor.setTo(.5,.5);
@@ -54,16 +53,11 @@ Player.prototype.update = function() {
     //  If player is being a smartass do nothing
     if (cursors.right.isDown && cursors.left.isDown) {
         player.animations.stop();
-        player.frame = 8;
+        player.frame = 9;
     }
     // Handles right arrow input
     else if (cursors.right.isDown) {
         player.animations.play('right');
-        /*
-        //face right (i just commented these out to avoid reversing the sprite.
-                      fix if I was wrong.)
-        if (this.scale.x < 0)
-            this.scale.x *= -1;*/
         
         //if going too fast to the left, slide to stop. Otherwise, go right
         if (this.body.velocity.x < -1*DEFAULT_SPEED)
@@ -74,16 +68,20 @@ Player.prototype.update = function() {
     // Handles left arrow input
     else if (cursors.left.isDown) {
         player.animations.play('left');
-        /*
-        //face left
-        if (this.scale.x > 0)
-            this.scale.x *= -1;*/
         
         //if going too fast to the right, slide to stop. Otherwise, go left
         if (this.body.velocity.x > DEFAULT_SPEED)
             this.body.velocity.x -= SIDE_DECAY_NUM;
         else if (this.body.velocity.x >= -1*DEFAULT_SPEED)
             this.body.velocity.x = -1*DEFAULT_SPEED;
+    }
+
+    // so player doesn't moonwalk when idle
+    if (!cursors.left.isDown && !cursors.right.isDown && player.animations.currentAnim != null) {
+        if(player.animations.currentAnim === player.animations.getAnimation('left'))
+            player.frame = 9;
+        else
+            player.frame = 8;
     }
     
     //  Decays upward momentum if player is not holding up key
