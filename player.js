@@ -32,9 +32,11 @@ function Player(game, x, y) {
 
     this.health = 2;
     
-    //  walking left and right animations
+    //  adding animations
     this.animations.add('left', [0, 1, 2, 3, 4, 5, 6, 7], 10, true);
     this.animations.add('right', [10, 11, 12, 13, 14, 15, 16, 17], 10, true);
+    //this.animations.add('jright', [18, 19, 20], 4, false);
+    //this.animations.add('jleft', [21, 22, 23], 4, false);
 
 //    this.animations.add('lowrez', [5], 10, true);
 //    this.animations.add('highrez', [6], 10, true);
@@ -81,22 +83,24 @@ Player.prototype.update = function() {
 
     // so player doesn't moonwalk when idle
     if (!cursors.left.isDown && !cursors.right.isDown && this.animations.currentAnim != null) {
-        if(!faceright)
+        if(!faceright )
             this.frame = 8;
         else
             this.frame = 9;
-    }
-    if (!this.body.touching.down) {
-        if (!faceright)
-            this.frame = 1;
-        else
-            this.frame = 11;
     }
     
     //  Decays upward momentum if player is not holding up key
     if (cursors.up.isDown && (this.body.touching.down || this.body.blocked.down)) {
         this.body.velocity.y = JUMP_SPEED; 
+
+        // plays jump animations
+        if (this.body.velocity.x < 0){
+        player.animations.play('jleft');
+        }
+        else 
+            player.animations.play('jright');
     }
+    // initializes jump
     else if (!cursors.up.isDown && this.body.velocity.y <= UP_DECAY_THRESH) 
     {
         this.body.velocity.y *= UP_DECAY_FACTOR;
