@@ -55,8 +55,17 @@ Player.prototype.update = function() {
     
     //  If player is being a smartass do nothing
     if (cursors.right.isDown && cursors.left.isDown) {
-        player.animations.stop();
-        player.frame = 9;
+        /*if(player.animations.currentAnim === player.animations.getAnimation('jleft'){
+            player.animations.stop();
+            player.frame = 8;
+        }
+        else if(player.animations.currentAnim === player.animations.getAnimation('jright'){
+            player.animations.stop();
+            player.frame = 9;
+        }
+        else*/
+            player.animations.stop();
+            player.frame = 9;
     }
     // Handles right arrow input
     else if (cursors.right.isDown) {
@@ -81,30 +90,32 @@ Player.prototype.update = function() {
             this.body.velocity.x = -1*DEFAULT_SPEED;
     }
 
-    // so player doesn't moonwalk when idle
-    if (!cursors.left.isDown && !cursors.right.isDown && this.animations.currentAnim != null) {
-        if(!faceright )
-            this.frame = 8;
+    // so player doesn't keep animating when idle
+    if (!cursors.left.isDown && !cursors.right.isDown && this.body.touching.down && this.animations.currentAnim != null) {
+        if(this.body.velocity.x < 0){
+            player.frame = 8;
+        }
         else
-            this.frame = 9;
+            player.frame = 9;
+
     }
     
     //  Decays upward momentum if player is not holding up key
     if (cursors.up.isDown && (this.body.touching.down || this.body.blocked.down)) {
-        this.body.velocity.y = JUMP_SPEED; 
+        this.body.velocity.y = JUMP_SPEED;
 
-        // plays jump animations
+    // plays jump animations
         if (this.body.velocity.x < 0){
         player.animations.play('jleft');
         }
         else 
             player.animations.play('jright');
     }
-    // initializes jump
+
     else if (!cursors.up.isDown && this.body.velocity.y <= UP_DECAY_THRESH) 
     {
         this.body.velocity.y *= UP_DECAY_FACTOR;
-    }  
+    } 
     
     //  Allows player to rapidly descend if airborne
     if (cursors.down.isDown && !this.body.touching.down)
