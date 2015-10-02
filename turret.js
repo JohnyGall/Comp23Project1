@@ -26,6 +26,7 @@ function Turret(game, x, y) {
 }
 
 Turret.prototype.update = function() {
+        var killcommand;
         var ray = new Phaser.Line(player.x, player.y, this.x, this.y);
         var intersect = getWallIntersection(ray, this);
 
@@ -34,7 +35,7 @@ Turret.prototype.update = function() {
         if (this.inWorld && !intersect) {
             //add kill command to queue
             if (game.time.events.length  < 1)
-                game.time.events.add(KILL_DELAY, hrturretkill, this, this)
+                killcommand = game.time.events.add(KILL_DELAY, hrturretkill, this, this)
             
             // This player can see the ball so change their color
             player.tint = 0xffaaaa*(0.001*Math.random()+.9995);
@@ -62,6 +63,9 @@ Turret.prototype.update = function() {
         }
         else {
             //game.time.events.destroy();
+            if (game.time.events.length  > 0)
+                game.time.events.remove(killcommand); 
+
             bmd.clear();
         }
 }
