@@ -126,7 +126,7 @@ function bitshift() {
 }
 
 function vtest(p) {
-    player.body.velocity.x += player.scale.x * VTEST_SPEED;
+    player.body.velocity.x += (2*faceright-1) * VTEST_SPEED;
 }
 
 function playerKill() {

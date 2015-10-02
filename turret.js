@@ -6,6 +6,7 @@ var KILL_DELAY = 1000; //milliseconds
 
 var bmd, bmdimg;
 var trace;
+var killcommand;
 
 function Turret(game, x, y) {
         Phaser.Sprite.call(this, game, x, y, 'turret');
@@ -26,14 +27,13 @@ function Turret(game, x, y) {
 }
 
 Turret.prototype.update = function() {
-        var killcommand;
         var ray = new Phaser.Line(player.x, player.y, this.x, this.y);
         var intersect = getWallIntersection(ray, this);
 
         player.tint = 0xffffff;
 
         if (this.inWorld && !intersect) {
-            //add kill command to queue
+            // add kill command to queue
             if (game.time.events.length  < 1)
                 killcommand = game.time.events.add(KILL_DELAY, hrturretkill, this, this)
             
@@ -62,10 +62,8 @@ Turret.prototype.update = function() {
 
         }
         else {
-            //game.time.events.destroy();
-            if (game.time.events.length  > 0)
-                game.time.events.remove(killcommand); 
-
+            // Remove the killcommand when player no longer visible 
+            game.time.events.remove(killcommand); 
             bmd.clear();
         }
 }
@@ -113,6 +111,7 @@ function getWallIntersection (ray, turret) {
     return closestIntersection;
 };
 
+//If player is in sight of given turret, kill the player.
 function hrturretkill(turret) {
     var ray = new Phaser.Line(player.x, player.y, this.x, this.y);
     var intersect = getWallIntersection(ray, this);    
