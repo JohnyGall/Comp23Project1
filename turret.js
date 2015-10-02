@@ -2,6 +2,8 @@ Turret.prototype = Object.create(Phaser.Sprite.prototype);
 
 Turret.prototype.constructor = Turret;
 
+var KILL_DELAY = 1000; //milliseconds
+
 var bmd, bmdimg;
 var trace;
 
@@ -27,12 +29,15 @@ Turret.prototype.update = function() {
         var ray = new Phaser.Line(player.x, player.y, this.x, this.y);
         var intersect = getWallIntersection(ray, this);
 
-        if (intersect) {
-            //A wall is blocking this players vision so change them back to their default color
-            player.tint = 0xffffff;
-        } else {
+        player.tint = 0xffffff;
+
+        if (this.inWorld && !intersect) {
+            //add kill command to queue
+            if (game.time.events.length  < 1)
+                game.time.events.add(KILL_DELAY, hrturretkill, this, this)
+            
             // This player can see the ball so change their color
-            player.tint = Math.random() * 0xffffff;
+            player.tint = 0xffaaaa*(0.001*Math.random()+.9995);
             var angle = 180 + Math.atan2(this.position.y - player.position.y, this.position.x - player.position.x) * -57.2957795;
             this.animations.play('rotate', 0);
             
@@ -40,13 +45,13 @@ Turret.prototype.update = function() {
             this.animations.currentAnim.setFrame(frame, true);
             if (angle > 180 || angle < 0) {
                 this.animations.currentAnim.setFrame(0, true);
-            }
+        }
 
     // Draw each of the rays on the rayBitmap
         bmd.context.clearRect(0, 0, game.world.getBounds().width, game.world.getBounds().height);
         bmd.context.beginPath();
-        bmd.context.strokeStyle = 'rgb(255, 255, 255)';
-        bmd.context.fillStyle = 'rgb(255, 255, 255)';
+        bmd.context.strokeStyle = 'rgb(255, 0, 0)';
+        bmd.context.fillStyle = 'rgb(255, 0, 0)';
         bmd.context.moveTo(this.position.x, this.position.y);
         bmd.context.lineTo(player.position.x, player.position.y);
         bmd.context.stroke();
@@ -55,9 +60,10 @@ Turret.prototype.update = function() {
         bmd.dirty = true;
 
         }
-
-
-
+        else {
+            //game.time.events.destroy();
+            bmd.clear();
+        }
 }
 
 
@@ -102,3 +108,12 @@ function getWallIntersection (ray, turret) {
 
     return closestIntersection;
 };
+
+function hrturretkill(turret) {
+    var ray = new Phaser.Line(player.x, player.y, this.x, this.y);
+    var intersect = getWallIntersection(ray, this);    
+    
+    if (this.inWorld && !intersect) {
+        playerKill();
+    }
+}

@@ -15,7 +15,9 @@ var UP_DECAY_THRESH = -100;
 var SIDE_DECAY_NUM = 5;
 var DOWN_SPEED = 400;
 var VTEST_SPEED = 300;
+var RESPAWN_TIME = 1000; //milliseconds
 var shifted = false;
+var faceright = true;
 
 //Creates a player at x and y
 function Player(game, x, y) {
@@ -28,8 +30,10 @@ function Player(game, x, y) {
     this.body.collideWorldBounds = true;
     game.camera.follow(this);
 
+    this.health = 2;
+    
     //  walking left and right animations
-    this.animations.add('left', [0, 1, 2, 3, 4, 5, 6, 7, ], 10, true);
+    this.animations.add('left', [0, 1, 2, 3, 4, 5, 6, 7], 10, true);
     this.animations.add('right', [10, 11, 12, 13, 14, 15, 16, 17], 10, true);
 
 //    this.animations.add('lowrez', [5], 10, true);
@@ -54,6 +58,7 @@ Player.prototype.update = function() {
     }
     // Handles right arrow input
     else if (cursors.right.isDown) {
+        faceright = true;
         player.animations.play('right');
         
         //if going too fast to the left, slide to stop. Otherwise, go right
@@ -64,7 +69,8 @@ Player.prototype.update = function() {
     }
     // Handles left arrow input
     else if (cursors.left.isDown) {
-        player.animations.play('left');
+        faceright = false;
+        this.animations.play('left');
         
         //if going too fast to the right, slide to stop. Otherwise, go left
         if (this.body.velocity.x > DEFAULT_SPEED)
@@ -74,11 +80,17 @@ Player.prototype.update = function() {
     }
 
     // so player doesn't moonwalk when idle
-    if (!cursors.left.isDown && !cursors.right.isDown && player.animations.currentAnim != null) {
-        if(player.animations.currentAnim === player.animations.getAnimation('left'))
-            player.frame = 8;
+    if (!cursors.left.isDown && !cursors.right.isDown && this.animations.currentAnim != null) {
+        if(!faceright)
+            this.frame = 8;
         else
-            player.frame = 9;
+            this.frame = 9;
+    }
+    if (!this.body.touching.down) {
+        if (!faceright)
+            this.frame = 1;
+        else
+            this.frame = 11;
     }
     
     //  Decays upward momentum if player is not holding up key
@@ -114,5 +126,23 @@ function bitshift() {
 }
 
 function vtest(p) {
-    player.body.velocity.x += 2*player.scale.x * VTEST_SPEED;
+    player.body.velocity.x += player.scale.x * VTEST_SPEED;
+}
+
+function playerKill() {
+        player.health -= 1;
+        respawn();
+}
+
+function respawn() {
+        timecheck = Date.now();
+        while(Date.now() - timecheck < RESPAWN_TIME) {};
+    
+        player.kill();
+
+        console.log(' restarting....\n');
+        //game.paused = false;
+        shifted = false;
+        player.health = 2;
+        game.state.start(game.state.current);
 }
