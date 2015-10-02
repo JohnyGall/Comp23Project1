@@ -35,8 +35,8 @@ function Player(game, x, y) {
     //  adding animations
     this.animations.add('left', [0, 1, 2, 3, 4, 5, 6, 7], 10, true);
     this.animations.add('right', [10, 11, 12, 13, 14, 15, 16, 17], 10, true);
-    //this.animations.add('jright', [18, 19, 20], 4, false);
-    //this.animations.add('jleft', [21, 22, 23], 4, false);
+    this.animations.add('jright', [18, 19, 20], 4, false);
+    this.animations.add('jleft', [21, 22, 23], 4, false);
 
 //    this.animations.add('lowrez', [5], 10, true);
 //    this.animations.add('highrez', [6], 10, true);
@@ -55,13 +55,13 @@ Player.prototype.update = function() {
     
     //  If player is being a smartass do nothing
     if (cursors.right.isDown && cursors.left.isDown) {
-        /*if(player.animations.currentAnim === player.animations.getAnimation('jleft'){
-            player.animations.stop();
-            player.frame = 8;
+        /*if(player.animations.currentAnim === player.animations.getAnimation('jleft')){
+            this.body.velocity.x = DEFAULT_SPEED;
+            player.frame = 20;
         }
-        else if(player.animations.currentAnim === player.animations.getAnimation('jright'){
-            player.animations.stop();
-            player.frame = 9;
+        else if(player.animations.currentAnim === player.animations.getAnimation('jright')){
+            this.body.velocity.x = -1*DEFAULT_SPEED;
+            player.frame = 23;
         }
         else*/
             player.animations.stop();
@@ -70,7 +70,8 @@ Player.prototype.update = function() {
     // Handles right arrow input
     else if (cursors.right.isDown) {
         faceright = true;
-        player.animations.play('right');
+        if(this.body.touching.down)
+            player.animations.play('right');
         
         //if going too fast to the left, slide to stop. Otherwise, go right
         if (this.body.velocity.x < -1*DEFAULT_SPEED)
@@ -81,7 +82,8 @@ Player.prototype.update = function() {
     // Handles left arrow input
     else if (cursors.left.isDown) {
         faceright = false;
-        this.animations.play('left');
+        if(this.body.touching.down)
+            player.animations.play('left');
         
         //if going too fast to the right, slide to stop. Otherwise, go left
         if (this.body.velocity.x > DEFAULT_SPEED)
@@ -92,7 +94,7 @@ Player.prototype.update = function() {
 
     // so player doesn't keep animating when idle
     if (!cursors.left.isDown && !cursors.right.isDown && this.body.touching.down && this.animations.currentAnim != null) {
-        if(this.body.velocity.x < 0){
+        if(!faceright){
             player.frame = 8;
         }
         else
@@ -105,7 +107,7 @@ Player.prototype.update = function() {
         this.body.velocity.y = JUMP_SPEED;
 
     // plays jump animations
-        if (this.body.velocity.x < 0){
+        if (!faceright){
         player.animations.play('jleft');
         }
         else 
