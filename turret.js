@@ -6,7 +6,8 @@ var KILL_DELAY = 1000; //milliseconds
 
 var bmd, bmdimg;
 var trace;
-var killcommand;
+var killtime;
+var dying;
 
 function Turret(game, x, y) {
         Phaser.Sprite.call(this, game, x, y, 'turret');
@@ -18,8 +19,6 @@ function Turret(game, x, y) {
         this.animations.add('rotate');
 
         bmd = game.add.bitmapData(game.world.getBounds().width, game.world.getBounds().height);
-        bmd.context.fillStyle = 'rgb(255, 255, 255)';
-        bmd.context.strokeStyle = 'rgb(255, 255, 255)';
         bmdimg = game.add.bitmapData(game.world.getBounds().width, game.world.getBounds().height);
         bmdimg = game.add.image(0, 0, bmd);
         bmdimg.visible = true;
@@ -27,28 +26,20 @@ function Turret(game, x, y) {
 }
 
 Turret.prototype.update = function() {
-        var ray = new Phaser.Line(player.x, player.y, this.x, this.y);
-        var intersect = getWallIntersection(ray, this);
 
-        player.tint = 0xffffff;
-
-        if (this.inWorld && !intersect) {
-            // add kill command to queue
-            if (game.time.events.length  < 1)
-                killcommand = game.time.events.add(KILL_DELAY, hrturretkill, this, this)
-            
-            // This player can see the ball so change their color
-            player.tint = 0xffaaaa*(0.001*Math.random()+.9995);
+    var intersect = this.findTarget(player, game);
+    if (!intersect && player.position.x > this.position.x) {
+        
+        // This player can see the ball so change their color
+        player.tint = 0xffaaaa*(0.001*Math.random()+.9995);
             var angle = 180 + Math.atan2(this.position.y - player.position.y, this.position.x - player.position.x) * -57.2957795;
-            this.animations.play('rotate', 0);
+        this.animations.play('rotate', 0);
             
-            var frame = Math.round(angle / 90 * 4);
-            this.animations.currentAnim.setFrame(frame, true);
-            if (angle > 180 || angle < 0) {
-                this.animations.currentAnim.setFrame(0, true);
-        }
+        var frame = Math.round(angle / 90 * 4);
+        this.animations.currentAnim.setFrame(frame, true);
+        if (angle > 180 || angle < 0)
+            this.animations.currentAnim.setFrame(0, true);
 
-    // Draw each of the rays on the rayBitmap
         bmd.context.clearRect(0, 0, game.world.getBounds().width, game.world.getBounds().height);
         bmd.context.beginPath();
         bmd.context.strokeStyle = 'rgb(255, 0, 0)';
@@ -59,25 +50,28 @@ Turret.prototype.update = function() {
 
         // This just tells the engine it should update the texture cache
         bmd.dirty = true;
+    } else {
+        dying = false;
+        bmd.clear();
+        player.tint = 0xffffff;
+    }
 
-        }
-        else {
-            // Remove the killcommand when player no longer visible 
-            game.time.events.remove(killcommand); 
-            bmd.clear();
-        }
+    if (dying && Date.now() - killtime >= KILL_DELAY) {
+        player.kill();
+        dying = false;
+    }
+
 }
 
 
+Turret.prototype.findTarget = function(player, game) {
+    var ray = new Phaser.Line(player.x, player.y, this.x, this.y);
+    var intersect;
 
-// Given a ray, this function iterates through all of the walls and
-// returns the closest wall intersection from the start of the ray
-// or null if the ray does not intersect any walls.
-function getWallIntersection (ray, turret) {
     var distanceToWall = game.width;
     var closestIntersection = null;
 
-    if (turret.position.x > player.position.x) {
+    if (this.position.x > player.position.x) {
         return 1;
     }
     
@@ -95,7 +89,7 @@ function getWallIntersection (ray, turret) {
         // Test each of the edges in this wall against the ray.
         // If the ray intersects any of the edges then the wall must be in the way.
         for(var i = 0; i < lines.length; i++) {
-            var intersect = Phaser.Line.intersects(ray, lines[i]);
+            intersect = Phaser.Line.intersects(ray, lines[i]);
             if (intersect) {
                 // Find the closest intersection
                 distance =
@@ -108,15 +102,10 @@ function getWallIntersection (ray, turret) {
         }
     }, this);
 
-    return closestIntersection;
-};
-
-//If player is in sight of given turret, kill the player.
-function hrturretkill(turret) {
-    var ray = new Phaser.Line(player.x, player.y, this.x, this.y);
-    var intersect = getWallIntersection(ray, this);    
-    
-    if (this.inWorld && !intersect) {
-        playerKill();
+    if (!dying && this.inWorld && !intersect && player.health >= 2) {
+        killtime = Date.now();
+        dying = true;
     }
-}
+
+    return intersect;
+};

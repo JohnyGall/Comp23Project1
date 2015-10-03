@@ -1,6 +1,14 @@
 var gameWidth = 800, gameHeight = 600;
 var game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, "game", {preload:preload, update:update, create:create, render:render});
 
+WebFontConfig = {
+    //  The Google Fonts we want to load (specify as many as you like in the array)
+    google: {
+      families: ['Raleway']
+    }
+
+};
+
 function preload () {
         game.load.image('sky', 'assets/sky.png');
         game.load.image('backgrass', 'assets/background_grass_pattern.png');
@@ -11,6 +19,7 @@ function preload () {
         game.load.image('boulder', 'assets/boulder.png');
         game.load.spritesheet('turret', 'assets/turretspritesheet.png', 70, 84, 5);
         game.time.advancedTiming = true;
+        game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
 
 }
 
@@ -23,6 +32,9 @@ var vkey;
 var boulder;
 var turret;
 var shifted = false;
+var PLAYER_X = 200;
+var PLAYER_Y = 500;
+var text;
 
 var debug_toggle = 0;
 
@@ -32,7 +44,6 @@ function create() {
         game.world.setBounds(0, 0, 1920, 600);
         game.add.sprite(0, 300, 'backgrass');
         game.add.sprite(1019, 300, 'backgrass');
-
 
         platforms = game.add.group();
         platforms.enableBody = true;
@@ -53,7 +64,7 @@ function create() {
 
         boulder = new Boulder(game, 500, 150);
         turret = new Turret(game, 700, 500);
-        player = new Player(game, 200, 500);
+        player = new Player(game, PLAYER_X, PLAYER_Y);
 
         tilde.onDown.add(function() {
                 debug_toggle = debug_toggle ? false : true;
@@ -65,6 +76,17 @@ function create() {
         spacebar.onDown.add(bitshift, this);
         vkey = game.input.keyboard.addKey(Phaser.Keyboard.V);
         vkey.onDown.add(vtest, this);
+
+        text = game.add.text(game.world.centerX, game.world.centerY, "");
+        text.anchor.setTo(0.5);
+        text.font = 'Raleway';
+        text.fontSize = 60;
+        text.align = 'center';
+        text.fill = '#fff';
+        text.stroke = '#000';
+        text.strokeThickness = 3;
+        text.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        text.visible = false;
 }
 
 function update() {

@@ -5,9 +5,6 @@
 Player.prototype = Object.create(Phaser.Sprite.prototype);
 Player.prototype.constructor = Player;
 
-Player.prototype = Object.create(Phaser.Sprite.prototype);
-Player.prototype.constructor = Player;
-
 var DEFAULT_SPEED = 150;
 var JUMP_SPEED = -450;
 var UP_DECAY_FACTOR = .8;
@@ -15,9 +12,10 @@ var UP_DECAY_THRESH = -100;
 var SIDE_DECAY_NUM = 5;
 var DOWN_SPEED = 400;
 var VTEST_SPEED = 300;
-var RESPAWN_TIME = 1000; //milliseconds
+var RESPAWN_TIME = 4000; //milliseconds
 var shifted = false;
 var faceright = true;
+var timecheck;
 
 //Creates a player at x and y
 function Player(game, x, y) {
@@ -46,9 +44,22 @@ function Player(game, x, y) {
 
 //function for updating the player's actions. returns whether or not world is shifted.
 Player.prototype.update = function() {
+    if(this.health < 2) {
+        text.visible = true;
+        text.text = Math.round((RESPAWN_TIME - (Date.now() - timecheck)) / 1000);
+        player.animations.stop();
+        if (Date.now() - timecheck >= RESPAWN_TIME) {
+            text.visible = false;
+            this.respawn();
+        }
+
+        return;
+    }
+
     //  Reset the players velocity if not going too fast (movement)
-    if (Math.abs(this.body.velocity.x) <= DEFAULT_SPEED) 
+    if (Math.abs(this.body.velocity.x) <= DEFAULT_SPEED) {
         this.body.velocity.x = 0;
+    }
     if (this.body.touching.down) {
         this.body.velocity.y = 0;
     }
@@ -154,20 +165,16 @@ function vtest(p) {
     player.body.velocity.x += (2*faceright-1) * VTEST_SPEED;
 }
 
-function playerKill() {
-        player.health -= 1;
-        respawn();
+Player.prototype.kill = function() {
+        this.health -= 1;
+        timecheck = Date.now();
+        this.body.velocity.x = 0;
+        this.body.velocity.y = 0;
 }
 
-function respawn() {
-        timecheck = Date.now();
-        while(Date.now() - timecheck < RESPAWN_TIME) {};
-    
-        player.kill();
-
-        console.log(' restarting....\n');
-        //game.paused = false;
+Player.prototype.respawn = function() {
         shifted = false;
-        player.health = 2;
-        game.state.start(game.state.current);
+        this.health = 2;
+        this.position.x = PLAYER_X;
+        this.position.y = PLAYER_Y;
 }
