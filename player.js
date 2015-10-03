@@ -55,15 +55,15 @@ Player.prototype.update = function() {
     
     //  If player is being a smartass do nothing
     if (cursors.right.isDown && cursors.left.isDown) {
-        /*if(player.animations.currentAnim === player.animations.getAnimation('jleft')){
+        if(player.animations.currentAnim === player.animations.getAnimation('jleft')){
             this.body.velocity.x = DEFAULT_SPEED;
-            player.frame = 20;
+            player.frame = 23;
         }
         else if(player.animations.currentAnim === player.animations.getAnimation('jright')){
             this.body.velocity.x = -1*DEFAULT_SPEED;
-            player.frame = 23;
+            player.frame = 20;
         }
-        else*/
+        else
             player.animations.stop();
             player.frame = 9;
     }
@@ -84,6 +84,8 @@ Player.prototype.update = function() {
         faceright = false;
         if(this.body.touching.down)
             player.animations.play('left');
+        /*else if (!this.body.touching.down && this.animations.currentAnim != null)
+            player.animation.play('jleft')*/
         
         //if going too fast to the right, slide to stop. Otherwise, go left
         if (this.body.velocity.x > DEFAULT_SPEED)
@@ -122,8 +124,14 @@ Player.prototype.update = function() {
     //  Allows player to rapidly descend if airborne
     if (cursors.down.isDown && !this.body.touching.down)
     {
-        if (this.body.velocity.y < DOWN_SPEED)
+        if (this.body.velocity.y < DOWN_SPEED){
             this.body.velocity.y = DOWN_SPEED;
+            if(faceright){
+                player.frame.24;
+            }
+            else
+                player.frame.25;
+        }
 
         if (this.body.touching.down) {
             this.body.velocity.y = 0;
