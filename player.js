@@ -47,7 +47,6 @@ Player.prototype.update = function() {
     if(this.health < 2) {
         text.visible = true;
         text.text = Math.round((RESPAWN_TIME - (Date.now() - timecheck)) / 1000);
-        player.animations.stop();
         if (Date.now() - timecheck >= RESPAWN_TIME) {
             text.visible = false;
             this.respawn();
@@ -121,7 +120,7 @@ Player.prototype.update = function() {
 
     // plays jump animations
         if (!faceright){
-        player.animations.play('jleft');
+            player.animations.play('jleft');
         }
         else 
             player.animations.play('jright');
@@ -170,11 +169,13 @@ Player.prototype.kill = function() {
         timecheck = Date.now();
         this.body.velocity.x = 0;
         this.body.velocity.y = 0;
+        this.body.gravity.y = 0;
 }
 
 Player.prototype.respawn = function() {
         shifted = false;
         this.health = 2;
+        this.body.gravity.y = 500;
         this.position.x = PLAYER_X;
         this.position.y = PLAYER_Y;
 }

@@ -16,6 +16,9 @@ function preload () {
         game.load.image('hgrass', 'assets/grass_h.png');
         game.load.image('tgrass', 'assets/grass_t.png');
         game.load.image('vgrass', 'assets/grass_v.png');
+        game.load.image('darkgrass', 'assets/darkgrass.png');
+        game.load.image('floatgrass', 'assets/floating.png');
+        game.load.image('floatledge', 'assets/floatingledge.png');
         game.load.image('boulder', 'assets/boulder.png');
         game.load.spritesheet('turret', 'assets/turretspritesheet.png', 70, 84, 5);
         game.time.advancedTiming = true;
@@ -52,16 +55,20 @@ function create() {
 
         for(var i = 0; i < 5; i++) {
                 var ground = platforms.create(252 * i, game.world.height - 64, 'hgrass');
+                var groundshadow = platforms.create(252 * i, game.world.height - 21, 'darkgrass');
                 ground.body.immovable = true;
-                ground.body.setSize(252, 80, 0, 6);
+                ground.body.setSize(252, 37, 0, 6);
+                groundshadow.body.immovable = true;
         }
 
         for(var i = 0; i < 2; i++) {
-                var ground = platforms.create(252 * i, game.world.height - 350, 'hgrass');
+                var ground = platforms.create(252 * i, game.world.height - 350, 'floatgrass');
                 ground.body.immovable = true;
-                ground.body.setSize(252, 80, 0, 6);
+                ground.body.setSize(252, 56, 0, 6);
         }
-
+        var ledge = platforms.create(504, game.world.height - 350, 'floatledge');
+        ledge.body.immovable = true;
+        ledge.body.setSize(80, 54, 0, 6);
 
         boulder = new Boulder(game, 500, 150);
         turret = new Turret(game, 700, 500);
