@@ -57,7 +57,7 @@ Turret.prototype.update = function() {
     }
 
     if (dying && Date.now() - killtime >= KILL_DELAY) {
-        //player.kill();
+        player.kill();
         dying = false;
     }
 
