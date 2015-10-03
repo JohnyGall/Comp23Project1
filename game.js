@@ -77,10 +77,11 @@ function create() {
         vkey = game.input.keyboard.addKey(Phaser.Keyboard.V);
         vkey.onDown.add(vtest, this);
 
-        text = game.add.text(game.world.centerX, game.world.centerY, "");
+        text = game.add.text(game.width/2, game.height/2, "");
+        text.fixedToCamera = true;
         text.anchor.setTo(0.5);
-        text.font = 'Raleway Light';
-        text.fontSize = 60;
+        text.font = 'Raleway Black';
+        text.fontSize = 120;
         text.align = 'center';
         text.fill = '#fff';
         text.stroke = '#000';
