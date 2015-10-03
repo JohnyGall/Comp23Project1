@@ -2,7 +2,7 @@ var gameWidth = 800, gameHeight = 600;
 var game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, "game", {preload:preload, update:update, create:create, render:render});
 
 function preload () {
-        game.load.image('sky', 'assets/sky.png');    
+        game.load.image('sky', 'assets/sky.png');
         game.load.image('backgrass', 'assets/background_grass_pattern.png');
         game.load.spritesheet('player', 'assets/protag_spritesheet.png',37, 65);
         game.load.image('hgrass', 'assets/grass_h.png');
@@ -10,6 +10,7 @@ function preload () {
         game.load.image('vgrass', 'assets/grass_v.png');
         game.load.image('boulder', 'assets/boulder.png');
         game.load.spritesheet('turret', 'assets/turretspritesheet.png', 70, 84, 5);
+        game.time.advancedTiming = true;
 
 }
 
@@ -27,7 +28,7 @@ var debug_toggle = 0;
 
 function create() {
         game.physics.startSystem(Phaser.Physics.ARCADE);
-        game.add.sprite(0, 0, 'sky');        
+        game.add.sprite(0, 0, 'sky');
         game.world.setBounds(0, 0, 1920, 600);
         game.add.sprite(0, 300, 'backgrass');
         game.add.sprite(1019, 300, 'backgrass');
@@ -48,7 +49,7 @@ function create() {
                 ground.body.immovable = true;
                 ground.body.setSize(252, 80, 0, 6);
         }
-        
+
 
         boulder = new Boulder(game, 500, 150);
         turret = new Turret(game, 700, 500);
@@ -58,7 +59,7 @@ function create() {
                 debug_toggle = debug_toggle ? false : true;
                 game.debug.reset();
         }, this);
-    
+
         cursors = game.input.keyboard.createCursorKeys();
         spacebar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         spacebar.onDown.add(bitshift, this);
@@ -66,7 +67,8 @@ function create() {
         vkey.onDown.add(vtest, this);
 }
 
-function update() { 
+function update() {
+        console.log("frame rate is " + game.time.fps);
         game.physics.arcade.collide(player, platforms);
         game.physics.arcade.collide(platforms, boulder);
         game.physics.arcade.collide(player, boulder);
@@ -77,8 +79,8 @@ function update() {
 }
 
 function render() {
-        
-        if (debug_toggle == true) { 
+
+        if (debug_toggle == true) {
                 game.debug.body(player);
                 game.debug.body(boulder);
                 platforms.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
