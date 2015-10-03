@@ -126,11 +126,11 @@ Player.prototype.update = function() {
     {
         if (this.body.velocity.y < DOWN_SPEED){
             this.body.velocity.y = DOWN_SPEED;
-            if(faceright){
-                player.frame.24;
+            if(!faceright){
+                player.frame = 25;
             }
             else
-                player.frame.25;
+                player.frame = 24;
         }
 
         if (this.body.touching.down) {
