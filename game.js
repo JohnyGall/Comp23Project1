@@ -79,7 +79,7 @@ function create() {
 
         text = game.add.text(game.world.centerX, game.world.centerY, "");
         text.anchor.setTo(0.5);
-        text.font = 'Raleway';
+        text.font = 'Raleway Light';
         text.fontSize = 60;
         text.align = 'center';
         text.fill = '#fff';
