@@ -26,8 +26,8 @@ function Turret(game, x, y) {
 }
 
 Turret.prototype.update = function() {
-
-    var intersect = this.findTarget(player, game);
+    var ray = new Phaser.Line(player.x, player.y, this.x, this.y);
+    var intersect = this.findTarget(ray);
     if (!intersect && player.position.x > this.position.x) {
         
         // This player can see the ball so change their color
@@ -57,18 +57,17 @@ Turret.prototype.update = function() {
     }
 
     if (dying && Date.now() - killtime >= KILL_DELAY) {
-        player.kill();
+        //player.kill();
         dying = false;
     }
 
 }
 
 
-Turret.prototype.findTarget = function(player, game) {
-    var ray = new Phaser.Line(player.x, player.y, this.x, this.y);
+Turret.prototype.findTarget = function(ray) {
     var intersect;
 
-    var distanceToWall = game.width;
+    var distanceToWall = game.world.width;
     var closestIntersection = null;
 
     if (this.position.x > player.position.x) {
@@ -92,8 +91,7 @@ Turret.prototype.findTarget = function(player, game) {
             intersect = Phaser.Line.intersects(ray, lines[i]);
             if (intersect) {
                 // Find the closest intersection
-                distance =
-                    game.math.distance(ray.start.x, ray.start.y, intersect.x, intersect.y);
+                distance = game.math.distance(ray.start.x, ray.start.y, intersect.x, intersect.y);
                 if (distance < distanceToWall) {
                     distanceToWall = distance;
                     closestIntersection = intersect;
@@ -107,5 +105,5 @@ Turret.prototype.findTarget = function(player, game) {
         dying = true;
     }
 
-    return intersect;
+    return closestIntersection;
 };

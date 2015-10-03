@@ -35,6 +35,7 @@ var shifted = false;
 var PLAYER_X = 200;
 var PLAYER_Y = 500;
 var text;
+var framerate;
 
 var debug_toggle = 0;
 
@@ -88,10 +89,17 @@ function create() {
         text.strokeThickness = 3;
         text.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         text.visible = false;
+
+        framerate = game.add.text(25, 25, game.time.fps);
+        framerate.fixedToCamera = true;
+        framerate.font = "Raleway Light";
+        framerate.fontSize = 14;
+        framerate.fill = '#33ff33';
+        framerate.visible = false;
+
 }
 
 function update() {
-        console.log("frame rate is " + game.time.fps);
         game.physics.arcade.collide(player, platforms);
         game.physics.arcade.collide(platforms, boulder);
         game.physics.arcade.collide(player, boulder);
@@ -104,8 +112,14 @@ function update() {
 function render() {
 
         if (debug_toggle == true) {
+                game.debug.context.clearRect(0, 0, game.world.width, game.world.height);
+                framerate.visible = true;
+                framerate.text = game.time.fps;
                 game.debug.body(player);
                 game.debug.body(boulder);
+                game.debug.body(turret);
                 platforms.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
+        } else {
+                framerate.visible = false;
         }
 }
