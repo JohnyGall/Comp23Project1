@@ -1,14 +1,3 @@
-Turret.prototype = Object.create(Phaser.Sprite.prototype);
-
-Turret.prototype.constructor = Turret;
-
-var KILL_DELAY = 1000; //milliseconds
-
-var bmd, bmdimg;
-var trace;
-var killtime;
-var dying;
-
 function Turret(game, target, obstacles, x, y) {
         // Store variables
         this.game = game;
@@ -48,41 +37,8 @@ function Turret(game, target, obstacles, x, y) {
 
 }
 
-<<<<<<< HEAD
 Turret.prototype = Object.create(Phaser.Sprite.prototype);
 Turret.prototype.constructor = Turret;
-=======
-Turret.prototype.update = function() {
-        var ray = new Phaser.Line(player.x, player.y, this.x, this.y);
-        var intersect = getWallIntersection(ray, this);
-
-        player.tint = 0xffffff;
-
-        if (this.inWorld && !intersect) {
-            // add kill command to queue
-            if (game.time.events.length  < 1)
-                killcommand = game.time.events.add(KILL_DELAY, hrturretkill, this, this)
-            
-            // This player can see the ball so change their color
-            player.tint = 0xffaaaa*(0.001*Math.random()+.9995);
-            var angle = 180 + Math.atan2(this.position.y - player.position.y, this.position.x - player.position.x) * -57.2957795;
-            this.animations.play('rotate', 0);
-            
-            var frame = Math.round(angle / 90 * 4);
-            this.animations.currentAnim.setFrame(frame, true);
-            if (angle > 180 || angle < 0) {
-                this.animations.currentAnim.setFrame(0, true);
-        }
-
-    // Draw each of the rays on the rayBitmap
-        bmd.context.clearRect(0, 0, game.world.getBounds().width, game.world.getBounds().height);
-        bmd.context.beginPath();
-        bmd.context.strokeStyle = 'rgb(255, 0, 0)';
-        bmd.context.fillStyle = 'rgb(255, 0, 0)';
-        bmd.context.moveTo(this.position.x, this.position.y);
-        bmd.context.lineTo(player.position.x, player.position.y);
-        bmd.context.stroke();
->>>>>>> parent of 62765d9... First Puzzle
 
 Turret.prototype.update = function() {
         // The first thing to do when updating the turret is to raytrace to the target to
@@ -138,15 +94,6 @@ Turret.prototype.update = function() {
                 this.bmd.clear();
                 this.target.tint = 0xffffff;
         }
-<<<<<<< HEAD
-=======
-        else {
-            // Remove the killcommand when player no longer visible 
-            game.time.events.remove(killcommand); 
-            bmd.clear();
-        }
-}
->>>>>>> parent of 62765d9... First Puzzle
 
         // if the player is being hit, check if enough time has passed for the player to die. If so, kill them
         // and make sure the turret won't shoot at them anymore by resetting dying (if it does, a stack overflow 
@@ -155,6 +102,7 @@ Turret.prototype.update = function() {
                 this.target.kill();
                 this.target.dying = false;
         }
+
 };
 
 // Method to find the intersection of the turret and its target via raycasting.
@@ -199,16 +147,3 @@ Turret.prototype.findTarget = function(ray) {
         
         return closestIntersection;
 };
-<<<<<<< HEAD
-=======
-
-//If player is in sight of given turret, kill the player.
-function hrturretkill(turret) {
-    var ray = new Phaser.Line(player.x, player.y, this.x, this.y);
-    var intersect = getWallIntersection(ray, this);    
-    
-    if (this.inWorld && !intersect) {
-        playerKill();
-    }
-}
->>>>>>> parent of 62765d9... First Puzzle

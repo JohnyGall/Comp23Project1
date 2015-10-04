@@ -74,18 +74,11 @@ function create() {
                 groundshadow.body.immovable = true;
         }
 
-<<<<<<< HEAD
         // Create the floating rocky grass platforms
         for(var i = 0; i < 2; i++) {
                 var floating = platforms.create(252 * i, game.world.height - 350, 'floatgrass');
                 floating.body.immovable = true;
                 floating.body.setSize(252, 56, 0, 6);
-=======
-        for(var i = 0; i < 2; i++) {
-                var ground = platforms.create(252 * i, game.world.height - 350, 'hgrass');
-                ground.body.immovable = true;
-                ground.body.setSize(252, 80, 0, 6);
->>>>>>> parent of 62765d9... First Puzzle
         }
 
         // Create the ledge that ends the floating rocky grass platforms
@@ -111,12 +104,12 @@ function create() {
         // Create the sprites of the game
         player = new Player(game, controls);
         boulder = new Boulder(game, 500, 150);
-        
+        /*
         obstacles = game.add.group();
         obstacles.add(platforms);
         obstacles.add(boulder); // Why does this not work?
-        
-        turret = new Turret(game, player, obstacles, 700, 500);
+        */
+        turret = new Turret(game, player, platforms, 700, 500);
 
         // Set up UI text
         createUI();
