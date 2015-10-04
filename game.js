@@ -104,11 +104,12 @@ function create() {
         // Create the sprites of the game
         player = new Player(game, controls);
         boulder = new Boulder(game, 500, 150);
-
+        /*
         obstacles = game.add.group();
         obstacles.add(platforms);
         obstacles.add(boulder); // Why does this not work?
-        turret = new Turret(game, player, obstacles, 700, 500);
+        */
+        turret = new Turret(game, player, platforms, 700, 500);
 
         // Set up UI text
         createUI();
