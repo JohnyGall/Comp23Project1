@@ -43,8 +43,8 @@ function create() {
                 ground.body.setSize(252, 80, 0, 6);
         }
 
-        for(var i = 0; i < 2; i++) {
-                var ground = platforms.create(252 * i, game.world.height - 350, 'hgrass');
+        for(var i = 0; i < 3; i++) {
+                var ground = platforms.create(240 * i, game.world.height - 350, 'hgrass');
                 ground.body.immovable = true;
                 ground.body.setSize(252, 80, 0, 6);
         }

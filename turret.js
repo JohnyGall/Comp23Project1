@@ -2,7 +2,7 @@ Turret.prototype = Object.create(Phaser.Sprite.prototype);
 
 Turret.prototype.constructor = Turret;
 
-var KILL_DELAY = 1000; //milliseconds
+var KILL_DELAY = 2000; //milliseconds
 
 var bmd, bmdimg;
 var trace;
@@ -34,13 +34,16 @@ Turret.prototype.update = function() {
 
         if (this.inWorld && !intersect) {
             // add kill command to queue
-            if (game.time.events.length  < 1)
+            if (game.time.events.length  < 1) {
+                this.tint = 0xffffff;
                 killcommand = game.time.events.add(KILL_DELAY, hrturretkill, this, this)
+            }
             
             // This player can see the ball so change their color
             player.tint = 0xffaaaa*(0.001*Math.random()+.9995);
             var angle = 180 + Math.atan2(this.position.y - player.position.y, this.position.x - player.position.x) * -57.2957795;
             this.animations.play('rotate', 0);
+            
             
             var frame = Math.round(angle / 90 * 4);
             this.animations.currentAnim.setFrame(frame, true);
@@ -65,6 +68,7 @@ Turret.prototype.update = function() {
             // Remove the killcommand when player no longer visible 
             game.time.events.remove(killcommand); 
             bmd.clear();
+            this.tint = 0xffffff;
         }
 }
 
@@ -112,9 +116,25 @@ function getWallIntersection (ray, turret) {
 };
 
 //If player is in sight of given turret, kill the player.
-function hrturretkill(turret) {
-    var ray = new Phaser.Line(player.x, player.y, this.x, this.y);
-    var intersect = getWallIntersection(ray, this);    
+function hrturretkill(turrett) {
+    console.log('hrturretkill\n');
+    turrett.tint = 0xff0000;
+    
+    var ray = new Phaser.Line(player.x, player.y, turrett.x, turrett.y);
+    var intersect = getWallIntersection(ray, turrett);
+
+    var lines = [
+        new Phaser.Line(boulder.x - boulder.width/2, boulder.y - boulder.height/2, boulder.x + boulder.width/2, boulder.y - boulder.height/2),
+        new Phaser.Line(boulder.x - boulder.width/2, boulder.y - boulder.height/2, boulder.x - boulder.width/2, boulder.y + boulder.height/2),
+        new Phaser.Line(boulder.x + boulder.width/2, boulder.y + boulder.height/2, boulder.x - boulder.width/2, boulder.y + boulder.height/2),
+        new Phaser.Line(boulder.x + boulder.width/2, boulder.y + boulder.height/2, boulder.x + boulder.width/2, boulder.y - boulder.height/2),
+    ];
+
+    // Test each of the edges in this boulder against the ray.
+    // If the ray intersects any of the edges then the boulder must be in the way.
+    for(var i = 0; i < lines.length; i++) {
+        var intersect = intersect || Phaser.Line.intersects(ray, lines[i]);
+    }
     
     if (this.inWorld && !intersect) {
         playerKill();
