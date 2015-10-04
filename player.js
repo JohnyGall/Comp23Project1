@@ -80,11 +80,13 @@ Player.prototype.update = function() {
 
         //  If player pushing down both arrow keys, don't move
         if ((this.controls.right.isDown && this.controls.left.isDown) || (this.controls.up.isDown && this.controls.down.isDown)) {
-                this.body.velocity.x = 0;
-                this.body.velocity.y = 0;
-                this.animations.stop();
-                // Frame for idling
-                this.frame = 9;
+                if(this.body.touching.down){
+                        this.body.velocity.x = 0;
+                        this.body.velocity.y = 0;
+                        this.animations.stop();
+                        // Frame for idling
+                        this.frame = 9;
+                }
         }
 
         // Right Arrow
