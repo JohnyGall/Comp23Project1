@@ -14,8 +14,8 @@ function preload () {
         game.load.image('sky', 'assets/sky.png');
         game.load.spritesheet('backgrass', 'assets/background_grass_spritesheet.png',1008,311,2);
         game.load.spritesheet('hgrass', 'assets/grass_h_spritesheet.png',252,48,2);
-        game.load.image('tgrass', 'assets/grass_t.png');
-        game.load.image('vgrass', 'assets/grass_v.png');
+        game.load.spritesheet('tgrass', 'assets/grass_t_spritesheet.png',48,66,2);
+        game.load.spritesheet('vgrass', 'assets/grass_v_spritesheet.png',145,210,2);
         game.load.spritesheet('darkgrass', 'assets/darkgrass.png',252,48,2);
         game.load.spritesheet('floatgrass', 'assets/floating_spritesheet.png',252,48,2);
         game.load.spritesheet('floatledge', 'assets/floatingledge_spritesheet.png',64,48,2);
