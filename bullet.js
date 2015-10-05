@@ -21,7 +21,7 @@ function Bullet (game, target, source) {
         // Remove once it leaves the visible field (Phaser built-in)
         this.body.outOfBoundsKill = true;
         this.body.gravity.y = 0;
-        var angle = 2 * Math.atan2(target.y - source.y, target.x - source.x);
+        var angle = Math.atan2(target.y - source.y, target.x - source.x);
 
 
         if (game.shifted) {

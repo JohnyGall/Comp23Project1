@@ -4,7 +4,6 @@ function Player(game, controls) {
         this.controls = controls;
         this.facingRight = true;
         this.killTime = 0;
-        this.dying = false;
     
         //Store constants
         // Player initial coordinates
