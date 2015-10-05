@@ -1,8 +1,9 @@
-function Turret(game, target, obstacles, x, y) {
+function Turret(game, target, obstacles, platforms, x, y) {
         // Store variables
         this.game = game;
         this.target = target;
         this.obstacles = obstacles;
+        this.platforms = platforms;
         // Used for counting down to player death
         this.timeEnteredRange = 0;
         // Is the target in the respawn countdown?
@@ -13,7 +14,7 @@ function Turret(game, target, obstacles, x, y) {
         this.INIT_X = x;
         this.INIT_Y = y;
         // Time to wait before the turret kills the target, in milliseconds
-        this.KILL_DELAY = 1000;
+        this.KILL_DELAY = 2000;
 
         // Create a new sprite based on the preloaded turet image, and add it to the this.game
         Phaser.Sprite.call(this, game, x, y, 'turret');
@@ -41,6 +42,9 @@ Turret.prototype = Object.create(Phaser.Sprite.prototype);
 Turret.prototype.constructor = Turret;
 
 Turret.prototype.update = function() {
+                this.bmd.clear();
+    
+
         // The first thing to do when updating the turret is to raytrace to the target to
         // see if the turret can kill them.
         //For this, we need a line between the target and the turret.
@@ -91,7 +95,6 @@ Turret.prototype.update = function() {
                 // If the target is not being hit, update their dying status (kill the death countdown), clear
                 // any residual raytraces, and reset the target's tint
                 this.target.dying = false;
-                this.bmd.clear();
                 this.target.tint = 0xffffff;
         }
 
@@ -110,7 +113,7 @@ Turret.prototype.update = function() {
 Turret.prototype.findTarget = function(ray) {
 
         if (this.position.x > this.target.position.x) {
-                return 1;
+                return 0;
         }
 
         var currentIntersection;
@@ -120,7 +123,7 @@ Turret.prototype.findTarget = function(ray) {
         var distanceToWall = this.game.world.width;
 
         // Check for an intersection between the ray and every wall
-        this.obstacles.forEach(function(wall) {
+        this.platforms.forEach(function(wall) {
                 // Create an array of lines to represent the four edges of each wall
                 var lines = [
                         new Phaser.Line(wall.x, wall.y, wall.x + wall.width, wall.y),
@@ -144,6 +147,34 @@ Turret.prototype.findTarget = function(ray) {
                 }
         
         }, this);
+    
+        // Check for an intersection between the ray and every obstacle if no intersection with walls
+    if(!closestIntersection) {
+        this.obstacles.forEach(function(wall) {
+                // Create an array of lines to represent the four edges of each wall
+                var lines = [
+                        new Phaser.Line(wall.x-(wall.anchor.x*wall.width), wall.y-(wall.anchor.y*wall.height), wall.x-(wall.anchor.x*wall.width), wall.y+((1-wall.anchor.y)*wall.height)),
+                        new Phaser.Line(wall.x-(wall.anchor.x*wall.width), wall.y-(wall.anchor.y*wall.height), wall.x+((1-wall.anchor.x)*wall.width), wall.y-(wall.anchor.y*wall.height)),
+                        new Phaser.Line(wall.x+((1-wall.anchor.x)*wall.width), wall.y-(wall.anchor.y*wall.height), wall.x+((1-wall.anchor.x)*wall.width), wall.y+((1-wall.anchor.y)*wall.height)),
+                        new Phaser.Line(wall.x-(wall.anchor.x*wall.width), wall.y+((1-wall.anchor.y)*wall.height), wall.x+((1-wall.anchor.x)*wall.width), wall.y+((1-wall.anchor.y)*wall.height)),
+                ];
         
+                // Test each of the edges in this wall against the ray.
+                // If the ray intersects any of the edges then the wall must be in the way.
+                for(var i = 0; i < lines.length; i++) {
+                        currentIntersection = Phaser.Line.intersects(ray, lines[i]);
+                        if (currentIntersection) {
+                                // Find the closest intersection
+                                var distance = this.game.math.distance(ray.start.x, ray.start.y, currentIntersection.x, currentIntersection.y);
+                                if (distance < distanceToWall) {
+                                        distanceToWall = distance;
+                                        closestIntersection = currentIntersection;
+                                }
+                        }
+                }
+        
+        }, this);
+    }
+    
         return closestIntersection;
 };
