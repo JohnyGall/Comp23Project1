@@ -20,9 +20,10 @@ function preload () {
         game.load.image('floatgrass', 'assets/floating.png');
         game.load.image('floatledge', 'assets/floatingledge.png');
         // Sprites and stuff 
-        game.load.image('boulder', 'assets/boulder.png');
+        game.load.spritesheet('boulder', 'assets/boulder_spritesheet.png',48,48,2);
         game.load.spritesheet('player', 'assets/protag_spritesheet.png',37, 65);
-        game.load.spritesheet('turret', 'assets/turretspritesheet.png', 70, 84, 5);
+        game.load.spritesheet('turret', 'assets/turretspritesheet.png', 90, 96, 6);
+        game.load.spritesheet('bullet', 'assets/bullet_spritesheet.png',16,16,2);
         // Makes FPS counter work
         game.time.advancedTiming = true;
         // Allows Google Fonts to be used remotely
@@ -210,7 +211,7 @@ function createUI() {
 
 function bitshift() {
     game.shifted = !game.shifted;
-    player.scale.y *= -1;
+    Bullet.shift();
     if (!game.shifted) {
 //        this.animations.play('highrez');
     }

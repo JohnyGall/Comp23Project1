@@ -10,6 +10,7 @@ function Boulder(game, x, y) {
         game.add.existing(this);
         // Boulders are heavy.
         this.body.gravity.y = 1000;
+
         // So it doesn't roll off the edge of the map.
         this.body.collideWorldBounds = true;
 }
@@ -22,6 +23,7 @@ Boulder.prototype.update = function() {
         // If in the low-res world, we want the boulder to not roll, but
         // if in the high res world, we want it to move freely.
         if (!game.shifted) {
+                this.frame = 0;
                 this.body.moves = true;
                 // Change the angle of the boulder as it moves by a factor
                 // of the speed it is moving at (simulate rolling) and
@@ -41,8 +43,13 @@ Boulder.prototype.update = function() {
                 }
         }
         else {
+                this.frame = 1;
                 this.body.velocity.x = 0;
                 this.body.velocity.y = 0;
+                this.angle = Math.ceil(this.angle/90)*90;
                 this.body.moves = false;
         }
+};
+
+Boulder.prototype.shift = function() {
 };

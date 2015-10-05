@@ -52,7 +52,6 @@ function Player(game, controls) {
         // jumping
         this.animations.add('jright', [18, 19, 20], 4, false);
         this.animations.add('jleft', [21, 22, 23], 4, false);
-
 }
 
 Player.prototype = Object.create(Phaser.Sprite.prototype);
@@ -172,6 +171,14 @@ Player.prototype.update = function() {
                         }
                 }
         }
+    
+        //change to low rez graphics if shifted
+        if(game.shifted) {
+            if (this.facingRight)
+                this.frame = 26;
+            else  
+                this.frame = 27;
+        }
 
         // V Key (speedboost)
         if (this.controls.V.isDown) {
@@ -198,7 +205,9 @@ Player.prototype.kill = function() {
 
 // Reset the player
 Player.prototype.respawn = function() {
-        this.game.shifted = false;
+        if(this.game.shifted)
+            bitshift();
+    
         this.health = this.MAX_HEALTH;
         this.body.gravity.y = 500;
         this.position.x = this.INIT_X;

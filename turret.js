@@ -117,7 +117,7 @@ Turret.prototype.update = function() {
         // and make sure the turret won't shoot at them anymore by resetting dying (if it does, a stack overflow 
         // will follow).
         if (this.target.dying && Date.now() - this.timeEnteredRange >= this.KILL_DELAY) {
-                this.target.kill();
+                bullet = new Bullet(game,this.target,this);
                 this.target.dying = false;
         }
     }
@@ -131,7 +131,7 @@ Turret.prototype.findTarget = function(ray) {
         // returns a valid intersection point if a collision occurred, and therefore
         // no turret firing occurs — there is a wall in the way. We want the same
         // result of an inactive turret, so we return a valid value.
-        if (this.position.x > this.target.position.x) {
+        if (!this.inWorld) {
                 return 1;
         }
         if (this.position.x > this.target.position.x) {
