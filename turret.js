@@ -15,6 +15,7 @@ function Turret(game, target, obstacles, platforms, x, y) {
         this.INIT_Y = y;
         // Time to wait before the turret kills the target, in milliseconds
         this.KILL_DELAY = 2000;
+        this.FIRE_DELAY = 1000;
 
         // Create a new sprite based on the preloaded turet image, and add it to the this.game
         Phaser.Sprite.call(this, game, x, y, 'turret');
@@ -42,9 +43,23 @@ Turret.prototype = Object.create(Phaser.Sprite.prototype);
 Turret.prototype.constructor = Turret;
 
 Turret.prototype.update = function() {
+                this.target.tint = 0xffffff;
                 this.bmd.clear();
     
 
+    if(game.shifted) {
+        if (this.inWorld && this.position.x<this.target.position.x){
+            if (!this.target.dying && this.target.health >= 2) {
+                this.timeEnteredRange = Date.now();
+                this.target.dying = true;
+            }
+            if (this.target.dying && Date.now() - this.timeEnteredRange >= this.KILL_DELAY) {
+                bullet = new Bullet(game,this.target,this);
+                this.target.dying = false;
+            }
+        }
+        
+    } else {
         // The first thing to do when updating the turret is to raytrace to the target to
         // see if the turret can kill them.
         //For this, we need a line between the target and the turret.
@@ -105,7 +120,7 @@ Turret.prototype.update = function() {
                 this.target.kill();
                 this.target.dying = false;
         }
-
+    }
 };
 
 // Method to find the intersection of the turret and its target via raycasting.
@@ -113,7 +128,10 @@ Turret.prototype.update = function() {
 Turret.prototype.findTarget = function(ray) {
 
         if (this.position.x > this.target.position.x) {
-                return 0;
+                return 1;
+        }
+        if (this.position.x > this.target.position.x) {
+                return 1;
         }
 
         var currentIntersection;
