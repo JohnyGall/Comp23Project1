@@ -22,7 +22,7 @@ function preload () {
         // Sprites and stuff 
         game.load.image('boulder', 'assets/boulder.png');
         game.load.spritesheet('player', 'assets/protag_spritesheet.png',37, 65);
-        game.load.spritesheet('turret', 'assets/turretspritesheet.png', 70, 84, 5);
+        game.load.spritesheet('turret', 'assets/turretspritesheet.png', 96, 96, 5);
         // Makes FPS counter work
         game.time.advancedTiming = true;
         // Allows Google Fonts to be used remotely
