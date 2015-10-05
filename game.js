@@ -1,11 +1,11 @@
 var gameWidth = 800, gameHeight = 600;
 var game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, "game", {preload:preload, update:update, create:create, render:render});
 
-var fontname = 'Raleway Thin';
+var fontname = 'Raleway';
 WebFontConfig = {
         // The Google Fonts we want to load (specify as many as you like in the array)
         google: {
-                families: [fontname]
+                families: [fontname + ':100']
         }
 };
 
@@ -107,9 +107,12 @@ function create() {
         boulder = new Boulder(game, 500, 150);
         
         obstacles = game.add.group();
+        for (var i = 0; i < platforms.length; i++) {
+                obstacles.add(platforms.getAt(i));
+        }
         obstacles.add(boulder); // Why does this not work?
         
-        turret = new Turret(game, player, obstacles, platforms, 700, 500);
+        turret = new Turret(game, player, obstacles, 700, 500);
 
         // Set up UI text
         createUI();
@@ -150,7 +153,7 @@ function render() {
                 game.debug.body(player);
                 game.debug.body(boulder);
                 game.debug.body(turret);
-                platforms.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
+                obstacles.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
                 // Animate the favicon, for fun
                 if(Date.now() - then >= 50) {
                         then = Date.now();
