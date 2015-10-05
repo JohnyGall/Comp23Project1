@@ -1,8 +1,9 @@
-function Turret(game, target, obstacles, x, y) {
+function Turret(game, target, obstacles, bullets, x, y) {
         // Store variables
         this.game = game;
         this.target = target;
         this.obstacles = obstacles;
+        this.bullets = bullets;
 
         // Used for counting down to player death
         this.timeEnteredRange = 0;
@@ -48,13 +49,14 @@ Turret.prototype.update = function() {
     
         if(game.shifted) {
                 this.frame = 5;
-                if (this.inWorld && this.position.x<this.target.position.x){
+                if (this.inWorld && this.position.x < this.target.position.x){
                         if (!this.target.dying && this.target.health >= 2) {
                                 this.timeEnteredRange = Date.now();
                                 this.target.dying = true;
                         }
                         if (this.target.dying && Date.now() - this.timeEnteredRange >= this.KILL_DELAY) {
-                                bullet = new Bullet(game,this.target,this);
+                                var bullet = new Bullet(game,this.target,this);
+                                this.bullets.add(bullet);
                                 this.target.dying = false;
                         }
                 }
@@ -114,8 +116,9 @@ Turret.prototype.update = function() {
                 // if the player is being hit, check if enough time has passed for the player to die. If so, kill them
                 // and make sure the turret won't shoot at them anymore by resetting dying (if it does, a stack overflow 
                 // will follow).
-                if (this.target.dying && Date.now() - this.timeEnteredRange >= this.KILL_DELAY) {
-                        bullet = new Bullet(game,this.target,this);
+                if (this.target.dying && Date.now() - this.timeEnteredRange >= this.FIRE_DELAY) {
+                        var bullet = new Bullet(game, this.target, this);
+                        this.bullets.add(bullet);
                         this.target.dying = false;
                 }
         }

@@ -20,16 +20,15 @@ function Bullet (game, target, source) {
 
         // Remove once it leaves the visible field (Phaser built-in)
         this.body.outOfBoundsKill = true;
+        this.body.gravity.y = 0;
         var angle = 2 * Math.atan2(target.y - source.y, target.x - source.x);
 
 
         if (game.shifted) {
-                this.body.gravity.y = 160;
                 this.frame = 0;
                 this.body.velocity.x = Math.cos(angle) * this.L_SPEED;
                 this.body.velocity.y = Math.sin(angle) * this.L_SPEED;
         } else {
-                this.body.gravity.y = 10;
                 this.frame = 1;
                 this.body.velocity.x = Math.cos(angle) * this.H_SPEED;
                 this.body.velocity.y = Math.sin(angle) * this.H_SPEED;
@@ -41,25 +40,25 @@ Bullet.prototype.constructor = Bullet;
 
 Bullet.prototype.update = function() {
 
-        if(this.target.health < this.target.MAX_HEALTH) {
+        if (this.target.health < this.target.MAX_HEALTH) {
                 this.kill();
         }
-        if(game.physics.arcade.overlap(this.target, this)) {
+        if (game.physics.arcade.overlap(this.target, this)) {
                 this.target.kill();
         }
-        if(game.physics.arcade.overlap(obstacles, this)) {
+        if (game.physics.arcade.overlap(obstacles, this)) {
                 this.kill();
         }
 }
 
 Bullet.prototype.shift = function() {
-        if(game.shifted) {
-                this.frame = 0;
-                this.body.velocity.x *= this.L_SPEED / this.H_SPEED;
-                this.body.velocity.y *= this.L_SPEED / this.H_SPEED;
-        } else {
+        if (!game.shifted) {
                 this.frame = 1;
                 this.body.velocity.x *= this.H_SPEED / this.L_SPEED;
                 this.body.velocity.y *= this.H_SPEED / this.L_SPEED;
+        } else {
+                this.frame = 0;
+                this.body.velocity.x *= this.L_SPEED / this.H_SPEED;
+                this.body.velocity.y *= this.L_SPEED / this.H_SPEED;
         }
 }

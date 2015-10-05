@@ -124,7 +124,7 @@ function create() {
         //Add player
         player = new Player(game, controls);
 
-        turret = new Turret(game, player, obstacles, 700, 500);
+        turret = new Turret(game, player, obstacles, bullets, 700, 500);
 
         // Set up UI text
         createUI();
