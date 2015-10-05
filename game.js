@@ -89,6 +89,7 @@ function create() {
         // Add controls to the game
         controls = game.input.keyboard.createCursorKeys();
         controls.space = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        controls.space.onDown.add(bitshift);
         controls.V = game.input.keyboard.addKey(Phaser.Keyboard.V);
         controls.tilde = game.input.keyboard.addKey(Phaser.Keyboard.TILDE);
         // Tilde toggles debug mode
@@ -104,12 +105,11 @@ function create() {
         // Create the sprites of the game
         player = new Player(game, controls);
         boulder = new Boulder(game, 500, 150);
-        /*
+        
         obstacles = game.add.group();
-        obstacles.add(platforms);
         obstacles.add(boulder); // Why does this not work?
-        */
-        turret = new Turret(game, player, platforms, 700, 500);
+        
+        turret = new Turret(game, player, obstacles, platforms, 700, 500);
 
         // Set up UI text
         createUI();
@@ -202,14 +202,14 @@ function createUI() {
         framerate.visible = false;
 }
 
-/*
+
 function bitshift() {
-    shifted = !shifted;
+    game.shifted = !game.shifted;
     player.scale.y *= -1;
-    if (!shifted) {
+    if (!game.shifted) {
 //        this.animations.play('highrez');
     }
     else {
 //        this.animations.play('lowrez');
     }
-}*/
+}
