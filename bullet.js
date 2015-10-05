@@ -3,10 +3,8 @@ function Bullet (game, target, source) {
         //High Rez
         this.H_SPEED = 3000;
         //Low Rez
-        this.L_SPEED = 200;
+        this.L_SPEED = 300;
 
-        
-    
         // Store variables, mostly for accessing the bitshift value
         this.game = game;
         this.INIT_X = source.x;

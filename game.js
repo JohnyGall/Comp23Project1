@@ -12,13 +12,13 @@ WebFontConfig = {
 function preload () {
         // Level background
         game.load.image('sky', 'assets/sky.png');
-        game.load.image('backgrass', 'assets/background_grass_pattern.png');
-        game.load.image('hgrass', 'assets/grass_h.png');
+        game.load.spritesheet('backgrass', 'assets/background_grass_spritesheet.png',1008,311,2);
+        game.load.spritesheet('hgrass', 'assets/grass_h_spritesheet.png',252,48,2);
         game.load.image('tgrass', 'assets/grass_t.png');
         game.load.image('vgrass', 'assets/grass_v.png');
-        game.load.image('darkgrass', 'assets/darkgrass.png');
+        game.load.spritesheet('darkgrass', 'assets/darkgrass.png',252,48,2);
         game.load.spritesheet('floatgrass', 'assets/floating_spritesheet.png',252,48,2);
-        game.load.image('floatledge', 'assets/floatingledge.png');
+        game.load.spritesheet('floatledge', 'assets/floatingledge_spritesheet.png',64,48,2);
         // Sprites and stuff 
         game.load.spritesheet('boulder', 'assets/boulder_spritesheet.png',48,48,2);
         game.load.spritesheet('player', 'assets/protag_spritesheet.png',37, 65);
@@ -37,6 +37,8 @@ var player;
 var platforms;
 // A group containing things that block raycasts
 var obstacles;
+// A group containing the background elements
+var background;
 // The controls
 var controls;
 // sprites
@@ -57,8 +59,10 @@ function create() {
         game.physics.startSystem(Phaser.Physics.ARCADE);
         game.add.sprite(0, 0, 'sky');
         game.world.setBounds(0, 0, 1920, 600);
-        game.add.sprite(0, 300, 'backgrass');
-        game.add.sprite(1019, 300, 'backgrass');
+        
+        background = game.add.group();
+        background.create(0, 300, 'backgrass');
+        background.create(1008, 300, 'backgrass');
         
         // Create a new part of the game keeping track of the world resolution
         game.shifted = false;
@@ -91,12 +95,6 @@ function create() {
         var ledge = platforms.create(504, game.world.height - 350, 'floatledge');
         ledge.body.immovable = true;
         ledge.body.setSize(80, 54, 0, 6);
-    
-        var ledge2 = platforms.create(800, 480, 'floatledge');
-        ledge2.body.immovable = true;
-        ledge2.body.setSize(80, 54, 0, 6);
-
-
 
         // Add controls to the game
         controls = game.input.keyboard.createCursorKeys();
@@ -122,8 +120,6 @@ function create() {
                 obstacles.add(platforms.getAt(i));
         }
         obstacles.add(boulder); 
-        obstacles.add(ledge2); 
-
         
         //Add player
         player = new Player(game, controls);
@@ -136,6 +132,7 @@ function create() {
 }
 
 function update() {
+
         // Collision detection for all objects
         game.physics.arcade.collide(player, platforms);
         game.physics.arcade.collide(platforms, boulder);
@@ -226,9 +223,19 @@ function bitshift() {
     game.shifted = !game.shifted;
     //Bullet.shift();
     if (!game.shifted) {
-//        this.animations.play('highrez');
+        platforms.forEach(function(bg) {
+            bg.frame = 0;
+        },this);
+        background.forEach(function(bg) {
+            bg.frame = 0;
+        },this);
     }
     else {
-//        this.animations.play('lowrez');
+        platforms.forEach(function(bg) {
+            bg.frame = 1;
+        },this);
+        background.forEach(function(bg) {
+            bg.frame = 1;
+        },this);
     }
 }

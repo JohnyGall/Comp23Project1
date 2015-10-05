@@ -15,7 +15,7 @@ function Turret(game, target, obstacles, x, y) {
         this.INIT_Y = y;
         // Time to wait before the turret kills the target, in milliseconds
         this.KILL_DELAY = 1500;
-        this.FIRE_DELAY = 750;
+        this.FIRE_DELAY = 500;
 
 
         // Create a new sprite based on the preloaded turet image, and add it to the this.game
@@ -66,10 +66,12 @@ Turret.prototype.update = function() {
         var ray = new Phaser.Line(this.target.x, this.target.y, this.x, this.y);
         // Call the raytracing method, and store the result
         var intersect = this.findTarget(ray, this.obstacles);
+        // Play the rotation animation at an FPS of 0 (not playing, just set to the first frame)
+        this.frame = 0;
 
+        
         // If there was an intersection and the target is not behind the turret
         if (!intersect && this.target.position.x > this.position.x) {
-
                 // target Stuff
                 // Shuffle the tint of the target to show they are being hurt        
                 this.target.tint = 0xffaaaa * (0.001 * Math.random() + 0.9995);
@@ -85,14 +87,10 @@ Turret.prototype.update = function() {
                 // Turret Animations
                 // Measure the angle between the turret and the target, and add 180 to it to get it in the range of 0-90 degrees
                 var angle = 180 + Math.atan2(this.position.y - this.target.position.y, this.position.x - this.target.position.x) * -57.2957795;
-                // Play the rotation animation at an FPS of 0 (not playing, just set to the first frame)
-                this.animations.play('rotate', 0);
+            
                 // Convert the angle to a number 0 to 4, and then set it as the current frame
                 var frame = Math.round(angle / 90 * 4);
-                this.animations.currentAnim.setFrame(frame, true);
-                // For extra security, if the frame is outside the allowable range, we manually set it to 0 
-                if (angle > 91 || angle < 0)
-                        this.animations.currentAnim.setFrame(0, true);
+                this.frame = frame;
 
                 // Clear whatever was on the bitmap before, so we don't end up with a million red lines on the screen
                 this.bmd.context.clearRect(0, 0, this.game.world.getBounds().width, this.game.world.getBounds().height);
@@ -158,7 +156,8 @@ Turret.prototype.findTarget = function(ray) {
                 // Test each of the edges in this wall against the ray.
                 // If the ray intersects any of the edges then the wall must be in the way.
                 for(var i = 0; i < lines.length; i++) {
-    game.debug.geom(lines[i]);
+                    if (debug_toggle)
+                        game.debug.geom(lines[i]);
 
                         currentIntersection = Phaser.Line.intersects(ray, lines[i]);
                         if (currentIntersection) {
