@@ -12,18 +12,18 @@ WebFontConfig = {
 function preload () {
         // Level background
         game.load.image('sky', 'assets/sky.png');
-        game.load.spritesheet('backgrass', 'assets/background_grass_spritesheet.png',1008,311,2);
-        game.load.spritesheet('hgrass', 'assets/grass_h_spritesheet.png',252,48,2);
+        game.load.spritesheet('backgrass', 'assets/background_grass_spritesheet.png', 1008, 311, 2);
+        game.load.spritesheet('hgrass', 'assets/grass_h_spritesheet.png', 252, 48, 2);
         game.load.image('tgrass', 'assets/grass_t.png');
         game.load.image('vgrass', 'assets/grass_v.png');
-        game.load.spritesheet('darkgrass', 'assets/darkgrass.png',252,48,2);
-        game.load.spritesheet('floatgrass', 'assets/floating_spritesheet.png',252,48,2);
-        game.load.spritesheet('floatledge', 'assets/floatingledge_spritesheet.png',64,48,2);
+        game.load.spritesheet('darkgrass', 'assets/darkgrass.png', 252, 48, 2);
+        game.load.spritesheet('floatgrass', 'assets/floating_spritesheet.png', 252, 48, 2);
+        game.load.spritesheet('floatledge', 'assets/floatingledge_spritesheet.png', 64, 48, 2);
         // Sprites and stuff 
-        game.load.spritesheet('boulder', 'assets/boulder_spritesheet.png',48,48,2);
+        game.load.spritesheet('boulder', 'assets/boulder_spritesheet.png',48, 48, 2);
         game.load.spritesheet('player', 'assets/protag_spritesheet.png',37, 65);
-        game.load.spritesheet('turret', 'assets/turretspritesheet.png', 90, 96, 6);
-        game.load.spritesheet('bullet', 'assets/bullet_spritesheet.png',16,16,2);
+        game.load.spritesheet('turret', 'assets/turretspritesheet.png', 96, 96, 6);
+        game.load.spritesheet('bullet', 'assets/bullet_spritesheet.png', 16, 16, 2);
         // Makes FPS counter work
         game.time.advancedTiming = true;
         // Allows Google Fonts to be used remotely
@@ -221,21 +221,26 @@ function createUI() {
 
 function bitshift() {
     game.shifted = !game.shifted;
-    //Bullet.shift();
+
+    bullets.forEach(
+        function(b) { b.shift(); }
+    , this);
     if (!game.shifted) {
-        platforms.forEach(function(bg) {
-            bg.frame = 0;
-        },this);
-        background.forEach(function(bg) {
-            bg.frame = 0;
-        },this);
+        platforms.forEach(shiftOff, this);
+        obstacles.forEach(shiftOff, this);
+        background.forEach(shiftOff, this);
     }
     else {
-        platforms.forEach(function(bg) {
-            bg.frame = 1;
-        },this);
-        background.forEach(function(bg) {
-            bg.frame = 1;
-        },this);
+        platforms.forEach(shiftOn, this);
+        obstacles.forEach(shiftOn, this);
+        background.forEach(shiftOn, this);
     }
+}
+
+function shiftOff(object) {
+        object.frame = 0;
+}
+
+function shiftOn(object) {
+        object.frame = 1;
 }
