@@ -203,9 +203,6 @@ Player.prototype.kill = function() {
 
 // Reset the player
 Player.prototype.respawn = function() {
-        if(this.game.shifted)
-            bitshift();
-    
         this.health = this.MAX_HEALTH;
         this.body.gravity.y = 500;
         this.position.x = this.INIT_X;

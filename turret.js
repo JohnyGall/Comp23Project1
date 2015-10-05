@@ -15,7 +15,7 @@ function Turret(game, target, obstacles, x, y) {
         this.INIT_Y = y;
         // Time to wait before the turret kills the target, in milliseconds
         this.KILL_DELAY = 1500;
-        this.FIRE_DELAY = 600;
+        this.FIRE_DELAY = 750;
 
         // Create a new sprite based on the preloaded turet image, and add it to the this.game
         Phaser.Sprite.call(this, game, x, y, 'turret');
@@ -63,11 +63,6 @@ Turret.prototype.update = function() {
                         }
                 }
         } else {
-                if (this.targetdying)
-                    console.log('dying!\n');
-                else
-                    console.log('okay!\n');
-
                 var strout = toString(this.x);
       
                 // The first thing to do when updating the turret is to raytrace to the target to
@@ -91,7 +86,6 @@ Turret.prototype.update = function() {
                         // that will lead to their death.
                         if (!this.targetdying && this.target.health >= 2) {
                                 this.timeEnteredRange = game.time.now;
-                                console.log(this.timeEnteredRange);
                                 this.targetdying = true;
                         }
 
@@ -126,8 +120,6 @@ Turret.prototype.update = function() {
                 // and make sure the turret won't shoot at them anymore by resetting dying (if it does, a stack overflow 
                 // will follow).
                 if (this.targetdying && (game.time.now - this.timeEnteredRange) >= this.KILL_DELAY) {
-                        console.log(this.timeEnteredRange);
-                        console.log(game.time.now);
                         bullet = new Bullet(game,this.target,this);
                         this.targetdying = false;
                 }

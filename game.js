@@ -132,7 +132,7 @@ function create() {
         turrets = game.add.group();
         turret = new Turret(game, player, obstacles, 600, 500);
         turrets.add(turret);
-        turret = new Turret(game, player, obstacles, 1200, 500);
+        turret = new Turret(game, player, obstacles, 1300, 500);
         turret.scale.x *= -1;
         turrets.add(turret);
 
@@ -160,6 +160,8 @@ function update() {
                         respawnText.visible = false;
                         player.respawn();
                         boulder.respawn();
+                        if(this.game.shifted)
+                            bitshift();
                 }
         }
 

@@ -60,8 +60,12 @@ Bullet.prototype.update = function() {
 Bullet.prototype.shift = function() {
         if(game.shifted) {
                 this.frame = 0;
-                this.body.velocity.x *= this.L_SPEED / this.H_SPEED;
-                this.body.velocity.y *= this.L_SPEED / this.H_SPEED;
+            
+                var velocity = Math.sqrt(this.body.velocity.x*this.body.velocity.x + this.body.velocity.y*this.body.velocity.y);
+                if (velocity > this.L_SPEED +1) {
+                    this.body.velocity.x *= this.L_SPEED / this.H_SPEED;
+                    this.body.velocity.y *= this.L_SPEED / this.H_SPEED;
+                }
         } else {
                 this.frame = 1;
                 //this.body.velocity.x *= this.H_SPEED / this.L_SPEED;

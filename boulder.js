@@ -6,7 +6,7 @@ function Boulder(game, x, y) {
         // Set up the boulder. Anchor at the center so it can roll.
         Phaser.Sprite.call(this, game, x, y, 'boulder');
         this.anchor.setTo(0.5, 0.5);
-        this.scale.setTo(1.2,1.2);
+        this.scale.setTo(1.5,1.5);
 
         game.physics.enable(this, Phaser.Physics.ARCADE);
         game.add.existing(this);
