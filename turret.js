@@ -4,6 +4,7 @@ function Turret(game, target, obstacles, platforms, x, y) {
         this.target = target;
         this.obstacles = obstacles;
         this.platforms = platforms;
+
         // Used for counting down to player death
         this.timeEnteredRange = 0;
         // Is the target in the respawn countdown?
@@ -15,6 +16,7 @@ function Turret(game, target, obstacles, platforms, x, y) {
         this.INIT_Y = y;
         // Time to wait before the turret kills the target, in milliseconds
         this.KILL_DELAY = 2000;
+
 
         // Create a new sprite based on the preloaded turet image, and add it to the this.game
         Phaser.Sprite.call(this, game, x, y, 'turret');
@@ -44,7 +46,6 @@ Turret.prototype.constructor = Turret;
 Turret.prototype.update = function() {
                 this.bmd.clear();
     
-
         // The first thing to do when updating the turret is to raytrace to the target to
         // see if the turret can kill them.
         //For this, we need a line between the target and the turret.

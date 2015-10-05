@@ -23,7 +23,8 @@ function Player(game, controls) {
         // Speedboost speed
         this.V_SPEED = 30;
         // Respawn time, in milliseconds
-        this.RESPAWN_TIME = 4000;
+        this.RESPAWN_TIME = 3000;
+
         // Player health. We only have one-hit deaths, but setting
         // health to zero triggers some default Phaser code, so we
         // use 1 and 2 as our values for alive and dead.
@@ -80,11 +81,13 @@ Player.prototype.update = function() {
 
         //  If player pushing down both arrow keys, don't move
         if ((this.controls.right.isDown && this.controls.left.isDown) || (this.controls.up.isDown && this.controls.down.isDown)) {
-                this.body.velocity.x = 0;
-                this.body.velocity.y = 0;
-                this.animations.stop();
-                // Frame for idling
-                this.frame = 9;
+                if(this.body.touching.down){
+                        this.body.velocity.x = 0;
+                        this.body.velocity.y = 0;
+                        this.animations.stop();
+                        // Frame for idling
+                        this.frame = 9;
+                }
         }
 
         // Right Arrow
