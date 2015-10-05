@@ -103,15 +103,17 @@ function create() {
         }, this);
 
         // Create the sprites of the game
-        player = new Player(game, controls);
         boulder = new Boulder(game, 500, 150);
         
         obstacles = game.add.group();
         for (var i = 0; i < platforms.length; i++) {
                 obstacles.add(platforms.getAt(i));
         }
-        obstacles.add(boulder); // Why does this not work?
+        obstacles.add(boulder); 
         
+        //Add player
+        player = new Player(game, controls);
+
         turret = new Turret(game, player, obstacles, 700, 500);
 
         // Set up UI text

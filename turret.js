@@ -112,8 +112,12 @@ Turret.prototype.update = function() {
 // Most of the code is for removing intersections with any obstacles.
 Turret.prototype.findTarget = function(ray) {
 
+        // Don't shoot the player if they are  behind the turret. The function
+        // returns a valid intersection point if a collision occurred, and therefore
+        // no turret firing occurs — there is a wall in the way. We want the same
+        // result of an inactive turret, so we return a valid value.
         if (this.position.x > this.target.position.x) {
-                return 0;
+                return 1;
         }
 
         var currentIntersection;
