@@ -18,18 +18,23 @@ function Bullet (game, target, source) {
         game.physics.enable(this, Phaser.Physics.ARCADE);
         game.add.existing(this);
 
+        bullets.add(this);
+
         // Remove once it leaves the visible field (Phaser built-in)
         this.body.outOfBoundsKill = true;
-        var angle = 2 * Math.atan2(target.y - source.y, target.x - source.x);
-
+    
+        // Correct for turret scale vs player scale on flat ground
+        if (target.y-source.y == 9.5)
+            this.INIT_Y += 9.5;
+        var angle = Math.atan2(target.y - this.INIT_Y, target.x - this.INIT_X);
 
         if (game.shifted) {
-                this.body.gravity.y = 160;
+                //this.body.gravity.y = 160;
                 this.frame = 0;
                 this.body.velocity.x = Math.cos(angle) * this.L_SPEED;
                 this.body.velocity.y = Math.sin(angle) * this.L_SPEED;
         } else {
-                this.body.gravity.y = 10;
+                //this.body.gravity.y = 10;
                 this.frame = 1;
                 this.body.velocity.x = Math.cos(angle) * this.H_SPEED;
                 this.body.velocity.y = Math.sin(angle) * this.H_SPEED;
@@ -59,7 +64,7 @@ Bullet.prototype.shift = function() {
                 this.body.velocity.y *= this.L_SPEED / this.H_SPEED;
         } else {
                 this.frame = 1;
-                this.body.velocity.x *= this.H_SPEED / this.L_SPEED;
-                this.body.velocity.y *= this.H_SPEED / this.L_SPEED;
+                //this.body.velocity.x *= this.H_SPEED / this.L_SPEED;
+                //this.body.velocity.y *= this.H_SPEED / this.L_SPEED;
         }
 }

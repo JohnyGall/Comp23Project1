@@ -6,6 +6,8 @@ function Boulder(game, x, y) {
         // Set up the boulder. Anchor at the center so it can roll.
         Phaser.Sprite.call(this, game, x, y, 'boulder');
         this.anchor.setTo(0.5, 0.5);
+        this.scale.setTo(1.2,1.2);
+
         game.physics.enable(this, Phaser.Physics.ARCADE);
         game.add.existing(this);
         // Boulders are heavy.
@@ -51,5 +53,7 @@ Boulder.prototype.update = function() {
         }
 };
 
-Boulder.prototype.shift = function() {
+Boulder.prototype.respawn = function() {
+        this.position.x = this.INIT_X;
+        this.position.y = this.INIT_Y;
 };

@@ -45,7 +45,7 @@ var background;
 var controls;
 // sprites
 var boulder;
-var turret;
+var turrets;
 var bullets;
 // UI text elements
 var respawnText;
@@ -113,6 +113,9 @@ function create() {
                 framerate.visible = false;
                 game.debug.reset();
         }, this);
+        controls.P = game.input.keyboard.addKey(Phaser.Keyboard.P);
+        controls.P.onDown.add(pause);
+
 
         // Create the sprites of the game
         boulder = new Boulder(game, 500, 150);
@@ -121,12 +124,17 @@ function create() {
         for (var i = 0; i < platforms.length; i++) {
                 obstacles.add(platforms.getAt(i));
         }
-        obstacles.add(boulder); 
+        obstacles.add(boulder);
         
         //Add player
         player = new Player(game, controls);
 
-        turret = new Turret(game, player, obstacles, 700, 500);
+        turrets = game.add.group();
+        turret = new Turret(game, player, obstacles, 600, 500);
+        turrets.add(turret);
+        turret = new Turret(game, player, obstacles, 1200, 500);
+        turret.scale.x *= -1;
+        turrets.add(turret);
 
         // Set up UI text
         createUI();
@@ -139,8 +147,8 @@ function update() {
         game.physics.arcade.collide(player, platforms);
         game.physics.arcade.collide(platforms, boulder);
         game.physics.arcade.collide(player, boulder);
-        game.physics.arcade.collide(player, turret);
-        game.physics.arcade.collide(boulder, turret);
+        game.physics.arcade.collide(player, turrets);
+        game.physics.arcade.collide(boulder, turrets);
 
         // Update UI
         if(player.health < 2) {
@@ -151,6 +159,7 @@ function update() {
                         respawnCount.visible = false;
                         respawnText.visible = false;
                         player.respawn();
+                        boulder.respawn();
                 }
         }
 
@@ -167,7 +176,7 @@ function render() {
                 // Draw bounding boxes
                 game.debug.body(player);
                 game.debug.body(boulder);
-                game.debug.body(turret);
+                turrets.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
                 obstacles.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
                 // Animate the favicon, for fun
                 if(Date.now() - then >= 50) {
@@ -245,4 +254,8 @@ function shiftOff(object) {
 
 function shiftOn(object) {
         object.frame = 1;
+}
+
+function pause() {
+    game.paused = !game.paused;
 }

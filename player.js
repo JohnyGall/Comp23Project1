@@ -4,7 +4,6 @@ function Player(game, controls) {
         this.controls = controls;
         this.facingRight = true;
         this.killTime = 0;
-        this.dying = false;
     
         //Store constants
         // Player initial coordinates
@@ -29,7 +28,6 @@ function Player(game, controls) {
         // health to zero triggers some default Phaser code, so we
         // use 1 and 2 as our values for alive and dead.
         this.MAX_HEALTH = 2;
-
 
         // Initialize the player sprite
         Phaser.Sprite.call(this, game, this.INIT_X, this.INIT_Y, 'player');
