@@ -17,7 +17,7 @@ function preload () {
         game.load.image('tgrass', 'assets/grass_t.png');
         game.load.image('vgrass', 'assets/grass_v.png');
         game.load.image('darkgrass', 'assets/darkgrass.png');
-        game.load.image('floatgrass', 'assets/floating.png');
+        game.load.spritesheet('floatgrass', 'assets/floating_spritesheet.png',252,48,2);
         game.load.image('floatledge', 'assets/floatingledge.png');
         // Sprites and stuff 
         game.load.spritesheet('boulder', 'assets/boulder_spritesheet.png',48,48,2);
@@ -42,6 +42,7 @@ var controls;
 // sprites
 var boulder;
 var turret;
+var bullets;
 // UI text elements
 var respawnText;
 var respawnCount;
@@ -65,6 +66,9 @@ function create() {
         // Create platforms group
         platforms = game.add.group();
         platforms.enableBody = true;
+    
+        // Create a bullets
+        bullets = game.add.group();
 
         // Add the "ground" platforms to the bottom of the screen
         for(var i = 0; i < 5; i++) {
@@ -78,6 +82,7 @@ function create() {
         // Create the floating rocky grass platforms
         for(var i = 0; i < 2; i++) {
                 var floating = platforms.create(252 * i, game.world.height - 350, 'floatgrass');
+                
                 floating.body.immovable = true;
                 floating.body.setSize(252, 56, 0, 6);
         }
@@ -86,6 +91,12 @@ function create() {
         var ledge = platforms.create(504, game.world.height - 350, 'floatledge');
         ledge.body.immovable = true;
         ledge.body.setSize(80, 54, 0, 6);
+    
+        var ledge2 = platforms.create(800, 480, 'floatledge');
+        ledge2.body.immovable = true;
+        ledge2.body.setSize(80, 54, 0, 6);
+
+
 
         // Add controls to the game
         controls = game.input.keyboard.createCursorKeys();
@@ -111,6 +122,8 @@ function create() {
                 obstacles.add(platforms.getAt(i));
         }
         obstacles.add(boulder); 
+        obstacles.add(ledge2); 
+
         
         //Add player
         player = new Player(game, controls);
@@ -211,7 +224,7 @@ function createUI() {
 
 function bitshift() {
     game.shifted = !game.shifted;
-    Bullet.shift();
+    //Bullet.shift();
     if (!game.shifted) {
 //        this.animations.play('highrez');
     }

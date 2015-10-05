@@ -14,8 +14,8 @@ function Turret(game, target, obstacles, x, y) {
         this.INIT_X = x;
         this.INIT_Y = y;
         // Time to wait before the turret kills the target, in milliseconds
-        this.KILL_DELAY = 2000;
-        this.FIRE_DELAY = 1000;
+        this.KILL_DELAY = 1500;
+        this.FIRE_DELAY = 750;
 
 
         // Create a new sprite based on the preloaded turet image, and add it to the this.game
@@ -37,7 +37,6 @@ function Turret(game, target, obstacles, x, y) {
         this.bmd = game.add.bitmapData(game.world.getBounds().width, game.world.getBounds().height);
         this.bmdimg = game.add.image(0, 0, this.bmd);
         this.bmdimg.visible = true;
-
 }
 
 Turret.prototype = Object.create(Phaser.Sprite.prototype);
@@ -48,6 +47,7 @@ Turret.prototype.update = function() {
                 this.bmd.clear();
     
     if(game.shifted) {
+        this.frame = 5;
         if (this.inWorld && this.position.x<this.target.position.x){
             if (!this.target.dying && this.target.health >= 2) {
                 this.timeEnteredRange = Date.now();
@@ -158,6 +158,8 @@ Turret.prototype.findTarget = function(ray) {
                 // Test each of the edges in this wall against the ray.
                 // If the ray intersects any of the edges then the wall must be in the way.
                 for(var i = 0; i < lines.length; i++) {
+    game.debug.geom(lines[i]);
+
                         currentIntersection = Phaser.Line.intersects(ray, lines[i]);
                         if (currentIntersection) {
                                 // Find the closest intersection
