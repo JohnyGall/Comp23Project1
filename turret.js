@@ -91,7 +91,6 @@ Turret.prototype.update = function() {
                        this.bmd.context.fillStyle = 'rgb(255, 0, 0)';
                        this.bmd.context.moveTo(this.position.x, this.position.y);
                         var fraction = 1 - (game.time.now - this.lastShotTime) / waitTime; 
-                       console.log(fraction);
                        this.bmd.context.lineTo(this.target.position.x - (fraction * (this.target.x - this.x)), this.target.position.y - (fraction * (this.target.y - this.y)));
                        this.bmd.context.stroke();
         
