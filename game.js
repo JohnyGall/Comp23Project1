@@ -130,9 +130,9 @@ function create() {
         player = new Player(game, controls);
 
         turrets = game.add.group();
-        turret = new Turret(game, player, obstacles, 600, 500);
+        turret = new Turret(game, player, obstacles, bullets, 600, 500);
         turrets.add(turret);
-        turret = new Turret(game, player, obstacles, 1300, 500);
+        turret = new Turret(game, player, obstacles, bullets, 1300, 500);
         turret.scale.x *= -1;
         turrets.add(turret);
 

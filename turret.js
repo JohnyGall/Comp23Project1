@@ -1,11 +1,12 @@
-function Turret(game, target, obstacles, x, y) {
+function Turret(game, target, obstacles, bullets, x, y) {
         // Store variables
         this.game = game;
         this.target = target;
         this.obstacles = obstacles;
+        this.bullets = bullets;
 
         // Used for counting down to player death
-        this.timeEnteredRange = 0;
+        this.lastShotTime = Date.now();
         // Is the target in the respawn countdown?
         this.targetdying = false;
 
@@ -46,6 +47,7 @@ Turret.prototype.constructor = Turret;
 Turret.prototype.update = function() {
         this.target.tint = 0xffffff;
         this.bmd.clear();
+
         var visible = false;
         if (Math.abs(this.x-this.target.x) < game.width/2 + this.body.width *this.anchor.x)
             var visible = true;
@@ -88,13 +90,13 @@ Turret.prototype.update = function() {
                                 this.timeEnteredRange = game.time.now;
                                 this.targetdying = true;
                         }
-
                         // Turret Animations
                         // Measure the angle between the turret and the target, and add 180 to it to get it in the range of 0-90 degrees
                         var angle = 180 + Math.atan2(this.position.y - this.target.position.y, (this.position.x - this.target.position.x)*this.scale.x) * -57.2957795;
             
                         // Convert the angle to a number 0 to 4, and then set it as the current frame
                         var frame = Math.round(angle / 90 * 4);
+                            if (frame > 4 || frame < 0) frame = 0;
                         this.frame = frame;
 
                         // Clear whatever was on the bitmap before, so we don't end up with a million red lines on the screen
@@ -122,6 +124,7 @@ Turret.prototype.update = function() {
                 if (this.targetdying && (game.time.now - this.timeEnteredRange) >= this.KILL_DELAY) {
                         bullet = new Bullet(game,this.target,this);
                         this.targetdying = false;
+
                 }
         }
 };

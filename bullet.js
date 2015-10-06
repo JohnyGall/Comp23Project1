@@ -34,7 +34,6 @@ function Bullet (game, target, source) {
                 this.body.velocity.x = Math.cos(angle) * this.L_SPEED;
                 this.body.velocity.y = Math.sin(angle) * this.L_SPEED;
         } else {
-                //this.body.gravity.y = 10;
                 this.frame = 1;
                 this.body.velocity.x = Math.cos(angle) * this.H_SPEED;
                 this.body.velocity.y = Math.sin(angle) * this.H_SPEED;
@@ -46,13 +45,13 @@ Bullet.prototype.constructor = Bullet;
 
 Bullet.prototype.update = function() {
 
-        if(this.target.health < this.target.MAX_HEALTH) {
+        if (this.target.health < this.target.MAX_HEALTH) {
                 this.kill();
         }
-        if(game.physics.arcade.overlap(this.target, this)) {
+        if (game.physics.arcade.overlap(this.target, this)) {
                 this.target.kill();
         }
-        if(game.physics.arcade.overlap(obstacles, this)) {
+        if (game.physics.arcade.overlap(obstacles, this)) {
                 this.kill();
         }
 }
