@@ -26,6 +26,7 @@ function preload () {
         game.load.spritesheet('player', 'assets/protag_spritesheet.png',37, 65);
         game.load.spritesheet('turret', 'assets/turretspritesheet.png', 96, 96, 6);
         game.load.spritesheet('bullet', 'assets/bullet_spritesheet.png', 16, 16, 2);
+
         // Makes FPS counter work
         game.time.advancedTiming = true;
         // Allows Google Fonts to be used remotely
