@@ -19,34 +19,33 @@ var player;
 
 function create() {
         game.physics.startSystem(Phaser.Physics.ARCADE);
-        game.stage.backgroundColor = '#787878';
 
-    //  The 'test' key here is the Loader key given in game.load.tilemap
+        //  The 'test' key here is the Loader key given in game.load.tilemap
         map = game.add.tilemap('testMap');
         map.addTilesetImage('dummyTiles', 'tileSet');
 
-            //  The first parameter is the tileset name, as specified in the Tiled map editor (and in the tilemap json file)
-            //  The second parameter maps this name to the Phaser.Cache key 'tiles'
+         //  The first parameter is the tileset name, as specified in the Tiled map editor (and in the tilemap json file)
+         //  The second parameter maps this name to the Phaser.Cache key 'tiles'
 
-            //  Creates a layer from the World1 layer in the map data.
-            //  A Layer is effectively like a Phaser.Sprite, so is added to the display list.
-            background = map.createLayer('back');
-            floor = map.createLayer('floor');
+         //  Creates a layer from the World1 layer in the map data.
+         //  A Layer is effectively like a Phaser.Sprite, so is added to the display list.
+        background = map.createLayer('back');
+        floor = map.createLayer('floor');
+        backgroud.resizeWorld();
 
+        // This sets up an area of the map (based on tile indexes) as collidable
+        // Still trying to figure out how to apply this to curved surfaces.
+        map.setCollisionBetween(142, 178, true, 'floor');
+        player = game.add.sprite(32, 32, 'dude');
+        game.physics.arcade.enable(player);
+        player.body.gravity.y = 300;
+        player.body.collideWorldBounds = true;
+        player.body.bounce.y = 0.2;
+        player.animations.add('left', [0,1,2,3],10, true);
+        player.animations.add('right',[5,6,7,8],10, true);
 
-            // This sets up an area of the map (based on tile indexes) as collidable
-            // Still trying to figure out how to apply this to curved surfaces.
-            map.setCollisionBetween(142, 178, true, 'floor');
-            player = game.add.sprite(32, 32, 'dude');
-            game.physics.arcade.enable(player);
-            player.body.gravity.y = 300;
-            player.body.collideWorldBounds = true;
-            player.body.bounce.y = 0.2;
-            player.animations.add('left', [0,1,2,3],10, true);
-            player.animations.add('right',[5,6,7,8],10, true);
+        //  This resizes the game world to match the layer dimensions
 
-            //  This resizes the game world to match the layer dimensions
-            backgroud.resizeWorld();
 
             //A bunch of player and control stuff
             cursors = game.input.keyboard.createCursorKeys();
