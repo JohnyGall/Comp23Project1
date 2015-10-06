@@ -1,7 +1,7 @@
 function Bullet (game, target, source) {
         //SET DEFAULT SPEED OF PROJECTILES
         //High-res
-        this.H_SPEED = 2000;
+        this.H_SPEED = 2500;
         //Low-res
         this.L_SPEED = 250;
 

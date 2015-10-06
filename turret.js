@@ -6,7 +6,7 @@ function Turret(game, target, obstacles, bullets, x, y) {
         this.bullets = bullets;
 
         // Used for counting down to player death
-        this.lastShotTime = Date.now();
+        this.lastShotTime = game.time.now;
         // Is the target in the respawn countdown?
         this.targetdying = false;
 
@@ -15,8 +15,8 @@ function Turret(game, target, obstacles, bullets, x, y) {
         this.INIT_X = x;
         this.INIT_Y = y;
         // Time to wait before the turret kills the target, in milliseconds
-        this.KILL_DELAY = 1500;
-        this.FIRE_DELAY = 750;
+        this.HIGH_DELAY = 1500;
+        this.LOW_DELAY = 750;
 
         // Create a new sprite based on the preloaded turet image, and add it to the this.game
         Phaser.Sprite.call(this, game, x, y, 'turret');
@@ -47,87 +47,76 @@ Turret.prototype.constructor = Turret;
 Turret.prototype.update = function() {
         this.target.tint = 0xffffff;
         this.bmd.clear();
+        var waitTime = this.HIGH_DELAY;
 
         var visible = false;
         if (Math.abs(this.x-this.target.x) < game.width/2 + this.body.width *this.anchor.x)
             var visible = true;
     
-        if(game.shifted) {
-                this.frame = 5;
-                if (visible && this.x*this.scale.x < this.target.x*this.scale.x){
-                        if (!this.targetdying && this.target.health >= 2) {
-                                this.timeEnteredRange = game.time.now;
-                                this.targetdying = true;
-                        }
-                        if (this.targetdying && game.time.now - this.timeEnteredRange >= this.FIRE_DELAY) {
-                                bullet = new Bullet(game,this.target,this);
-                                this.targetdying = false;
-                        }
-                }
-        } else {
-                var strout = toString(this.x);
-      
-                // The first thing to do when updating the turret is to raytrace to the target to
-                // see if the turret can kill them.
-                //For this, we need a line between the target and the turret.
-                var ray = new Phaser.Line(this.target.x, this.target.y, this.x, this.y);
-                // Call the raytracing method, and store the result
-                var intersect = this.findTarget(ray, this.obstacles);
-                // Play the rotation animation at an FPS of 0 (not playing, just set to the first frame)
-                this.frame = 0;
-
+        // The first thing to do when updating the turret is to raytrace to the target to
+        // see if the turret can kill them.
+        //For this, we need a line between the target and the turret.
+        var ray = new Phaser.Line(this.target.x, this.target.y, this.x, this.y);
+        // Call the raytracing method, and store the result
+        var intersect = this.findTarget(ray, this.obstacles);
         
-                // If there was no intersection
-                if (!intersect && visible) {
-                        // target Stuff
-                        // Shuffle the tint of the target to show they are being hurt        
-                        this.target.tint = 0xffaaaa * (0.001 * Math.random() + 0.9995);
-                        // If the target is not yet dying (i.e. this is the first time the turret
-                        // has found the target) and the target's health says they have not been
-                        // hit yet, update 'dying' to show they are under fire and start the timer
-                        // that will lead to their death.
-                        if (!this.targetdying && this.target.health >= 2) {
-                                this.timeEnteredRange = game.time.now;
-                                this.targetdying = true;
-                        }
+            // If there was no intersection
+            if (!intersect && visible) {
+                if(!this.targetdying) {
+                    this.targetdying = true;
+                    this.lastShotTime = game.time.now;                    
+                }
+                   if(game.shifted) {
+                        this.frame = 5;
+                        waitTime = this.LOW_DELAY;
+                        this.bmd.context.lineWidth = 16;
+                   } else {
+                        this.frame = 0;
+                        this.bmd.context.lineWidth = 1;
                         // Turret Animations
                         // Measure the angle between the turret and the target, and add 180 to it to get it in the range of 0-90 degrees
                         var angle = 180 + Math.atan2(this.position.y - this.target.position.y, (this.position.x - this.target.position.x)*this.scale.x) * -57.2957795;
-            
-                        // Convert the angle to a number 0 to 4, and then set it as the current frame
+             
+                         // Convert the angle to a number 0 to 4, and then set it as the current frame
                         var frame = Math.round(angle / 90 * 4);
-                            if (frame > 4 || frame < 0) frame = 0;
+                        if (frame > 4 || frame < 0) 
+                            frame = 0;
                         this.frame = frame;
+ 
+                       // Clear whatever was on the bitmap before, so we don't end up with a million red lines on the screen
+                       this.bmd.context.clearRect(0, 0, this.game.world.getBounds().width, this.game.world.getBounds().height);
+                       // Draw a red line from the turret to the target
+                       this.bmd.context.beginPath();
+                       this.bmd.context.strokeStyle = 'rgb(255, 0, 0)';
+                       this.bmd.context.fillStyle = 'rgb(255, 0, 0)';
+                       this.bmd.context.moveTo(this.position.x, this.position.y);
+                        var fraction = 1 - (game.time.now - this.lastShotTime) / waitTime; 
+                       console.log(fraction);
+                       this.bmd.context.lineTo(this.target.position.x - (fraction * (this.target.x - this.x)), this.target.position.y - (fraction * (this.target.y - this.y)));
+                       this.bmd.context.stroke();
+        
+                       // This just tells the engine it should update the texture cache so the bitmap can be redrawn
+                       this.bmd.dirty = true;
+                   };
+             
+                if (this.targetdying && game.time.now - this.lastShotTime >= waitTime) {
+                    var bullet = new Bullet(game, this.target, this);
+                    this.bullets.add(bullet);
+                        this.lastShotTime = game.time.now;
+                }
+            } else {
+                // If the target is not being hit, update their dying status (kill the death countdown), clear
+                // any residual raytraces, and reset the target's tint
+                this.targetdying = false;
 
-                        // Clear whatever was on the bitmap before, so we don't end up with a million red lines on the screen
-                        this.bmd.context.clearRect(0, 0, this.game.world.getBounds().width, this.game.world.getBounds().height);
-                        // Draw a red line from the turret to the target
-                        this.bmd.context.beginPath();
-                        this.bmd.context.strokeStyle = 'rgb(255, 0, 0)';
-                        this.bmd.context.fillStyle = 'rgb(255, 0, 0)';
-                        this.bmd.context.moveTo(this.position.x, this.position.y);
-                        this.bmd.context.lineTo(this.target.position.x, this.target.position.y);
-                        this.bmd.context.stroke();
-                
-                        // This just tells the engine it should update the texture cache so the bitmap can be redrawn
-                        this.bmd.dirty = true;
+                if(game.shifted) {
+                        this.frame = 5;
+                        waitTime = this.LOW_DELAY;
                 } else {
-                        // If the target is not being hit, update their dying status (kill the death countdown), clear
-                        // any residual raytraces, and reset the target's tint
-                        this.targetdying = false;
-                        this.target.tint = 0xffffff;
+                        this.frame = 0;
                 }
-
-                // if the player is being hit, check if enough time has passed for the player to die. If so, kill them
-                // and make sure the turret won't shoot at them anymore by resetting dying (if it does, a stack overflow 
-                // will follow).
-                if (this.targetdying && (game.time.now - this.timeEnteredRange) >= this.KILL_DELAY) {
-                        bullet = new Bullet(game,this.target,this);
-                        this.targetdying = false;
-
-                }
-        }
-};
+         }
+}
 
 // Method to find the intersection of the turret and its target via raycasting.
 // Most of the code is for removing intersections with any obstacles.
