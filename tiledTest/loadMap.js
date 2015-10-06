@@ -15,7 +15,7 @@ function preload() {
 var map;
 var background;
 var floor;
-var player;
+//var player;
 
 function create() {
         game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -31,7 +31,7 @@ function create() {
          //  A Layer is effectively like a Phaser.Sprite, so is added to the display list.
         background = map.createLayer('back');
         floor = map.createLayer('floor');
-        backgroud.resizeWorld();
+        background.resizeWorld();
 
         // This sets up an area of the map (based on tile indexes) as collidable
         // Still trying to figure out how to apply this to curved surfaces.
@@ -52,8 +52,8 @@ function create() {
 }
 
 function update() {
-        game.physics.arcade.collide(player, floor);
-        player.body.velocity.x = 0;
+        //game.physics.arcade.collide(player, floor);
+        //player.body.velocity.x = 0;
 
         /*
         if (cursors.left.isDown)
