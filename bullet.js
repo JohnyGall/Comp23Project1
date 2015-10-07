@@ -25,7 +25,7 @@ function Bullet (game, target, source) {
     
         // Correct for turret scale vs player scale on flat ground
         if (target.y-source.y == 9.5)
-            this.INIT_Y += 9.5;
+                this.INIT_Y += 9.5;
         var angle = Math.atan2(target.y - this.INIT_Y, target.x - this.INIT_X);
 
         if (game.shifted) {
@@ -44,10 +44,10 @@ Bullet.prototype = Object.create(Phaser.Sprite.prototype);
 Bullet.prototype.constructor = Bullet;
 
 Bullet.prototype.update = function() {
-            this.checkWorldBounds = true;
-            this.events.onOutOfBounds.add(function() {
-                this.destroy();
-            }, this);
+                this.checkWorldBounds = true;
+                this.events.onOutOfBounds.add(function() {
+                        this.destroy();
+                }, this);
 
 
 
@@ -67,13 +67,13 @@ Bullet.prototype.shift = function() {
                 this.frame = 0;
             
                 var velocity = Math.sqrt(this.body.velocity.x*this.body.velocity.x + this.body.velocity.y*this.body.velocity.y);
-                if (velocity > this.L_SPEED +1) {
-                    this.body.velocity.x *= this.L_SPEED / this.H_SPEED;
-                    this.body.velocity.y *= this.L_SPEED / this.H_SPEED;
+                if (velocity > this.L_SPEED) {
+                        this.body.velocity.x *= this.L_SPEED / this.H_SPEED;
+                        this.body.velocity.y *= this.L_SPEED / this.H_SPEED;
                 }
         } else {
                 this.frame = 1;
-                //this.body.velocity.x *= this.H_SPEED / this.L_SPEED;
-                //this.body.velocity.y *= this.H_SPEED / this.L_SPEED;
+                this.body.velocity.x *= this.H_SPEED / this.L_SPEED;
+                this.body.velocity.y *= this.H_SPEED / this.L_SPEED;
         }
 }

@@ -4,6 +4,7 @@ var game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, "game", {preload:
 var fontname = 'Raleway';
 WebFontConfig = {
         // The Google Fonts we want to load (specify as many as you like in the array)
+        // the :100 determines font weight
         google: {
                 families: [fontname + ':100']
         }
@@ -11,20 +12,20 @@ WebFontConfig = {
 
 function preload () {
         // Level background
-        game.load.spritesheet('sky', 'assets/sky.png', 1920,1080,2);
-        game.load.spritesheet('backgrass', 'assets/background_grass_spritesheet.png',1008,311,2);
-        game.load.spritesheet('hgrass', 'assets/grass_h_spritesheet.png',252,48,2);
-        game.load.spritesheet('tgrass', 'assets/grass_t_spritesheet.png',48,66,2);
-        game.load.spritesheet('vgrass', 'assets/grass_v_spritesheet.png',145,210,2);
-        game.load.spritesheet('darkgrass', 'assets/darkgrass.png',252,48,2);
-        game.load.spritesheet('floatgrass', 'assets/floating_spritesheet.png',252,48,2);
-        game.load.spritesheet('floatright', 'assets/floatingledge_spritesheet.png',64,48,2);
-        game.load.spritesheet('floatleft', 'assets/floatingledge1_spritesheet.png',64,48,2);
-        game.load.spritesheet('miniledge', 'assets/mini_floating_spritesheet.png',48, 48, 2);
+        game.load.spritesheet('sky', 'assets/sky_spritesheet.png', 1920, 1080, 2);
+        game.load.spritesheet('backgrass', 'assets/background_grass_spritesheet.png',1008, 311, 2);
+        game.load.spritesheet('hgrass', 'assets/grass_h_spritesheet.png',252, 48, 2);
+        game.load.spritesheet('tgrass', 'assets/grass_t_spritesheet.png',48, 66, 2);
+        game.load.spritesheet('vgrass', 'assets/grass_v_spritesheet.png', 144, 208, 2);
+        game.load.spritesheet('darkgrass', 'assets/darkgrass.png', 252, 48, 2);
+        game.load.spritesheet('floatgrass', 'assets/floating_spritesheet.png', 252, 48, 2);
+        game.load.spritesheet('floatright', 'assets/floatingledge_spritesheet.png', 64, 48, 2);
+        game.load.spritesheet('floatleft', 'assets/floatingledge1_spritesheet.png', 64, 48, 2);
+        game.load.spritesheet('miniledge', 'assets/mini_floating_spritesheet.png', 48, 48, 2);
 
         // Sprites and stuff 
         game.load.spritesheet('boulder', 'assets/boulder_spritesheet.png',48, 48, 2);
-        game.load.spritesheet('player', 'assets/protag_spritesheet.png',37, 65);
+        game.load.spritesheet('player', 'assets/protag_spritesheet.png', 37, 65);
         game.load.spritesheet('turret', 'assets/turretspritesheet.png', 96, 96, 6);
         game.load.spritesheet('bullet', 'assets/bullet_spritesheet.png', 16, 16, 2);
 
@@ -169,7 +170,7 @@ function update() {
                         player.respawn();
                         boulder.respawn();
                         if(this.game.shifted)
-                            bitshift();
+                                bitshift();
                 }
         }
 
@@ -241,21 +242,21 @@ function createUI() {
 
 
 function bitshift() {
-    game.shifted = !game.shifted;
+        game.shifted = !game.shifted;
 
-    bullets.forEach(
-        function(b) { b.shift(); }
-    , this);
-    if (!game.shifted) {
-        platforms.forEach(shiftOff, this);
-        obstacles.forEach(shiftOff, this);
-        background.forEach(shiftOff, this);
-    }
-    else {
-        platforms.forEach(shiftOn, this);
-        obstacles.forEach(shiftOn, this);
-        background.forEach(shiftOn, this);
-    }
+        bullets.forEach(
+                function(b) { b.shift(); }
+        , this);
+        if (!game.shifted) {
+                platforms.forEach(shiftOff, this);
+                obstacles.forEach(shiftOff, this);
+                background.forEach(shiftOff, this);
+        }
+        else {
+                platforms.forEach(shiftOn, this);
+                obstacles.forEach(shiftOn, this);
+                background.forEach(shiftOn, this);
+        }
 }
 
 function shiftOff(object) {
@@ -267,5 +268,5 @@ function shiftOn(object) {
 }
 
 function pause() {
-    game.paused = !game.paused;
+        game.paused = !game.paused;
 }

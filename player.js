@@ -36,7 +36,7 @@ function Player(game, controls) {
         game.add.existing(this);
         // Add gravity and don't let the player pass offscreen
         this.body.gravity.y = 500;
-        this.body.collideWorldBounds = false;
+        this.body.checkWorldBounds = true;
         this.body.outOfBoundsKill = true;
         // Have the game camera always centered on the player
         game.camera.follow(this);
@@ -59,8 +59,8 @@ Player.prototype.constructor = Player;
 Player.prototype.update = function() {
             this.checkWorldBounds = true;
             this.events.onOutOfBounds.add(function() {
-                if (this.y > game.world.height)
-                    this.kill();
+                        if (this.y > game.world.height)
+                                this.kill();
             }, this);
     
         // If the player is dead and waiting to be respawned, don't let the user
@@ -177,12 +177,12 @@ Player.prototype.update = function() {
                 }
         }
     
-        //change to low rez graphics if shifted
+        //change to low-res graphics if shifted
         if(game.shifted) {
-            if (this.facingRight)
-                this.frame = 26;
-            else  
-                this.frame = 27;
+                if (this.facingRight)
+                        this.frame = 26;
+                else  
+                        this.frame = 27;
         }
 
         // V Key (speedboost)
@@ -196,11 +196,11 @@ Player.prototype.update = function() {
         }
     
         if(this.x >= game.world.width) {
-            this.x -= 1;
-            this.body.velocity.x = 0;
+                this.x -= 1;
+                this.body.velocity.x = 0;
         } else if(this.x <= 0) {
-            this.x += 1;
-            this.body.velocity.x = 0;
+                this.x += 1;
+                this.body.velocity.x = 0;
         }
 };
 

@@ -20,10 +20,10 @@ Boulder.prototype = Object.create(Phaser.Sprite.prototype);
 Boulder.prototype.constructor = Boulder;
 
 Boulder.prototype.update = function() {
-            this.checkWorldBounds = true;
-            this.events.onOutOfBounds.add(function() {
-                this.respawn();
-            }, this);
+                this.checkWorldBounds = true;
+                this.events.onOutOfBounds.add(function() {
+                        this.respawn();
+                }, this);
 
 
         // If in the low-res world, we want the boulder to not roll, but
