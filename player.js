@@ -36,7 +36,8 @@ function Player(game, controls) {
         game.add.existing(this);
         // Add gravity and don't let the player pass offscreen
         this.body.gravity.y = 500;
-        this.body.collideWorldBounds = true;
+        this.body.collideWorldBounds = false;
+        this.body.outOfBoundsKill = true;
         // Have the game camera always centered on the player
         game.camera.follow(this);
         // Initialize alive-ness
@@ -56,6 +57,11 @@ Player.prototype = Object.create(Phaser.Sprite.prototype);
 Player.prototype.constructor = Player;
 
 Player.prototype.update = function() {
+            this.checkWorldBounds = true;
+            this.events.onOutOfBounds.add(function() {
+                this.kill();
+            }, this);
+
         // If the player is dead and waiting to be respawned, don't let the user
         // move the player around.
         if (this.health < 2) {

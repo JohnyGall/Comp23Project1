@@ -13,13 +13,18 @@ function Boulder(game, x, y) {
         this.body.gravity.y = 1000;
 
         // So it doesn't roll off the edge of the map.
-        this.body.collideWorldBounds = true;
+        this.body.collideWorldBounds = false;
 }
 
 Boulder.prototype = Object.create(Phaser.Sprite.prototype);
 Boulder.prototype.constructor = Boulder;
 
 Boulder.prototype.update = function() {
+            this.checkWorldBounds = true;
+            this.events.onOutOfBounds.add(function() {
+                this.respawn();
+            }, this);
+
 
         // If in the low-res world, we want the boulder to not roll, but
         // if in the high res world, we want it to move freely.
@@ -55,4 +60,6 @@ Boulder.prototype.update = function() {
 Boulder.prototype.respawn = function() {
         this.position.x = this.INIT_X;
         this.position.y = this.INIT_Y;
+        this.body.velocity.x = 0;
+        this.body.velocity.y = 0;
 };
