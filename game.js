@@ -42,6 +42,8 @@ var player;
 var platforms;
 // A group containing things that block raycasts
 var obstacles;
+// A group for all slopes
+var slopes;
 // A group containing the background elements
 var background;
 // The controls
@@ -96,14 +98,14 @@ function create() {
 
         // Create the floating rocky grass platforms
         for(var i = 0; i < 2; i++) {
-                var floating = platforms.create(252 * i, game.world.height - 350, 'floatgrass');
+                var floating = platforms.create(252 * i, game.world.height - 250, 'floatgrass');
                 
                 floating.body.immovable = true;
                 floating.body.setSize(252, 56, 0, 6);
         }
 
         // Create the ledge that ends the floating rocky grass platforms
-        var ledge = platforms.create(504, game.world.height - 350, 'floatright');
+        var ledge = platforms.create(504, game.world.height - 250, 'floatright');
         ledge.body.immovable = true;
         ledge.body.setSize(80, 54, 0, 6);
 
@@ -138,12 +140,25 @@ function create() {
         //Add player
         player = new Player(game, controls);
 
+//         Add turrets
         turrets = game.add.group();
-        turret = new Turret(game, player, obstacles, bullets, 600, 500);
-        turrets.add(turret);
-        turret = new Turret(game, player, obstacles, bullets, 1300, 500);
-        turret.scale.x *= -1;
-        turrets.add(turret);
+//        turret = new Turret(game, player, obstacles, bullets, 600, 500);
+//        turrets.add(turret);
+//        turret = new Turret(game, player, obstacles, bullets, 1300, 500);
+//        turret.scale.x *= -1;
+//        turrets.add(turret);
+    
+        // Add slopes
+        slopes = game.add.group();
+        var movables = game.add.group();
+        movables.add(player);
+        movables.add(boulder);
+    
+    
+        for(var i = 0; i < 2; i++) {
+                var slope = new Slope(this, 800-146 * i, 210+210*i, movables);
+                slopes.add(slope);
+        }
 
         // Set up UI text
         createUI();

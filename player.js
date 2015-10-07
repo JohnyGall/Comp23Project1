@@ -5,6 +5,9 @@ function Player(game, controls) {
         this.facingRight = true;
         this.killTime = 0;
     
+        // if player is on slope
+        this.onSlope = false;
+    
         //Store constants
         // Player initial coordinates
         this.INIT_X = 200;
