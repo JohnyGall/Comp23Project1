@@ -46,19 +46,19 @@ Bullet.prototype.constructor = Bullet;
 Bullet.prototype.update = function() {
             this.checkWorldBounds = true;
             this.events.onOutOfBounds.add(function() {
-                this.kill();
+                this.destroy();
             }, this);
 
 
 
         if (this.target.health < this.target.MAX_HEALTH) {
-                this.kill();
+                this.destroy();
         }
         if (game.physics.arcade.overlap(this.target, this)) {
                 this.target.kill();
         }
         if (game.physics.arcade.overlap(obstacles, this)) {
-                this.kill();
+                this.destroy();
         }
 }
 

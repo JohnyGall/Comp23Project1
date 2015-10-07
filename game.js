@@ -78,13 +78,19 @@ function create() {
         bullets = game.add.group();
 
         // Add the "ground" platforms to the bottom of the screen
-        for(var i = 0; i < 5; i++) {
+        for(var i = 0; i < 6; i++) {
                 var ground = platforms.create(252 * i, game.world.height - 64, 'hgrass');
                 var groundshadow = platforms.create(252 * i, game.world.height - 21, 'darkgrass');
                 ground.body.immovable = true;
                 ground.body.setSize(252, 37, 0, 6);
                 groundshadow.body.immovable = true;
         }
+    
+                var ground = platforms.create(1700, game.world.height - 64, 'hgrass');
+                var groundshadow = platforms.create(1700, game.world.height - 21, 'darkgrass');
+                ground.body.immovable = true;
+                ground.body.setSize(252, 37, 0, 6);
+                groundshadow.body.immovable = true;
 
         // Create the floating rocky grass platforms
         for(var i = 0; i < 2; i++) {

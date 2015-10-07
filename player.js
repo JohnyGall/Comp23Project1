@@ -59,9 +59,10 @@ Player.prototype.constructor = Player;
 Player.prototype.update = function() {
             this.checkWorldBounds = true;
             this.events.onOutOfBounds.add(function() {
-                this.kill();
+                if (this.y > game.world.height)
+                    this.kill();
             }, this);
-
+    
         // If the player is dead and waiting to be respawned, don't let the user
         // move the player around.
         if (this.health < 2) {
@@ -192,6 +193,14 @@ Player.prototype.update = function() {
                 // whereas if the player is facing left 2 * 0 - 1 = -1, 
                 // and a velocity of -V_SPEED will be added.  
                 this.body.velocity.x += ((2 * this.facingRight) - 1) * this.V_SPEED;
+        }
+    
+        if(this.x >= game.world.width) {
+            this.x -= 1;
+            this.body.velocity.x = 0;
+        } else if(this.x <= 0) {
+            this.x += 1;
+            this.body.velocity.x = 0;
         }
 };
 
