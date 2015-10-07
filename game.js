@@ -11,15 +11,16 @@ WebFontConfig = {
 
 function preload () {
         // Level background
-        game.load.image('sky', 'assets/sky.png');
-
+        game.load.spritesheet('sky', 'assets/sky.png', 1920,1080,2);
         game.load.spritesheet('backgrass', 'assets/background_grass_spritesheet.png',1008,311,2);
         game.load.spritesheet('hgrass', 'assets/grass_h_spritesheet.png',252,48,2);
         game.load.spritesheet('tgrass', 'assets/grass_t_spritesheet.png',48,66,2);
         game.load.spritesheet('vgrass', 'assets/grass_v_spritesheet.png',145,210,2);
         game.load.spritesheet('darkgrass', 'assets/darkgrass.png',252,48,2);
         game.load.spritesheet('floatgrass', 'assets/floating_spritesheet.png',252,48,2);
-        game.load.spritesheet('floatledge', 'assets/floatingledge_spritesheet.png',64,48,2);
+        game.load.spritesheet('floatright', 'assets/floatingledge_spritesheet.png',64,48,2);
+        game.load.spritesheet('floatleft', 'assets/floatingledge1_spritesheet.png',64,48,2);
+        game.load.spritesheet('miniledge', 'assets/mini_floating_spritesheet.png',48, 48, 2);
 
         // Sprites and stuff 
         game.load.spritesheet('boulder', 'assets/boulder_spritesheet.png',48, 48, 2);
@@ -60,10 +61,10 @@ var debug_toggle = 0;
 function create() {
         // Create world, with the sky and background grass
         game.physics.startSystem(Phaser.Physics.ARCADE);
-        game.add.sprite(0, 0, 'sky');
         game.world.setBounds(0, 0, 1920, 600);
         
         background = game.add.group();
+        background.create(0,0, 'sky');
         background.create(0, 300, 'backgrass');
         background.create(1008, 300, 'backgrass');
         
@@ -101,7 +102,7 @@ function create() {
         }
 
         // Create the ledge that ends the floating rocky grass platforms
-        var ledge = platforms.create(504, game.world.height - 350, 'floatledge');
+        var ledge = platforms.create(504, game.world.height - 350, 'floatright');
         ledge.body.immovable = true;
         ledge.body.setSize(80, 54, 0, 6);
 
