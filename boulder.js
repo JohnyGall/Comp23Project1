@@ -3,6 +3,7 @@ function Boulder(game, x, y) {
         this.game = game;
         this.INIT_X = x;
         this.INIT_Y = y;
+
         // Set up the boulder. Anchor at the center so it can roll.
         Phaser.Sprite.call(this, game, x, y, 'boulder');
         this.anchor.setTo(0.5, 0.5);
@@ -10,7 +11,9 @@ function Boulder(game, x, y) {
         game.physics.enable(this, Phaser.Physics.ARCADE);
         game.add.existing(this);
         // Boulders are heavy.
-        this.body.gravity.y = 1000;
+        this.ORIG_GRAV = 1000;
+        this.body.gravity.y = this.ORIG_GRAV;
+        this.onSlope = false;
 
         // So it doesn't roll off the edge of the map.
         this.body.collideWorldBounds = false;
@@ -58,6 +61,7 @@ Boulder.prototype.update = function() {
 };
 
 Boulder.prototype.respawn = function() {
+        this.body.gravity.y = this.ORIG_GRAV;
         this.position.x = this.INIT_X;
         this.position.y = this.INIT_Y;
         this.body.velocity.x = 0;

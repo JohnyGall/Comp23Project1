@@ -155,8 +155,8 @@ function create() {
         movables.add(boulder);
     
     
-        for(var i = 0; i < 2; i++) {
-                var slope = new Slope(this, 800-146 * i, 210+210*i, movables);
+        for(var i = 0; i < 1; i++) {
+                var slope = new Slope(this, 800-146 * i, 420+210*.7*i, movables);
                 slopes.add(slope);
         }
 
