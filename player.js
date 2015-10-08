@@ -63,6 +63,8 @@ Player.prototype = Object.create(Phaser.Sprite.prototype);
 Player.prototype.constructor = Player;
 
 Player.prototype.update = function() {
+            this.onSlope = false;
+            slopes.forEach(function(slope) {this.onSlope = (slope.isOn(this) || this.onSlope);}, this);
             this.checkWorldBounds = true;
             this.events.onOutOfBounds.add(function() {
                         if (this.y > game.world.height)
@@ -148,8 +150,12 @@ Player.prototype.update = function() {
         // If the up arrow is being pushed, give the player a velocity upwards as long as
         // the player is touching the ground.
         if (this.controls.up.isDown && (this.body.touching.down || this.body.blocked.down || this.onSlope)) {
-                if (this.body.velocity.y > this.JUMP_SPEED)
+            console.log('jump?');
+                if (this.body.velocity.y > this.JUMP_SPEED) {
+                                console.log('jump!');
+                    this.y -= 1;
                     this.body.velocity.y = this.JUMP_SPEED;
+                }
                 // Play jump animations
                 if (this.facingRight){
                         this.animations.play('jright');

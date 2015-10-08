@@ -4,16 +4,13 @@ function Slope (game, x, y, sprites) {
         this.INIT_X = x;
         this.INIT_Y = y;
         this.sprites = sprites;
-        this.steps = game.add.group();
-
         // Set up the slope
         Phaser.Sprite.call(this, game, this.INIT_X, this.INIT_Y, 'vgrass');
         game.physics.enable(this, Phaser.Physics.ARCADE);
         game.add.existing(this);
-      this.scale.y = .7;
+        this.anchor.setTo(0.5,0);
 
-    
-        //var step = platforms.create(252 * i, game.world.height - 64, 'boulder');
+      this.scale.y = .7;
 
         // Make slope stationary
         this.body.moves = false;
@@ -27,37 +24,55 @@ Slope.prototype.update = function() {
         this.frame = 0;
         if (game.shifted) 
             this.frame = 1;
-        if (game.physics.arcade.overlap(this.sprites, this) && thing.x >= this.x && thing.x <= this.x + this.width) {
-            var rel_x = thing.x - this.x;
-            var rel_y = (1-rel_x / this.width) * this.height + this.y - thing.anchor.y*thing.height;
+        if (game.physics.arcade.overlap(this.sprites, this) && this.scale.x*thing.x >= this.scale.x*(this.x-0.5*this.width) && this.scale.x*thing.x  <= this.scale.x*(this.x+0.5*this.width)) {
+            console.log('ITS WORKING');
+            var rel_x = this.scale.x*(thing.x - this.x+0.5*this.width*this.scale.x);
+            if (this.scale.x > 0) 
+                var rel_y = (1-rel_x / this.width) * this.height + this.y - thing.anchor.y*thing.height;
+            else
+                var rel_y = (rel_x / this.width) * this.height + this.y - thing.anchor.y*thing.height;
 
-            if (thing.x >= this.x + this.width-5) {
-                thing.x += 1;
-                if (thing.body.velocity.x < 0) {
-                    thing.body.velocity.x = 0;  
-                }
-            } else if (thing.y > rel_y) {
-                thing.onSlope = true;
 
-                thing.y = rel_y;
-                thing.body.gravity.y = 0;
-                if (game.shifted) {
-                    thing.body.velocity.x = 0;
-                } else {
-                    thing.body.velocity.x -= thing.ORIG_GRAV/50;
-                }
-                thing.body.velocity.y = -thing.body.velocity.x / this.width *this.height;
+//            if (thing.x >= this.x + this.width-5) {
+//                thing.x += 1;
+//                if (thing.body.velocity.x < 0) {
+//                    thing.body.velocity.x = 0;  
+//                }
+//            } else 
+            if (thing.y > rel_y) {
+                    thing.y = rel_y;
+
+                    thing.body.gravity.y = 0;
+                    if (game.shifted) {
+                        thing.body.velocity.x = 0;
+                    } else {
+                        thing.body.velocity.x -= this.scale.x*thing.ORIG_GRAV/50;
+                    }
+                    thing.body.velocity.y = -thing.body.velocity.x / this.width *this.height;
             } else {
                 thing.body.gravity.y = thing.ORIG_GRAV;
-                thing.onSlope = false;
+                //thing.onSlope = false;
             }
         } else {
             thing.body.gravity.y = thing.ORIG_GRAV;
-            thing.onSlope = false;
+            //thing.onSlope = false;
         }
     }, this);
 }
 
-Slope.prototype.shift = function() {
+Slope.prototype.isOn = function(thing) {
+        if (game.physics.arcade.overlap(this.sprites, this) && this.scale.x*thing.x >= this.scale.x*(this.x-0.5*this.width) && this.scale.x*thing.x  <= this.scale.x*(this.x+0.5*this.width)) {
+            var rel_x = this.scale.x*(thing.x - this.x+0.5*this.width*this.scale.x);
+            if (this.scale.x > 0) 
+                var rel_y = (1-rel_x / this.width) * this.height + this.y - thing.anchor.y*thing.height;
+            else
+                var rel_y = (rel_x / this.width) * this.height + this.y - thing.anchor.y*thing.height;
 
+            if (thing.y > rel_y) 
+                return true;
+            else 
+                return false;
+        }
+
+        return false;
 }

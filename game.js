@@ -64,7 +64,7 @@ var debug_toggle = 0;
 function create() {
         // Create world, with the sky and background grass
         game.physics.startSystem(Phaser.Physics.ARCADE);
-        game.world.setBounds(0, 0, 1920, 600);
+        game.world.setBounds(0, 0, 4500, 600);
         
         background = game.add.group();
         background.create(0,0, 'sky');
@@ -90,22 +90,55 @@ function create() {
                 groundshadow.body.immovable = true;
         }
     
-                var ground = platforms.create(1700, game.world.height - 64, 'hgrass');
+                var ground = platforms.create(1700, game.world.height - 100, 'hgrass');
                 var groundshadow = platforms.create(1700, game.world.height - 21, 'darkgrass');
                 ground.body.immovable = true;
                 ground.body.setSize(252, 37, 0, 6);
                 groundshadow.body.immovable = true;
+    
+                var ground = platforms.create(3800, game.world.height - 64, 'hgrass');
+                var groundshadow = platforms.create(3800, game.world.height - 21, 'darkgrass');
+                ground.body.immovable = true;
+                ground.body.setSize(252, 37, 0, 6);
+                groundshadow.body.immovable = true;
+                var ground = platforms.create(3550, game.world.height - 64, 'hgrass');
+                var groundshadow = platforms.create(3550, game.world.height - 21, 'darkgrass');
+                ground.body.immovable = true;
+                ground.body.setSize(252, 37, 0, 6);
+                groundshadow.body.immovable = true;    
+    
+                var ground = platforms.create(930, game.world.height - 260, 'hgrass');
+                var groundshadow = platforms.create(930, game.world.height - 222, 'darkgrass');
+                ground.body.immovable = true;
+                ground.body.setSize(252, 37, 0, 6);
+                groundshadow.body.immovable = true;
 
+        for (var i = 0; i < 10; i++) {
+                var groundshadow = platforms.create(1050, game.world.height - 450+40*i, 'darkgrass');
+                groundshadow.body.immovable = true;
+        }
+        for (var i = 0; i < 3; i++) {
+                var groundshadow = platforms.create(930, game.world.height - 450+35*i, 'darkgrass');
+                groundshadow.body.immovable = true;
+        }    
+
+        var ground = platforms.create(930, game.world.height - 483, 'hgrass');
+        ground.body.immovable = true;
+        var ground = platforms.create(1050, game.world.height - 483, 'hgrass');
+        ground.body.immovable = true;
+
+    
+    
         // Create the floating rocky grass platforms
         for(var i = 0; i < 2; i++) {
-                var floating = platforms.create(252 * i, game.world.height - 250, 'floatgrass');
+                var floating = platforms.create(240 * i, game.world.height - 250, 'floatgrass');
                 
                 floating.body.immovable = true;
                 floating.body.setSize(252, 56, 0, 6);
         }
 
         // Create the ledge that ends the floating rocky grass platforms
-        var ledge = platforms.create(504, game.world.height - 250, 'floatright');
+        var ledge = platforms.create(474, game.world.height - 250, 'floatright');
         ledge.body.immovable = true;
         ledge.body.setSize(80, 54, 0, 6);
 
@@ -130,6 +163,7 @@ function create() {
 
         // Create the sprites of the game
         boulder = new Boulder(game, 500, 150);
+        boulder.scale.setTo(1.5,1.5);
         
         obstacles = game.add.group();
         for (var i = 0; i < platforms.length; i++) {
@@ -142,11 +176,18 @@ function create() {
 
 //         Add turrets
         turrets = game.add.group();
-//        turret = new Turret(game, player, obstacles, bullets, 600, 500);
-//        turrets.add(turret);
+        turret = new Turret(game, player, obstacles, bullets, 975, 300);
+        turret.scale.x *= -1;
+        turrets.add(turret);
 //        turret = new Turret(game, player, obstacles, bullets, 1300, 500);
-//        turret.scale.x *= -1;
 //        turrets.add(turret);
+    
+        for (var i = 0; i < 5; i++) {
+                turrets = game.add.group();
+                turret = new Turret(game, player, obstacles, bullets, 4000, 100+i*100);
+                turret.scale.x *= -1;
+                turrets.add(turret);
+        }
     
         // Add slopes
         slopes = game.add.group();
@@ -155,10 +196,19 @@ function create() {
         movables.add(boulder);
     
     
-        for(var i = 0; i < 1; i++) {
-                var slope = new Slope(this, 800-146 * i, 420+210*.7*i, movables);
+        for(var i = 0; i < 2; i++) {
+                var slope = new Slope(this, 860-144 * i, 300+192*.7*i, movables);
                 slopes.add(slope);
         }
+    
+        for(var i = 0; i < 3; i++) {
+                var slope = new Slope(this, 1220+144 * (i+1), 117+192*.7*i, movables);
+                slope.scale.x = -1;
+                slopes.add(slope);
+        }
+        
+        var slope = new Slope(this, 2000, 117+192*.7*2, movables);
+
 
         // Set up UI text
         createUI();
@@ -204,11 +254,13 @@ function render() {
                 game.debug.body(boulder);
                 turrets.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
                 obstacles.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
+                slopes.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
                 // Animate the favicon, for fun
                 if(Date.now() - then >= 50) {
                         then = Date.now();
                         favicon();
                 }
+
         }
 }
 
