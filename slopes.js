@@ -24,6 +24,9 @@ Slope.prototype.constructor = Slope;
 
 Slope.prototype.update = function() {
     this.sprites.forEach(function(thing) {
+        this.frame = 0;
+        if (game.shifted) 
+            this.frame = 1;
         if (game.physics.arcade.overlap(this.sprites, this) && thing.x >= this.x && thing.x <= this.x + this.width) {
             var rel_x = thing.x - this.x;
             var rel_y = (1-rel_x / this.width) * this.height + this.y - thing.anchor.y*thing.height;
@@ -38,7 +41,11 @@ Slope.prototype.update = function() {
 
                 thing.y = rel_y;
                 thing.body.gravity.y = 0;
-                thing.body.velocity.x -= thing.ORIG_GRAV/50;
+                if (game.shifted) {
+                    thing.body.velocity.x = 0;
+                } else {
+                    thing.body.velocity.x -= thing.ORIG_GRAV/50;
+                }
                 thing.body.velocity.y = -thing.body.velocity.x / this.width *this.height;
             } else {
                 thing.body.gravity.y = thing.ORIG_GRAV;
