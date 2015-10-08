@@ -84,7 +84,7 @@ Player.prototype.update = function() {
         if (Math.abs(this.body.velocity.x) <= this.SLIDE_SPEED) {
                 this.body.velocity.x = 0;
         }
-        if (this.body.touching.down || this.body.blocked.down) {
+        if (this.body.blocked.down) {
                 this.body.velocity.y = 0;
         }
         

@@ -25,7 +25,6 @@ Slope.prototype.update = function() {
         if (game.shifted) 
             this.frame = 1;
         if (game.physics.arcade.overlap(this.sprites, this) && this.scale.x*thing.x >= this.scale.x*(this.x-0.5*this.width) && this.scale.x*thing.x  <= this.scale.x*(this.x+0.5*this.width)) {
-            console.log('ITS WORKING');
             var rel_x = this.scale.x*(thing.x - this.x+0.5*this.width*this.scale.x);
             if (this.scale.x > 0) 
                 var rel_y = (1-rel_x / this.width) * this.height + this.y - thing.anchor.y*thing.height;
@@ -39,6 +38,8 @@ Slope.prototype.update = function() {
 //                    thing.body.velocity.x = 0;  
 //                }
 //            } else 
+            console.log(rel_y);
+
             if (thing.y > rel_y) {
                     thing.y = rel_y;
 
