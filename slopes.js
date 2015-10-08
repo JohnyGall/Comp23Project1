@@ -24,11 +24,16 @@ Slope.prototype.constructor = Slope;
 
 Slope.prototype.update = function() {
     this.sprites.forEach(function(thing) {
-        if (game.physics.arcade.overlap(this.sprites, this) && thing.x > this.x && thing.x < this.x + this.width) {
-            var rel_x = thing.x + thing.anchor.x*thing.width - this.x;
+        if (game.physics.arcade.overlap(this.sprites, this) && thing.x >= this.x && thing.x <= this.x + this.width) {
+            var rel_x = thing.x - this.x;
             var rel_y = (1-rel_x / this.width) * this.height + this.y - thing.anchor.y*thing.height;
 
-            if (thing.y > rel_y) {
+            if (thing.x >= this.x + this.width-5) {
+                thing.x += 1;
+                if (thing.body.velocity.x < 0) {
+                    thing.body.velocity.x = 0;  
+                }
+            } else if (thing.y > rel_y) {
                 thing.onSlope = true;
 
                 thing.y = rel_y;
