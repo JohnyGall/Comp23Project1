@@ -28,12 +28,12 @@ Slope.prototype.update = function() {
             var rel_x = thing.x + thing.anchor.x*thing.width - this.x;
             var rel_y = (1-rel_x / this.width) * this.height + this.y - thing.anchor.y*thing.height;
 
-            if (thing.y> rel_y) {
+            if (thing.y > rel_y) {
                 thing.onSlope = true;
 
                 thing.y = rel_y;
                 thing.body.gravity.y = 0;
-                thing.body.velocity.x -= 10;
+                thing.body.velocity.x -= thing.ORIG_GRAV/50;
                 thing.body.velocity.y = -thing.body.velocity.x / this.width *this.height;
             } else {
                 thing.body.gravity.y = thing.ORIG_GRAV;
