@@ -1,8 +1,9 @@
-function Turret(game, target, obstacles, bullets, x, y) {
+function Turret(game, target, obstacles, slopes, bullets, x, y) {
         // Store variables
         this.game = game;
         this.target = target;
         this.obstacles = obstacles;
+        this.slopes = slopes;
         this.bullets = bullets;
 
         // Used for counting down to player death
@@ -49,9 +50,19 @@ Turret.prototype.update = function() {
         this.bmd.clear();
         var waitTime = this.HIGH_DELAY;
 
-        var visible = false;
-        if (Math.abs(this.x-this.target.x) < game.width/2 + this.body.width *this.anchor.x)
-            var visible = true;
+        var visible = true;
+        if (Math.abs(this.x-this.target.x) > game.width/2 + this.body.width *this.anchor.x) {
+            var visible = false;
+            this.targetdying = false;
+
+            if(game.shifted) {
+                    this.frame = 5;
+                    waitTime = this.LOW_DELAY;
+            } else {
+                    this.frame = 0;
+            }
+            return;
+        }
     
         // The first thing to do when updating the turret is to raytrace to the target to
         // see if the turret can kill them.
@@ -145,6 +156,34 @@ Turret.prototype.findTarget = function(ray) {
                         new Phaser.Line(wall.x-(wall.anchor.x*wall.width), wall.y-(wall.anchor.y*wall.height), wall.x+((1-wall.anchor.x)*wall.width), wall.y-(wall.anchor.y*wall.height)),
                         new Phaser.Line(wall.x+((1-wall.anchor.x)*wall.width), wall.y-(wall.anchor.y*wall.height), wall.x+((1-wall.anchor.x)*wall.width), wall.y+((1-wall.anchor.y)*wall.height)),
                         new Phaser.Line(wall.x-(wall.anchor.x*wall.width), wall.y+((1-wall.anchor.y)*wall.height), wall.x+((1-wall.anchor.x)*wall.width), wall.y+((1-wall.anchor.y)*wall.height)),
+                ];
+                distanceToWall = game.width;
+        
+                // Test each of the edges in this wall against the ray.
+                // If the ray intersects any of the edges then the wall must be in the way.
+                for(var i = 0; i < lines.length; i++) {
+
+                        currentIntersection = Phaser.Line.intersects(ray, lines[i]);
+                        if (currentIntersection) {
+                                // Find the closest intersection
+                                var distance = this.game.math.distance(ray.start.x, ray.start.y, currentIntersection.x, currentIntersection.y);
+                                if (distance < distanceToWall) {
+                                        distanceToWall = distance;
+                                        closestIntersection = currentIntersection;
+                                }
+                        }
+                }
+        
+        }, this);
+    
+        //this.slopes = slopes;
+
+        this.slopes.forEach(function(wall) {
+                // Create an array of lines to represent the four edges of each wall
+                var lines = [
+                        new Phaser.Line(wall.x+wall.scale.x*(wall.anchor.x*wall.width), wall.y-(wall.anchor.y*wall.height), wall.x+wall.scale.x*(wall.anchor.x*wall.width), wall.y+((1-wall.anchor.y)*wall.height)),
+                        new Phaser.Line(wall.x-wall.scale.x*(wall.anchor.x*wall.width), wall.y-(wall.anchor.y*wall.height), wall.x+wall.scale.x*(wall.anchor.x*wall.width), wall.y-(wall.anchor.y*wall.height)),
+                        new Phaser.Line(wall.x-wall.scale.x*(wall.anchor.x*wall.width), wall.y-(wall.anchor.y*wall.height), wall.x+wall.scale.x*(wall.anchor.x*wall.width), wall.y+(wall.anchor.y*wall.height)),
                 ];
                 distanceToWall = game.width;
         
