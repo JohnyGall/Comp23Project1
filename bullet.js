@@ -73,7 +73,7 @@ Bullet.prototype.shift = function() {
                 }
         } else {
                 this.frame = 1;
-                this.body.velocity.x *= this.H_SPEED / this.L_SPEED;
-                this.body.velocity.y *= this.H_SPEED / this.L_SPEED;
+//                this.body.velocity.x *= this.H_SPEED / this.L_SPEED;
+//                this.body.velocity.y *= this.H_SPEED / this.L_SPEED;
         }
 }

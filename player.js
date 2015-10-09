@@ -5,16 +5,22 @@ function Player(game, controls) {
         this.facingRight = true;
         this.killTime = 0;
     
+        // if player is on slope
+        this.onSlope = false;
+    
         //Store constants
         // Player initial coordinates
         this.INIT_X = 200;
         this.INIT_Y = 500;
         // Walking and jumping speeds
         this.DEFAULT_SPEED = 150;
+        this.SLIDE_SPEED = 150;
         this.JUMP_SPEED = -450;
         // Constants to make jumps higher if the key is held down
         this.UP_DECAY_FACTOR = 0.8;
         this.UP_DECAY_THRESH = -100;
+        // Default gravity value
+        this.ORIG_GRAV = 500;
         // Decay factor for coming down from a speedboost
         this.SIDE_DECAY_NUM = 5;
         // Speed for the accelerated downward movement (ground pound)
@@ -35,7 +41,7 @@ function Player(game, controls) {
         game.physics.enable(this, Phaser.Physics.ARCADE);
         game.add.existing(this);
         // Add gravity and don't let the player pass offscreen
-        this.body.gravity.y = 500;
+        this.body.gravity.y = this.ORIG_GRAV;
         this.body.checkWorldBounds = true;
         this.body.outOfBoundsKill = true;
         // Have the game camera always centered on the player
@@ -57,12 +63,14 @@ Player.prototype = Object.create(Phaser.Sprite.prototype);
 Player.prototype.constructor = Player;
 
 Player.prototype.update = function() {
+            this.onSlope = false;
+            slopes.forEach(function(slope) {this.onSlope = (slope.isOn(this) || this.onSlope);}, this);
             this.checkWorldBounds = true;
             this.events.onOutOfBounds.add(function() {
                         if (this.y > game.world.height)
                                 this.kill();
             }, this);
-    
+        
         // If the player is dead and waiting to be respawned, don't let the user
         // move the player around.
         if (this.health < 2) {
@@ -73,10 +81,10 @@ Player.prototype.update = function() {
         }
 
         // Reset velocities if touching the ground or moving slowly
-        if (Math.abs(this.body.velocity.x) <= this.DEFAULT_SPEED) {
+        if (Math.abs(this.body.velocity.x) <= this.SLIDE_SPEED) {
                 this.body.velocity.x = 0;
         }
-        if (this.body.touching.down || this.body.blocked.down) {
+        if (this.body.blocked.down) {
                 this.body.velocity.y = 0;
         }
         
@@ -85,7 +93,7 @@ Player.prototype.update = function() {
 
         //  If player pushing down both arrow keys, don't move
         if ((this.controls.right.isDown && this.controls.left.isDown) || (this.controls.up.isDown && this.controls.down.isDown)) {
-                if(this.body.touching.down){
+                if(this.body.touching.down || this.onSlope){
                         this.body.velocity.x = 0;
                         this.body.velocity.y = 0;
                         this.animations.stop();
@@ -98,7 +106,7 @@ Player.prototype.update = function() {
         else if (this.controls.right.isDown) {
                 this.facingRight = true;
                 // If we are touching the ground, walk to the right
-                if(this.body.touching.down || this.body.blocked.down) {
+                if(this.body.touching.down || this.body.blocked.down || this.onSlope) {
                         this.animations.play('right');
                 }
             
@@ -116,7 +124,7 @@ Player.prototype.update = function() {
         else if (this.controls.left.isDown) {
                 this.facingRight = false;
                 // If we are touching the ground, walk to the left
-                if(this.body.touching.down || this.body.blocked.down) {
+                if(this.body.touching.down || this.body.blocked.down || this.onSlope) {
                         this.animations.play('left');
                 }
             
@@ -130,7 +138,7 @@ Player.prototype.update = function() {
         }
     
         // Reset the animation when the player is idle, so we don't walk in place
-        if (!this.controls.left.isDown && !this.controls.right.isDown && (this.body.touching.down || this.body.blocked.down)) {
+        if (!this.controls.left.isDown && !this.controls.right.isDown && (this.body.touching.down || this.body.blocked.down || this.onSlope)) {
                 if(this.facingRight){
                         this.frame = 9;
                 } else {
@@ -141,8 +149,13 @@ Player.prototype.update = function() {
         // Up Arrow
         // If the up arrow is being pushed, give the player a velocity upwards as long as
         // the player is touching the ground.
-        if (this.controls.up.isDown && (this.body.touching.down || this.body.blocked.down)) {
-                this.body.velocity.y = this.JUMP_SPEED;
+        if (this.controls.up.isDown && (this.body.touching.down || this.body.blocked.down || this.onSlope)) {
+            console.log('jump?');
+                if (this.body.velocity.y > this.JUMP_SPEED) {
+                                console.log('jump!');
+                    this.y -= 1;
+                    this.body.velocity.y = this.JUMP_SPEED;
+                }
                 // Play jump animations
                 if (this.facingRight){
                         this.animations.play('jright');
@@ -219,7 +232,7 @@ Player.prototype.kill = function() {
 // Reset the player
 Player.prototype.respawn = function() {
         this.health = this.MAX_HEALTH;
-        this.body.gravity.y = 500;
+        this.body.gravity.y = this.ORIG_GRAV;
         this.position.x = this.INIT_X;
         this.position.y = this.INIT_Y;
 };
