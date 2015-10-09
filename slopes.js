@@ -45,7 +45,8 @@ Slope.prototype.update = function() {
 
                     thing.body.gravity.y = 0;
                     if (game.shifted) {
-                        thing.body.velocity.x = 0;
+                        if(this.scale.x * thing.body.velocity.x > 0)
+                            thing.body.velocity.x = 0;
                     } else {
                         thing.body.velocity.x -= this.scale.x*thing.ORIG_GRAV/50;
                     }
