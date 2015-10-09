@@ -28,6 +28,7 @@ function preload () {
         game.load.spritesheet('player', 'assets/protag_spritesheet.png', 37, 65);
         game.load.spritesheet('turret', 'assets/turretspritesheet.png', 96, 96, 6);
         game.load.spritesheet('bullet', 'assets/bullet_spritesheet.png', 16, 16, 2);
+        game.load.spritesheet('spike', 'assets/spike_spritesheet.png', 48, 85, 2);
 
         // Makes FPS counter work
         game.time.advancedTiming = true;
@@ -205,6 +206,12 @@ function create() {
                 var slope = new Slope(this, 1220+144 * (i+1), 117+192*.7*i, movables);
                 slope.scale.x = -1;
                 slopes.add(slope);
+        }
+    
+        for(var i = 0; i < 20; i++) {
+                var spike = new Spike(this, 1700+48*i, 85, player);
+                this.scale.y = -1;
+                platforms.add(spike);
         }
         
         var slope = new Slope(this, 2000, 117+192*.7*2, movables);
