@@ -10,6 +10,7 @@ function Cloud(game, x, y){
 
         game.physics.enable(this, Phaser.Physics.ARCADE);
         game.add.existing(this);
+        this.body.moves = false;
 
 }
 
@@ -17,11 +18,11 @@ Cloud.prototype = Object.create(Phaser.Sprite.prototype);
 Cloud.prototype.constructor = Cloud;
 
 Cloud.prototype.update = function(){
-        // in high res we want the cloud to be 
+        // in high res we want the cloud to be fluffy
         if(!game.shifted){
                 this.frame = 0;
         }
-        else{
+        else{//in low res we want the cloud to be the block
                 this.frame = 1;
         }
 

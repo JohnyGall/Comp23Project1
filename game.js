@@ -229,6 +229,9 @@ function update() {
         game.physics.arcade.collide(player, boulder);
         game.physics.arcade.collide(player, turrets);
         game.physics.arcade.collide(boulder, turrets);
+        if(game.shifted){
+                game.physics.arcade.collide(player, cloud);
+        }
 
         // Update UI
         if(player.health < 2) {
