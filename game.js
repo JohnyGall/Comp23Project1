@@ -63,7 +63,7 @@ var then = Date.now();
 var debug_toggle = 0;
 
 //first cloud 
-var cloud;
+var clouds;
 
 function create() {
         // Create world, with the sky and background grass
@@ -169,14 +169,17 @@ function create() {
         boulder = new Boulder(game, 500, 150);
         boulder.scale.setTo(1.5,1.5);
 
-        cloud = new Cloud(game, 600, 150);
+        //create a clouds group
+        clouds = game.add.group();
+        cloud = new Cloud(game, 600, 250);
+        clouds.add(cloud);
         
         obstacles = game.add.group();
         for (var i = 0; i < platforms.length; i++) {
                 obstacles.add(platforms.getAt(i));
         }
         obstacles.add(boulder);
-        
+        obstacles.add(cloud);
         //Add player
         player = new Player(game, controls);
 
@@ -230,7 +233,7 @@ function update() {
         game.physics.arcade.collide(player, turrets);
         game.physics.arcade.collide(boulder, turrets);
         if(game.shifted){
-                game.physics.arcade.collide(player, cloud);
+                game.physics.arcade.collide(player, clouds);
         }
 
         // Update UI
