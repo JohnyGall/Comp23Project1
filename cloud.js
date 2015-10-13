@@ -19,7 +19,7 @@ Cloud.prototype.constructor = Cloud;
 
 Cloud.prototype.update = function(){
         // in high res we want the cloud to be fluffy
-        if(!game.shifted){
+        if(!this.game.shifted){
                 this.frame = 0;
         }
         else{//in low res we want the cloud to be the block
