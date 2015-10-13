@@ -16,7 +16,7 @@ function Cloud(game, x, y){
 Cloud.prototype = Object.create(Phaser.Sprite.prototype);
 Cloud.prototype.constructor = Cloud;
 
-Cloud.protoype.update = function(){
+Cloud.prototype.update = function(){
         // in high res we want the cloud to be 
         if(!game.shifted){
                 this.frame = 0;

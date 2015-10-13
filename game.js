@@ -28,6 +28,7 @@ function preload () {
         game.load.spritesheet('player', 'assets/protag_spritesheet.png', 37, 65);
         game.load.spritesheet('turret', 'assets/turretspritesheet.png', 96, 96, 6);
         game.load.spritesheet('bullet', 'assets/bullet_spritesheet.png', 16, 16, 2);
+        game.load.spritesheet('cloud', 'assets/cloud_spritesheet.png',96 ,32 , 2);
 
         // Makes FPS counter work
         game.time.advancedTiming = true;
@@ -60,6 +61,9 @@ var framerate;
 var then = Date.now();
 // Are we in debug mode?
 var debug_toggle = 0;
+
+//first cloud 
+var cloud;
 
 function create() {
         // Create world, with the sky and background grass
@@ -164,6 +168,8 @@ function create() {
         // Create the sprites of the game
         boulder = new Boulder(game, 500, 150);
         boulder.scale.setTo(1.5,1.5);
+
+        cloud = new Cloud(game, 600, 150);
         
         obstacles = game.add.group();
         for (var i = 0; i < platforms.length; i++) {
