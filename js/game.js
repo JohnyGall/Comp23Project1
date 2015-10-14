@@ -78,10 +78,12 @@ function create() {
         music = game.add.audio('wordl1');
         music.play();
         music.volume = 0.25;
+        music.loop = true;
         music_l = game.add.audio('wordl1_l');
         music_l.play();
         music_l.volume = 0.25;
         music_l.mute = true;
+        music_l.loop = true;
     
         background = game.add.group();
         background.create(0,0, 'sky');
@@ -240,6 +242,11 @@ function create() {
 }
 
 function update() {
+    
+        if (!music.isPlaying) {
+                music.play();
+                music_l.play();
+        }
 
         //Delete me!
         console.log("framerate is" + game.time.fps);
