@@ -28,6 +28,7 @@ function preload () {
         game.load.spritesheet('player', 'assets/protag_spritesheet.png', 37, 65);
         game.load.spritesheet('turret', 'assets/turretspritesheet.png', 96, 96, 6);
         game.load.spritesheet('bullet', 'assets/bullet_spritesheet.png', 16, 16, 2);
+        game.load.spritesheet('spike', 'assets/spike_spritesheet.png', 48, 85, 2);
 
         // Makes FPS counter work
         game.time.advancedTiming = true;
@@ -174,21 +175,6 @@ function create() {
         //Add player
         player = new Player(game, controls);
 
-//         Add turrets
-        turrets = game.add.group();
-        turret = new Turret(game, player, obstacles, bullets, 975, 300);
-        turret.scale.x *= -1;
-        turrets.add(turret);
-//        turret = new Turret(game, player, obstacles, bullets, 1300, 500);
-//        turrets.add(turret);
-
-        for (var i = 0; i < 5; i++) {
-                turrets = game.add.group();
-                turret = new Turret(game, player, obstacles, bullets, 4000, 100+i*100);
-                turret.scale.x *= -1;
-                turrets.add(turret);
-        }
-
         // Add slopes
         slopes = game.add.group();
         var movables = game.add.group();
@@ -207,8 +193,30 @@ function create() {
                 slopes.add(slope);
         }
 
+        for(var i = 0; i < 20; i++) {
+                var spike = new Spike(this, 2000+48*i, game.height - 43, player);
+                spike.scale.y = -1;
+                platforms.add(spike);
+        }
+        
         var slope = new Slope(this, 2000, 117+192*.7*2, movables);
+        slopes.add(slope);
 
+    //         Add turrets
+        turrets = game.add.group();
+        turret = new Turret(game, player, obstacles, slopes, bullets, 975, 275);
+        turret.scale.x *= -1;
+        turrets.add(turret);
+//        turret = new Turret(game, player, obstacles, bullets, 1300, 500);
+//        turrets.add(turret);
+    
+        for (var i = 0; i < 5; i++) {
+                turrets = game.add.group();
+                turret = new Turret(game, player, obstacles, slopes, bullets, 4000, 100+i*100);
+                turret.scale.x *= -1;
+                turrets.add(turret);
+        }
+    
 
         // Set up UI text
         createUI();
