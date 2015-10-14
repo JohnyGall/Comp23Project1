@@ -72,7 +72,7 @@ Turret.prototype.update = function() {
         var intersect = this.findTarget(ray, this.obstacles);
         
             // If there was no intersection
-            if (!intersect && visible) {
+            if (!intersect) {
                 if(!this.targetdying) {
                     this.targetdying = true;
                     this.lastShotTime = game.time.now;                    
