@@ -29,6 +29,10 @@ function preload () {
         game.load.spritesheet('turret', 'assets/turretspritesheet.png', 96, 96, 6);
         game.load.spritesheet('bullet', 'assets/bullet_spritesheet.png', 16, 16, 2);
         game.load.spritesheet('spike', 'assets/spike_spritesheet.png', 48, 85, 2);
+    
+        // Music
+        game.load.audio('wordl1_l', ['assets/music/bitshift2_lr.wav', 'assets/music/bitshift2_lr.ogg']);
+        game.load.audio('wordl1', ['assets/music/bitshift2.wav', 'assets/music/bitshift2.ogg']);   
 
         // Makes FPS counter work
         game.time.advancedTiming = true;
@@ -57,6 +61,9 @@ var bullets;
 var respawnText;
 var respawnCount;
 var framerate;
+// the songs to bbe playing
+var music;
+var music_l;
 // Time, used for favicon animation
 var then = Date.now();
 // Are we in debug mode?
@@ -66,7 +73,16 @@ function create() {
         // Create world, with the sky and background grass
         game.physics.startSystem(Phaser.Physics.ARCADE);
         game.world.setBounds(0, 0, 4500, 600);
-
+    
+        // Make wonderful music
+        music = game.add.audio('wordl1');
+        music.play();
+        music.volume = 0.25;
+        music_l = game.add.audio('wordl1_l');
+        music_l.play();
+        music_l.volume = 0.25;
+        music_l.mute = true;
+    
         background = game.add.group();
         background.create(0,0, 'sky');
         background.create(0, 300, 'backgrass');
@@ -328,11 +344,15 @@ function bitshift() {
                 platforms.forEach(shiftOff, this);
                 obstacles.forEach(shiftOff, this);
                 background.forEach(shiftOff, this);
+                music.mute = false;
+                music_l.mute = true;
         }
         else {
                 platforms.forEach(shiftOn, this);
                 obstacles.forEach(shiftOn, this);
                 background.forEach(shiftOn, this);
+                music.mute = true;
+                music_l.mute = false;
         }
 }
 
