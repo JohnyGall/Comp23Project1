@@ -342,6 +342,7 @@ function createUI() {
 function bitshift() {
         game.shifted = !game.shifted;
 
+        turrets.forEach(function(t) {t.bmd.clear();}, this);
         bullets.forEach(
                 function(b) { b.shift(); }
         , this);

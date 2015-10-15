@@ -54,14 +54,14 @@ Turret.prototype.update = function() {
             this.targetdying = false;
 
             if(game.shifted) {
+                    this.bmd.clear();
                     this.frame = 5;
+                    waitTime = this.LOW_DELAY;
             } else {
                     this.frame = 0;
             }
             return;
         }
-
-        console.log('doing expensive turret stuff');
 
         // The first thing to do when updating the turret is to raytrace to the target to
         // see if the turret can kill them.
