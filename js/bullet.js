@@ -57,7 +57,7 @@ Bullet.prototype.update = function() {
         if (game.physics.arcade.overlap(this.target, this)) {
                 this.target.kill();
         }
-        if (game.physics.arcade.overlap(obstacles, this)) {
+        if (game.physics.arcade.overlap(boulders, this) || game.physics.arcade.overlap(platforms, this)) {
                 this.destroy();
         }
 }

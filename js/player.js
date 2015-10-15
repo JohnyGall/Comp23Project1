@@ -150,9 +150,7 @@ Player.prototype.update = function() {
         // If the up arrow is being pushed, give the player a velocity upwards as long as
         // the player is touching the ground.
         if (this.controls.up.isDown && (this.body.touching.down || this.body.blocked.down || this.onSlope)) {
-            //console.log('jump?');
                 if (this.body.velocity.y > this.JUMP_SPEED) {
-                                //console.log('jump!');
                     this.y -= 1;
                     this.body.velocity.y = this.JUMP_SPEED;
                 }

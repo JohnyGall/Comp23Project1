@@ -69,6 +69,7 @@ Turret.prototype.update = function() {
         var ray = new Phaser.Line(this.target.x, this.target.y, this.x, this.y);
         // Call the raytracing method, and store the result
         var intersect = this.findTarget(ray, this.obstacles);
+        intersect = intersect && this.findTarget(ray, boulders);
         
             // If there was no intersection
             if (!intersect) {

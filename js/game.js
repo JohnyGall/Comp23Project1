@@ -47,8 +47,6 @@ function preload () {
 var player;
 // A group of the static platforms in the level
 var platforms;
-// A group containing things that block raycasts
-var obstacles;
 // A group for all slopes
 var slopes;
 // A group containing the background elements
@@ -56,7 +54,7 @@ var background;
 // The controls
 var controls;
 // sprites
-var boulder;
+var boulders;
 var turrets;
 var bullets;
 // UI text elements
@@ -96,6 +94,7 @@ function create() {
 
         // Create platforms group
         platforms = game.add.group();
+
         platforms.enableBody = true;
 
         // Create a bullets
@@ -110,22 +109,12 @@ function create() {
                 groundshadow.body.immovable = true;
         }
 
-                var ground = platforms.create(1700, game.world.height - 100, 'hgrass');
-                var groundshadow = platforms.create(1700, game.world.height - 21, 'darkgrass');
+                var ground = platforms.create(1900, game.world.height - 100, 'hgrass');
+                var groundshadow = platforms.create(1900, game.world.height - 21, 'darkgrass');
                 ground.body.immovable = true;
                 ground.body.setSize(252, 37, 0, 6);
                 groundshadow.body.immovable = true;
 
-                var ground = platforms.create(3800, game.world.height - 64, 'hgrass');
-                var groundshadow = platforms.create(3800, game.world.height - 21, 'darkgrass');
-                ground.body.immovable = true;
-                ground.body.setSize(252, 37, 0, 6);
-                groundshadow.body.immovable = true;
-                var ground = platforms.create(3550, game.world.height - 64, 'hgrass');
-                var groundshadow = platforms.create(3550, game.world.height - 21, 'darkgrass');
-                ground.body.immovable = true;
-                ground.body.setSize(252, 37, 0, 6);
-                groundshadow.body.immovable = true;
 
                 var ground = platforms.create(930, game.world.height - 290, 'hgrass');
                 var groundshadow = platforms.create(930, game.world.height - 270, 'darkgrass');
@@ -133,7 +122,7 @@ function create() {
                 ground.body.setSize(252, 37, 0, 6);
                 groundshadow.body.immovable = true;
 
-        for (var i = 0; i < 10; i++) {
+        for (var i = 0; i < 12; i++) {
                 var groundshadow = platforms.create(1050, game.world.height - 500+40*i, 'darkgrass');
                 groundshadow.body.immovable = true;
         }
@@ -184,34 +173,29 @@ function create() {
         controls.M = game.input.keyboard.addKey(Phaser.Keyboard.M);
         controls.M.onDown.add(switchtune);
 
-        // Create the sprites of the game
-        boulder = new Boulder(game, 500, 150);
+        // Create the sprites of the 
+        boulders = game.add.group();
+        var boulder = new Boulder(game, 500, 150);
         boulder.scale.setTo(1.5,1.5);
+        boulders.add(boulder);
 
-        obstacles = game.add.group();
-        for (var i = 0; i < platforms.length; i++) {
-                obstacles.add(platforms.getAt(i));
-        }
-        obstacles.add(boulder);
+        boulder = new Boulder(game, 1700, -100);
+        boulder.scale.setTo(1.5,1.5);
+        boulders.add(boulder);
+
+        // Add slopes
+        slopes = game.add.group();
+        for(var i = 0; i < 2; i++) {
+                var slope = new Slope(this, 860-145 * i, 510+209*.7*i, boulders);
+                slopes.add(slope);
+        }    
 
         //Add player
         player = new Player(game, controls);
 
-        // Add slopes
-        slopes = game.add.group();
-        var movables = game.add.group();
-        movables.add(player);
-        movables.add(boulder);
-
-
-        for(var i = 0; i < 2; i++) {
-                var slope = new Slope(this, 860-144 * i, 510+192*.7*i, movables);
-                slopes.add(slope);
-        }
-
     //         Add turrets
         turrets = game.add.group();
-        turret = new Turret(game, player, obstacles, slopes, bullets, 975, 475);
+        turret = new Turret(game, player, platforms, slopes, bullets, 975, 475);
         turret.scale.x *= -1;
         turrets.add(turret);
     
@@ -230,10 +214,10 @@ function update() {
 
         // Collision detection for all objects
         game.physics.arcade.collide(player, platforms);
-        game.physics.arcade.collide(platforms, boulder);
-        game.physics.arcade.collide(player, boulder);
+        game.physics.arcade.collide(platforms, boulders);
+        game.physics.arcade.collide(player, boulders);
         game.physics.arcade.collide(player, turrets);
-        game.physics.arcade.collide(boulder, turrets);
+        game.physics.arcade.collide(boulders, turrets);
 
         // Update UI
         if(player.health < 2) {
@@ -244,7 +228,7 @@ function update() {
                         respawnCount.visible = false;
                         respawnText.visible = false;
                         player.respawn();
-                        boulder.respawn();
+                        boulders.forEach(function(b) {b.respawn();},this);
                         if(this.game.shifted)
                                 bitshift();
                 }
@@ -262,9 +246,9 @@ function render() {
                 framerate.text = game.time.fps;
                 // Draw bounding boxes
                 game.debug.body(player);
-                game.debug.body(boulder);
+                boulders.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
                 turrets.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
-                obstacles.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
+                platforms.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
                 slopes.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
                 // Animate the favicon, for fun
                 if(Date.now() - then >= 50) {
@@ -328,14 +312,12 @@ function bitshift() {
         , this);
         if (!game.shifted) {
                 platforms.forEach(shiftOff, this);
-                obstacles.forEach(shiftOff, this);
                 background.forEach(shiftOff, this);
                 music.mute = false;
                 music_l.mute = true;
         }
         else {
                 platforms.forEach(shiftOn, this);
-                obstacles.forEach(shiftOn, this);
                 background.forEach(shiftOn, this);
                 music.mute = true;
                 music_l.mute = false;
