@@ -64,6 +64,7 @@ var respawnText;
 var respawnCount;
 var framerate;
 // the songs to bbe playing
+var songone = true;
 var music;
 var music_l;
 // Time, used for favicon animation
@@ -167,8 +168,8 @@ function create() {
         controls = game.input.keyboard.createCursorKeys();
         controls.space = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         controls.space.onDown.add(bitshift);
-        controls.V = game.input.keyboard.addKey(Phaser.Keyboard.V);
         controls.tilde = game.input.keyboard.addKey(Phaser.Keyboard.TILDE);
+
         // Tilde toggles debug mode
         controls.tilde.onDown.add(function() {
                 debug_toggle = debug_toggle ? false : true;
@@ -178,9 +179,12 @@ function create() {
                 framerate.visible = false;
                 game.debug.reset();
         }, this);
+
         controls.P = game.input.keyboard.addKey(Phaser.Keyboard.P);
         controls.P.onDown.add(pause);
-
+        controls.V = game.input.keyboard.addKey(Phaser.Keyboard.V);
+        controls.M = game.input.keyboard.addKey(Phaser.Keyboard.M);
+        controls.M.onDown.add(switchtune);
 
         // Create the sprites of the game
         boulder = new Boulder(game, 500, 150);
@@ -372,4 +376,32 @@ function shiftOn(object) {
 
 function pause() {
         game.paused = !game.paused;
+}
+
+function switchtune() {
+    music.pause();
+    music_l.pause();
+
+    if (songone) {
+        songone = false;
+        music = game.add.audio('wordl2');
+        music_l = game.add.audio('wordl2_l');
+
+    } else {
+        songone = true;
+        music = game.add.audio('wordl1');
+        music_l = game.add.audio('wordl1_l');
+    }
+    music.play();
+    music.volume = 0.25;
+    music.loop = true;
+    music_l.play();
+    music_l.volume = 0.25;
+    music_l.loop = true;
+
+    
+    if (game.shifted)
+        music.mute = true;
+    else
+        music_l.mute = true;
 }
