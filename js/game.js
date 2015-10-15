@@ -79,11 +79,9 @@ function create() {
     
         // Make wonderful music
         music = game.add.audio('wordl1');
-        music.play();
         music.volume = 0.25;
         music.loop = true;
         music_l = game.add.audio('wordl1_l');
-        music_l.play();
         music_l.volume = 0.25;
         music_l.mute = true;
         music_l.loop = true;
