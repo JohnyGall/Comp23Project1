@@ -23,18 +23,12 @@ function preload () {
         game.load.spritesheet('floatleft', 'assets/floatingledge1_spritesheet.png', 64, 48, 2);
         game.load.spritesheet('miniledge', 'assets/mini_floating_spritesheet.png', 48, 48, 2);
 
-        // Sprites and stuff
+        // Sprites and stuff 
         game.load.spritesheet('boulder', 'assets/boulder_spritesheet.png',48, 48, 2);
         game.load.spritesheet('player', 'assets/protag_spritesheet.png', 37, 65);
         game.load.spritesheet('turret', 'assets/turretspritesheet.png', 96, 96, 6);
         game.load.spritesheet('bullet', 'assets/bullet_spritesheet.png', 16, 16, 2);
-        game.load.spritesheet('spike', 'assets/spike_spritesheet.png', 48, 85, 2);
-    
-        // Music
-        game.load.audio('wordl1_l', ['assets/music/bitshift2_lr.wav', 'assets/music/bitshift2_lr.ogg']);
-        game.load.audio('wordl1', ['assets/music/bitshift2.wav', 'assets/music/bitshift2.ogg']);   
-        game.load.audio('wordl2_l', ['assets/music/bitshift3_lr.wav', 'assets/music/bitshift3_lr.ogg']);
-        game.load.audio('wordl2', ['assets/music/bitshift3.wav', 'assets/music/bitshift3.ogg']);   
+        game.load.spritesheet('cloud', 'assets/cloud_spritesheet.png',96 ,32 , 2);
 
         // Makes FPS counter work
         game.time.advancedTiming = true;
@@ -63,43 +57,31 @@ var bullets;
 var respawnText;
 var respawnCount;
 var framerate;
-// the songs to bbe playing
-var songone = true;
-var music;
-var music_l;
 // Time, used for favicon animation
 var then = Date.now();
 // Are we in debug mode?
 var debug_toggle = 0;
 
+//first cloud 
+var clouds;
+
 function create() {
         // Create world, with the sky and background grass
         game.physics.startSystem(Phaser.Physics.ARCADE);
         game.world.setBounds(0, 0, 4500, 600);
-    
-        // Make wonderful music
-        music = game.add.audio('wordl1');
-        music.play();
-        music.volume = 0.25;
-        music.loop = true;
-        music_l = game.add.audio('wordl1_l');
-        music_l.play();
-        music_l.volume = 0.25;
-        music_l.mute = true;
-        music_l.loop = true;
-    
+        
         background = game.add.group();
         background.create(0,0, 'sky');
         background.create(0, 300, 'backgrass');
         background.create(1008, 300, 'backgrass');
-
+        
         // Create a new part of the game keeping track of the world resolution
         game.shifted = false;
 
         // Create platforms group
         platforms = game.add.group();
         platforms.enableBody = true;
-
+    
         // Create a bullets
         bullets = game.add.group();
 
@@ -111,13 +93,13 @@ function create() {
                 ground.body.setSize(252, 37, 0, 6);
                 groundshadow.body.immovable = true;
         }
-
+    
                 var ground = platforms.create(1700, game.world.height - 100, 'hgrass');
                 var groundshadow = platforms.create(1700, game.world.height - 21, 'darkgrass');
                 ground.body.immovable = true;
                 ground.body.setSize(252, 37, 0, 6);
                 groundshadow.body.immovable = true;
-
+    
                 var ground = platforms.create(3800, game.world.height - 64, 'hgrass');
                 var groundshadow = platforms.create(3800, game.world.height - 21, 'darkgrass');
                 ground.body.immovable = true;
@@ -127,8 +109,8 @@ function create() {
                 var groundshadow = platforms.create(3550, game.world.height - 21, 'darkgrass');
                 ground.body.immovable = true;
                 ground.body.setSize(252, 37, 0, 6);
-                groundshadow.body.immovable = true;
-
+                groundshadow.body.immovable = true;    
+    
                 var ground = platforms.create(930, game.world.height - 260, 'hgrass');
                 var groundshadow = platforms.create(930, game.world.height - 222, 'darkgrass');
                 ground.body.immovable = true;
@@ -142,19 +124,19 @@ function create() {
         for (var i = 0; i < 3; i++) {
                 var groundshadow = platforms.create(930, game.world.height - 450+35*i, 'darkgrass');
                 groundshadow.body.immovable = true;
-        }
+        }    
 
         var ground = platforms.create(930, game.world.height - 483, 'hgrass');
         ground.body.immovable = true;
         var ground = platforms.create(1050, game.world.height - 483, 'hgrass');
         ground.body.immovable = true;
 
-
-
+    
+    
         // Create the floating rocky grass platforms
         for(var i = 0; i < 2; i++) {
                 var floating = platforms.create(240 * i, game.world.height - 250, 'floatgrass');
-
+                
                 floating.body.immovable = true;
                 floating.body.setSize(252, 56, 0, 6);
         }
@@ -168,77 +150,78 @@ function create() {
         controls = game.input.keyboard.createCursorKeys();
         controls.space = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         controls.space.onDown.add(bitshift);
+        controls.V = game.input.keyboard.addKey(Phaser.Keyboard.V);
         controls.tilde = game.input.keyboard.addKey(Phaser.Keyboard.TILDE);
-
         // Tilde toggles debug mode
         controls.tilde.onDown.add(function() {
                 debug_toggle = debug_toggle ? false : true;
                 // If debug is turned off, we want to clear the bounding boxes and make the FPS
                 // counter invisible. This code is put here because in render it would be called
-                // at every frame.
+                // at every frame. 
                 framerate.visible = false;
                 game.debug.reset();
         }, this);
-
         controls.P = game.input.keyboard.addKey(Phaser.Keyboard.P);
         controls.P.onDown.add(pause);
-        controls.V = game.input.keyboard.addKey(Phaser.Keyboard.V);
-        controls.M = game.input.keyboard.addKey(Phaser.Keyboard.M);
-        controls.M.onDown.add(switchtune);
+
 
         // Create the sprites of the game
         boulder = new Boulder(game, 500, 150);
         boulder.scale.setTo(1.5,1.5);
-
+        
         obstacles = game.add.group();
         for (var i = 0; i < platforms.length; i++) {
                 obstacles.add(platforms.getAt(i));
         }
         obstacles.add(boulder);
-
         //Add player
         player = new Player(game, controls);
 
+        //create a clouds group
+        clouds = game.add.group();
+        cloud = new Cloud(game, 600, 250, 'cloud');
+        clouds.add(cloud);
+        cloud = new Cloud(game, 500, 500, 'cloud');
+        clouds.add(cloud);
+        for(var i = 0; i< clouds.length; i++){
+                obstacles.add(clouds.getAt(i));
+        }
+
+//         Add turrets
+        turrets = game.add.group();
+        turret = new Turret(game, player, obstacles, bullets, 975, 300);
+        turret.scale.x *= -1;
+        turrets.add(turret);
+//        turret = new Turret(game, player, obstacles, bullets, 1300, 500);
+//        turrets.add(turret);
+    
+        for (var i = 0; i < 5; i++) {
+                turrets = game.add.group();
+                turret = new Turret(game, player, obstacles, bullets, 4000, 100+i*100);
+                turret.scale.x *= -1;
+                turrets.add(turret);
+        }
+    
         // Add slopes
         slopes = game.add.group();
         var movables = game.add.group();
         movables.add(player);
         movables.add(boulder);
-
-
+    
+    
         for(var i = 0; i < 2; i++) {
                 var slope = new Slope(this, 860-144 * i, 300+192*.7*i, movables);
                 slopes.add(slope);
         }
-
+    
         for(var i = 0; i < 3; i++) {
                 var slope = new Slope(this, 1220+144 * (i+1), 117+192*.7*i, movables);
                 slope.scale.x = -1;
                 slopes.add(slope);
         }
-
-        for(var i = 0; i < 20; i++) {
-                var spike = new Spike(this, 2000+48*i, game.height - 43, player);
-                spike.scale.y = -1;
-                platforms.add(spike);
-        }
         
         var slope = new Slope(this, 2000, 117+192*.7*2, movables);
-        slopes.add(slope);
 
-    //         Add turrets
-        turrets = game.add.group();
-        turret = new Turret(game, player, obstacles, slopes, bullets, 975, 275);
-        turret.scale.x *= -1;
-        turrets.add(turret);
-
-        for (var i = 0; i < 5; i++) {
-                turrets = game.add.group();
-                turret = new Turret(game, player, obstacles, slopes, bullets, 4000, 100+i*100);
-                turret.scale.x *= -1;
-                turrets.add(turret);
-        }
-    
 
         // Set up UI text
         createUI();
@@ -247,17 +230,15 @@ function create() {
 
 function update() {
 
-        if (!music.isPlaying) {
-                music.play();
-                music_l.play();
-        }
-
         // Collision detection for all objects
         game.physics.arcade.collide(player, platforms);
         game.physics.arcade.collide(platforms, boulder);
         game.physics.arcade.collide(player, boulder);
         game.physics.arcade.collide(player, turrets);
         game.physics.arcade.collide(boulder, turrets);
+        if(game.shifted){
+                game.physics.arcade.collide(player, clouds);
+        }
 
         // Update UI
         if(player.health < 2) {
@@ -346,7 +327,6 @@ function createUI() {
 function bitshift() {
         game.shifted = !game.shifted;
 
-        turrets.forEach(function(t) {t.bmd.clear();}, this);
         bullets.forEach(
                 function(b) { b.shift(); }
         , this);
@@ -354,15 +334,11 @@ function bitshift() {
                 platforms.forEach(shiftOff, this);
                 obstacles.forEach(shiftOff, this);
                 background.forEach(shiftOff, this);
-                music.mute = false;
-                music_l.mute = true;
         }
         else {
                 platforms.forEach(shiftOn, this);
                 obstacles.forEach(shiftOn, this);
                 background.forEach(shiftOn, this);
-                music.mute = true;
-                music_l.mute = false;
         }
 }
 
@@ -376,32 +352,4 @@ function shiftOn(object) {
 
 function pause() {
         game.paused = !game.paused;
-}
-
-function switchtune() {
-    music.pause();
-    music_l.pause();
-
-    if (songone) {
-        songone = false;
-        music = game.add.audio('wordl2');
-        music_l = game.add.audio('wordl2_l');
-
-    } else {
-        songone = true;
-        music = game.add.audio('wordl1');
-        music_l = game.add.audio('wordl1_l');
-    }
-    music.play();
-    music.volume = 0.25;
-    music.loop = true;
-    music_l.play();
-    music_l.volume = 0.25;
-    music_l.loop = true;
-
-    
-    if (game.shifted)
-        music.mute = true;
-    else
-        music_l.mute = true;
 }
