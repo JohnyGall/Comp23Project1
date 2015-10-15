@@ -10,7 +10,7 @@ function Slope (game, x, y, sprites) {
         game.add.existing(this);
         this.anchor.setTo(0.5,0);
 
-      this.scale.y = .7;
+      // this.scale.y = .7;
 
         // Make slope stationary
         this.body.moves = false;

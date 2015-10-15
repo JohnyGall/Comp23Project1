@@ -16,7 +16,7 @@ function preload () {
         game.load.spritesheet('backgrass', 'assets/background_grass_spritesheet.png',1008, 311, 2);
         game.load.spritesheet('hgrass', 'assets/grass_h_spritesheet.png',252, 48, 2);
         game.load.spritesheet('tgrass', 'assets/grass_t_spritesheet.png',48, 66, 2);
-        game.load.spritesheet('vgrass', 'assets/grass_v_spritesheet.png', 144, 208, 2);
+        game.load.spritesheet('vgrass', 'assets/grass_v_spritesheet.png', 144, 144, 2);
         game.load.spritesheet('darkgrass', 'assets/darkgrass.png', 252, 48, 2);
         game.load.spritesheet('floatgrass', 'assets/floating_spritesheet.png', 252, 48, 2);
         game.load.spritesheet('floatright', 'assets/floatingledge_spritesheet.png', 64, 48, 2);
@@ -24,7 +24,7 @@ function preload () {
         game.load.spritesheet('miniledge', 'assets/mini_floating_spritesheet.png', 48, 48, 2);
 
         // Sprites and stuff 
-        game.load.spritesheet('boulder', 'assets/boulder_spritesheet.png',48, 48, 2);
+        game.load.spritesheet('boulder', 'assets/boulder_spritesheet.png',80, 80, 2);
         game.load.spritesheet('player', 'assets/protag_spritesheet.png', 37, 65);
         game.load.spritesheet('turret', 'assets/turretspritesheet.png', 96, 96, 6);
         game.load.spritesheet('bullet', 'assets/bullet_spritesheet.png', 16, 16, 2);
@@ -167,7 +167,6 @@ function create() {
 
         // Create the sprites of the game
         boulder = new Boulder(game, 500, 150);
-        boulder.scale.setTo(1.5,1.5);
         
         obstacles = game.add.group();
         for (var i = 0; i < platforms.length; i++) {
