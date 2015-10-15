@@ -10,6 +10,10 @@ WebFontConfig = {
         }
 };
 
+game.state.add('menu', menuState);
+game.state.add('play', playState);
+game.state.add('win', winState);
+
 function preload () {
         // Level background
         game.load.spritesheet('sky', 'assets/sky_spritesheet.png', 1920, 1080, 2);
