@@ -59,4 +59,5 @@ var menuState = {
 	// call the function that loads a JSON file
 	maps: function(){
 		game.state.start('loadmap')	
+	},
 };
