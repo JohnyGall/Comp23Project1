@@ -227,9 +227,7 @@ function create() {
         turret = new Turret(game, player, obstacles, slopes, bullets, 975, 275);
         turret.scale.x *= -1;
         turrets.add(turret);
-//        turret = new Turret(game, player, obstacles, bullets, 1300, 500);
-//        turrets.add(turret);
-    
+
         for (var i = 0; i < 5; i++) {
                 turrets = game.add.group();
                 turret = new Turret(game, player, obstacles, slopes, bullets, 4000, 100+i*100);
@@ -244,14 +242,12 @@ function create() {
 }
 
 function update() {
-    
+
         if (!music.isPlaying) {
                 music.play();
                 music_l.play();
         }
 
-        //Delete me!
-        console.log("framerate is" + game.time.fps);
         // Collision detection for all objects
         game.physics.arcade.collide(player, platforms);
         game.physics.arcade.collide(platforms, boulder);

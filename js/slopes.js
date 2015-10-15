@@ -38,7 +38,6 @@ Slope.prototype.update = function() {
 //                    thing.body.velocity.x = 0;  
 //                }
 //            } else 
-            console.log(rel_y);
 
             if (thing.y > rel_y) {
                     thing.y = rel_y;
@@ -53,11 +52,9 @@ Slope.prototype.update = function() {
                     thing.body.velocity.y = -thing.body.velocity.x / this.width *this.height;
             } else {
                 thing.body.gravity.y = thing.ORIG_GRAV;
-                //thing.onSlope = false;
             }
         } else {
             thing.body.gravity.y = thing.ORIG_GRAV;
-            //thing.onSlope = false;
         }
     }, this);
 }

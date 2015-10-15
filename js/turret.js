@@ -47,23 +47,22 @@ Turret.prototype.constructor = Turret;
 
 Turret.prototype.update = function() {
         this.target.tint = 0xffffff;
-        this.bmd.clear();
         var waitTime = this.HIGH_DELAY;
-
-        var visible = true;
-        if (Math.abs(this.x-this.target.x) > game.width/2 + this.body.width *this.anchor.x) {
-            var visible = false;
+        
+        if (Math.abs(this.x-this.target.x) > game.width/2 + this.body.width *this.anchor.x ||
+            Math.abs(this.y-this.target.y) > game.height/2 + this.body.height *this.anchor.y) {
             this.targetdying = false;
 
             if(game.shifted) {
                     this.frame = 5;
-                    waitTime = this.LOW_DELAY;
             } else {
                     this.frame = 0;
             }
             return;
         }
-    
+
+        console.log('doing expensive turret stuff');
+
         // The first thing to do when updating the turret is to raytrace to the target to
         // see if the turret can kill them.
         //For this, we need a line between the target and the turret.
@@ -117,6 +116,7 @@ Turret.prototype.update = function() {
                 // If the target is not being hit, update their dying status (kill the death countdown), clear
                 // any residual raytraces, and reset the target's tint
                 this.targetdying = false;
+                this.bmd.clear();
 
                 if(game.shifted) {
                         this.frame = 5;
@@ -131,9 +131,6 @@ Turret.prototype.update = function() {
 // Most of the code is for removing intersections with any obstacles.
 Turret.prototype.findTarget = function(ray) {
 
-        if (!this.inWorld)
-            return 1;
-    
         // Don't shoot the player if they are  behind the turret. The function
         // returns a valid intersection point if a collision occurred, and therefore
         // no turret firing occurs — there is a wall in the way. We want the same
