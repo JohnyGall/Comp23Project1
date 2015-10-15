@@ -168,24 +168,24 @@ function create() {
         // Create the sprites of the game
         boulder = new Boulder(game, 500, 150);
         boulder.scale.setTo(1.5,1.5);
-
-        //create a clouds group
-        clouds = game.add.group();
-        cloud = new Cloud(game, 600, 250);
-        //clouds.add(cloud);
-        //cloud = new Cloud(game, 500, 250);
-        clouds.add(cloud);
         
         obstacles = game.add.group();
         for (var i = 0; i < platforms.length; i++) {
                 obstacles.add(platforms.getAt(i));
         }
         obstacles.add(boulder);
+        //Add player
+        player = new Player(game, controls);
+
+        //create a clouds group
+        clouds = game.add.group();
+        cloud = new Cloud(game, 600, 250);
+        clouds.add(cloud);
+        cloud = new Cloud(game, 500, 500);
+        clouds.add(cloud);
         for(var i = 0; i< clouds.length; i++){
                 obstacles.add(clouds.getAt(i));
         }
-        //Add player
-        player = new Player(game, controls);
 
 //         Add turrets
         turrets = game.add.group();
