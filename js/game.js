@@ -11,24 +11,117 @@ WebFontConfig = {
 };
 
 function preload () {
-        // Level background
-        game.load.spritesheet('sky', 'assets/sky_spritesheet.png', 1920, 1080, 2);
-        game.load.spritesheet('backgrass', 'assets/background_grass_spritesheet.png',1008, 311, 2);
-        game.load.spritesheet('hgrass', 'assets/grass_h_spritesheet.png',252, 48, 2);
-        game.load.spritesheet('tgrass', 'assets/grass_t_spritesheet.png',48, 66, 2);
-        game.load.spritesheet('vgrass', 'assets/grass_v_spritesheet.png', 144, 208, 2);
-        game.load.spritesheet('darkgrass', 'assets/darkgrass.png', 252, 48, 2);
-        game.load.spritesheet('floatgrass', 'assets/floating_spritesheet.png', 252, 48, 2);
-        game.load.spritesheet('floatright', 'assets/floatingledge_spritesheet.png', 64, 48, 2);
-        game.load.spritesheet('floatleft', 'assets/floatingledge1_spritesheet.png', 64, 48, 2);
-        game.load.spritesheet('miniledge', 'assets/mini_floating_spritesheet.png', 48, 48, 2);
+        // Customise the sprites used
+        var backgroundSprites = {
+                "sky":{
+                        "url":"assets/sky_spritesheet.png",
+                        "sizeX":1920,
+                        "sizeY":1080,
+                        "number":2
+                },
+                "backgrass":{
+                        "url":"assets/background_grass_spritesheet.png",
+                        "sizeX":1008,
+                        "sizeY":311,
+                        "number":2
+                },
+                "hgrass":{
+                        "url":"assets/grass_h_spritesheet.png",
+                        "sizeX":252,
+                        "sizeY":48,
+                        "number":2
+                },
+                "vgrass":{
+                        "url":"assets/grass_v_spritesheet.png",
+                        "sizeX":144,
+                        "sizeY":208,
+                        "number":2
+                },
+                "darkgrass":{
+                        "url":"assets/darkgrass.png",
+                        "sizeX":252,
+                        "sizeY":48,
+                        "number":2
 
-        // Sprites and stuff 
-        game.load.spritesheet('boulder', 'assets/boulder_spritesheet.png',48, 48, 2);
-        game.load.spritesheet('player', 'assets/protag_spritesheet.png', 37, 65);
-        game.load.spritesheet('turret', 'assets/turretspritesheet.png', 96, 96, 6);
-        game.load.spritesheet('bullet', 'assets/bullet_spritesheet.png', 16, 16, 2);
-        game.load.spritesheet('cloud', 'assets/cloud_spritesheet.png',96 ,32 , 2);
+                },
+                "floatgrass":{
+                        "url":"assets/floating_spritesheet.png",
+                        "sizeX":252,
+                        "sizeY":48,
+                        "number":2
+                },
+                "floatright":{
+                        "url":"assets/floatingledge_spritesheet.png",
+                        "sizeX":65,
+                        "sizeY":48,
+                        "number":2
+                },
+                "floatleft":{
+                        "url":"assets/floatingledge1_spritesheet.png",
+                        "sizeX":65,
+                        "sizeY":48,
+                        "number":2
+                },
+                "miniledge":{
+                        "url":"assets/mini_floating_spritesheet.png",
+                        "sizeX":48,
+                        "sizeY":48,
+                        "number":2
+                }
+        }
+
+        var playerObjectSprites = {
+                "boulder":{
+                        "url":"assets/boulder_spritesheet.png",
+                        "sizeX":48,
+                        "sizeY":48,
+                        "number":2
+                },
+                "player":{
+                        "url":"assets/protag_spritesheet.png",
+                        "sizeX":37,
+                        "sizeY":65,
+                        // no "number" because the player sprite uses the defualt value (1)
+                },
+                "turret":{
+                        "url":"assets/turretspritesheet.png",
+                        "sizeX":96,
+                        "sizeY":96,
+                        "number":6
+                },
+                "bullet":{
+                        "url":"assets/bullet_spritesheet.png",
+                        "sizeX":16,
+                        "sizeY":16,
+                        "number":2
+                },
+                "cloud":{
+                        "url":"assets/cloud_spritesheet.png",
+                        "sizeX":96,
+                        "sizeY":32,
+                        "number":2
+
+                }
+        }
+
+        // Object and player Sprites and stuff
+        game.load.spritesheet('boulder',playerObjectSprites.boulder.url ,playerObjectSprites.boulder.sizeX, playerObjectSprites.boulder.sizeY, playerObjectSprites.boulder.number);
+        game.load.spritesheet('player', playerObjectSprites.player.url, playerObjectSprites.player.sizeX, playerObjectSprites.player.sizeY);
+        game.load.spritesheet('turret', playerObjectSprites.turret.url ,playerObjectSprites.turret.sizeX, playerObjectSprites.turret.sizeY, playerObjectSprites.turret.number);
+        game.load.spritesheet('bullet', playerObjectSprites.bullet.url ,playerObjectSprites.bullet.sizeX, playerObjectSprites.bullet.sizeY, playerObjectSprites.bullet.number);
+        game.load.spritesheet('cloud', playerObjectSprites.cloud.url ,playerObjectSprites.cloud.sizeX, playerObjectSprites.cloud.sizeY, playerObjectSprites.cloud.number);
+
+        // Level background sprites
+        game.load.spritesheet('sky', backgroundSprites.sky.url, backgroundSprites.sky.sizeX, backgroundSprites.sky.sizeY, backgroundSprites.sky.number);
+        game.load.spritesheet('backgrass', backgroundSprites.backgrass.url,backgroundSprites.backgrass.sizeX, backgroundSprites.backgrass.sizeY, backgroundSprites.backgrass.number);
+        game.load.spritesheet('hgrass', backgroundSprites.hgrass.url,backgroundSprites.hgrass.sizeX, backgroundSprites.hgrass.sizeY, backgroundSprites.hgrass.number);
+        game.load.spritesheet('vgrass', backgroundSprites.vgrass.url, backgroundSprites.vgrass.sizeX, backgroundSprites.vgrass.sizeY, backgroundSprites.vgrass.number);
+        game.load.spritesheet('darkgrass', backgroundSprites.darkgrass.url, backgroundSprites.darkgrass.sizeX, backgroundSprites.darkgrass.sizeY, backgroundSprites.darkgrass.number);
+        game.load.spritesheet('floatgrass', backgroundSprites.floatgrass.url, backgroundSprites.floatgrass.sizeX, backgroundSprites.floatgrass.sizeY, backgroundSprites.floatgrass.number);
+        game.load.spritesheet('floatright', backgroundSprites.floatright.url, backgroundSprites.floatright.sizeX, backgroundSprites.floatright.sizeY, backgroundSprites.floatright.number);
+        game.load.spritesheet('floatleft', backgroundSprites.floatleft.url, backgroundSprites.floatleft.sizeX, backgroundSprites.floatleft.sizeY, backgroundSprites.floatleft.number);
+        game.load.spritesheet('miniledge', backgroundSprites.miniledge.url, backgroundSprites.miniledge.sizeX, backgroundSprites.miniledge.sizeY, backgroundSprites.miniledge.number);
+
 
         // Makes FPS counter work
         game.time.advancedTiming = true;
@@ -62,26 +155,26 @@ var then = Date.now();
 // Are we in debug mode?
 var debug_toggle = 0;
 
-//first cloud 
+//first cloud
 var clouds;
 
 function create() {
         // Create world, with the sky and background grass
         game.physics.startSystem(Phaser.Physics.ARCADE);
         game.world.setBounds(0, 0, 4500, 600);
-        
+
         background = game.add.group();
         background.create(0,0, 'sky');
         background.create(0, 300, 'backgrass');
         background.create(1008, 300, 'backgrass');
-        
+
         // Create a new part of the game keeping track of the world resolution
         game.shifted = false;
 
         // Create platforms group
         platforms = game.add.group();
         platforms.enableBody = true;
-    
+
         // Create a bullets
         bullets = game.add.group();
 
@@ -93,13 +186,13 @@ function create() {
                 ground.body.setSize(252, 37, 0, 6);
                 groundshadow.body.immovable = true;
         }
-    
+
                 var ground = platforms.create(1700, game.world.height - 100, 'hgrass');
                 var groundshadow = platforms.create(1700, game.world.height - 21, 'darkgrass');
                 ground.body.immovable = true;
                 ground.body.setSize(252, 37, 0, 6);
                 groundshadow.body.immovable = true;
-    
+
                 var ground = platforms.create(3800, game.world.height - 64, 'hgrass');
                 var groundshadow = platforms.create(3800, game.world.height - 21, 'darkgrass');
                 ground.body.immovable = true;
@@ -109,8 +202,8 @@ function create() {
                 var groundshadow = platforms.create(3550, game.world.height - 21, 'darkgrass');
                 ground.body.immovable = true;
                 ground.body.setSize(252, 37, 0, 6);
-                groundshadow.body.immovable = true;    
-    
+                groundshadow.body.immovable = true;
+
                 var ground = platforms.create(930, game.world.height - 260, 'hgrass');
                 var groundshadow = platforms.create(930, game.world.height - 222, 'darkgrass');
                 ground.body.immovable = true;
@@ -124,19 +217,19 @@ function create() {
         for (var i = 0; i < 3; i++) {
                 var groundshadow = platforms.create(930, game.world.height - 450+35*i, 'darkgrass');
                 groundshadow.body.immovable = true;
-        }    
+        }
 
         var ground = platforms.create(930, game.world.height - 483, 'hgrass');
         ground.body.immovable = true;
         var ground = platforms.create(1050, game.world.height - 483, 'hgrass');
         ground.body.immovable = true;
 
-    
-    
+
+
         // Create the floating rocky grass platforms
         for(var i = 0; i < 2; i++) {
                 var floating = platforms.create(240 * i, game.world.height - 250, 'floatgrass');
-                
+
                 floating.body.immovable = true;
                 floating.body.setSize(252, 56, 0, 6);
         }
@@ -157,7 +250,7 @@ function create() {
                 debug_toggle = debug_toggle ? false : true;
                 // If debug is turned off, we want to clear the bounding boxes and make the FPS
                 // counter invisible. This code is put here because in render it would be called
-                // at every frame. 
+                // at every frame.
                 framerate.visible = false;
                 game.debug.reset();
         }, this);
@@ -168,7 +261,7 @@ function create() {
         // Create the sprites of the game
         boulder = new Boulder(game, 500, 150);
         boulder.scale.setTo(1.5,1.5);
-        
+
         obstacles = game.add.group();
         for (var i = 0; i < platforms.length; i++) {
                 obstacles.add(platforms.getAt(i));
@@ -194,32 +287,32 @@ function create() {
         turrets.add(turret);
 //        turret = new Turret(game, player, obstacles, bullets, 1300, 500);
 //        turrets.add(turret);
-    
+
         for (var i = 0; i < 5; i++) {
                 turrets = game.add.group();
                 turret = new Turret(game, player, obstacles, bullets, 4000, 100+i*100);
                 turret.scale.x *= -1;
                 turrets.add(turret);
         }
-    
+
         // Add slopes
         slopes = game.add.group();
         var movables = game.add.group();
         movables.add(player);
         movables.add(boulder);
-    
-    
+
+
         for(var i = 0; i < 2; i++) {
                 var slope = new Slope(this, 860-144 * i, 300+192*.7*i, movables);
                 slopes.add(slope);
         }
-    
+
         for(var i = 0; i < 3; i++) {
                 var slope = new Slope(this, 1220+144 * (i+1), 117+192*.7*i, movables);
                 slope.scale.x = -1;
                 slopes.add(slope);
         }
-        
+
         var slope = new Slope(this, 2000, 117+192*.7*2, movables);
 
 
