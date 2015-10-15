@@ -75,7 +75,7 @@ var debug_toggle = 0;
 function create() {
         // Create world, with the sky and background grass
         game.physics.startSystem(Phaser.Physics.ARCADE);
-        game.world.setBounds(0, 0, 4500, 600);
+        game.world.setBounds(0, 0, 4500, 800);
     
         // Make wonderful music
         music = game.add.audio('wordl1');
@@ -88,8 +88,8 @@ function create() {
     
         background = game.add.group();
         background.create(0,0, 'sky');
-        background.create(0, 300, 'backgrass');
-        background.create(1008, 300, 'backgrass');
+        background.create(0, 500, 'backgrass');
+        background.create(1008, 500, 'backgrass');
 
         // Create a new part of the game keeping track of the world resolution
         game.shifted = false;
@@ -127,24 +127,24 @@ function create() {
                 ground.body.setSize(252, 37, 0, 6);
                 groundshadow.body.immovable = true;
 
-                var ground = platforms.create(930, game.world.height - 260, 'hgrass');
-                var groundshadow = platforms.create(930, game.world.height - 222, 'darkgrass');
+                var ground = platforms.create(930, game.world.height - 290, 'hgrass');
+                var groundshadow = platforms.create(930, game.world.height - 270, 'darkgrass');
                 ground.body.immovable = true;
                 ground.body.setSize(252, 37, 0, 6);
                 groundshadow.body.immovable = true;
 
         for (var i = 0; i < 10; i++) {
-                var groundshadow = platforms.create(1050, game.world.height - 450+40*i, 'darkgrass');
+                var groundshadow = platforms.create(1050, game.world.height - 500+40*i, 'darkgrass');
                 groundshadow.body.immovable = true;
         }
         for (var i = 0; i < 3; i++) {
-                var groundshadow = platforms.create(930, game.world.height - 450+35*i, 'darkgrass');
+                var groundshadow = platforms.create(930, game.world.height - 500+35*i, 'darkgrass');
                 groundshadow.body.immovable = true;
         }
 
-        var ground = platforms.create(930, game.world.height - 483, 'hgrass');
+        var ground = platforms.create(930, game.world.height - 533, 'hgrass');
         ground.body.immovable = true;
-        var ground = platforms.create(1050, game.world.height - 483, 'hgrass');
+        var ground = platforms.create(1050, game.world.height - 533, 'hgrass');
         ground.body.immovable = true;
 
 
@@ -205,37 +205,15 @@ function create() {
 
 
         for(var i = 0; i < 2; i++) {
-                var slope = new Slope(this, 860-144 * i, 300+192*.7*i, movables);
+                var slope = new Slope(this, 860-144 * i, 510+192*.7*i, movables);
                 slopes.add(slope);
         }
-
-        for(var i = 0; i < 3; i++) {
-                var slope = new Slope(this, 1220+144 * (i+1), 117+192*.7*i, movables);
-                slope.scale.x = -1;
-                slopes.add(slope);
-        }
-
-        for(var i = 0; i < 20; i++) {
-                var spike = new Spike(this, 2000+48*i, game.height - 43, player);
-                spike.scale.y = -1;
-                platforms.add(spike);
-        }
-        
-        var slope = new Slope(this, 2000, 117+192*.7*2, movables);
-        slopes.add(slope);
 
     //         Add turrets
         turrets = game.add.group();
-        turret = new Turret(game, player, obstacles, slopes, bullets, 975, 275);
+        turret = new Turret(game, player, obstacles, slopes, bullets, 975, 475);
         turret.scale.x *= -1;
         turrets.add(turret);
-
-        for (var i = 0; i < 5; i++) {
-                turrets = game.add.group();
-                turret = new Turret(game, player, obstacles, slopes, bullets, 4000, 100+i*100);
-                turret.scale.x *= -1;
-                turrets.add(turret);
-        }
     
 
         // Set up UI text

@@ -32,9 +32,9 @@ Slope.prototype.update = function() {
                 var rel_y = (rel_x / this.width) * this.height + this.y - thing.anchor.y*thing.height;
 
 
-//            if (thing.x >= this.x + this.width-5) {
-//                thing.x += 1;
-//                if (thing.body.velocity.x < 0) {
+//            if (this.scale.x * thing.x >= this.scale.x * (this.x + this.width-5)) {
+//                thing.x -= this.scale.x*1;
+//                if (this.scale.x * thing.body.velocity.x < 0) {
 //                    thing.body.velocity.x = 0;  
 //                }
 //            } else 

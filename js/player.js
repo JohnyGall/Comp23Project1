@@ -11,7 +11,7 @@ function Player(game, controls) {
         //Store constants
         // Player initial coordinates
         this.INIT_X = 200;
-        this.INIT_Y = 500;
+        this.INIT_Y = this.game.world.height-100;
         // Walking and jumping speeds
         this.DEFAULT_SPEED = 150;
         this.SLIDE_SPEED = 150;
