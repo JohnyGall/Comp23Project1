@@ -1,5 +1,5 @@
 var gameWidth = 800, gameHeight = 600;
-var game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, "game", {preload:preload, update:update, create:create, render:render});
+var game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, "game", playState);
 
 var fontname = 'Raleway';
 WebFontConfig = {

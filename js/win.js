@@ -4,6 +4,6 @@ var winState = {
 
 	// when correctly prompted,
 	// call the function that relaunches the menu
-	game.state.start('menu');
+	// game.state.start('menu');
 
 }

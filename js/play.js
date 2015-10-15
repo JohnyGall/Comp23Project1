@@ -1,6 +1,34 @@
+	// The player sprite, extended from Phaser.Sprite
+	var player;
+	// A group of the static platforms in the level
+	var platforms;
+	// A group containing things that block raycasts
+	var obstacles;
+	// A group for all slopes
+	var slopes;
+	// A group containing the background elements
+	var background;
+	// The controls
+	var controls;
+	// sprites
+	var boulder;
+	var turrets;
+	var bullets;
+	// UI text elements
+	var respawnText;
+	var respawnCount;
+	var framerate;
+	// the songs to bbe playing
+	var music;
+	var music_l;
+	// Time, used for favicon animation
+	var then = Date.now();
+	// Are we in debug mode?
+	var debug_toggle = 0;
+
 var playState = {
 
-	function preload (){
+	preload: function (){
 
 		// this is where we could call the loadlevel funciton, not the loadState
 		// go team
@@ -33,37 +61,9 @@ var playState = {
         // Allows Google Fonts to be used remotely
         game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
 
-	}
+	},
 
-	// The player sprite, extended from Phaser.Sprite
-	var player;
-	// A group of the static platforms in the level
-	var platforms;
-	// A group containing things that block raycasts
-	var obstacles;
-	// A group for all slopes
-	var slopes;
-	// A group containing the background elements
-	var background;
-	// The controls
-	var controls;
-	// sprites
-	var boulder;
-	var turrets;
-	var bullets;
-	// UI text elements
-	var respawnText;
-	var respawnCount;
-	var framerate;
-	// the songs to bbe playing
-	var music;
-	var music_l;
-	// Time, used for favicon animation
-	var then = Date.now();
-	// Are we in debug mode?
-	var debug_toggle = 0;
-
-	function create() {
+	create: function() {
 	    // Create world, with the sky and background grass
 	    game.physics.startSystem(Phaser.Physics.ARCADE);
 	    game.world.setBounds(0, 0, 4500, 600);
@@ -235,9 +235,9 @@ var playState = {
 	    // Set up UI text
 	    createUI();
 
-	}
+	},
 
-	function update() {
+	update: function() {
 
 	    if (!music.isPlaying) {
 	            music.play();
@@ -268,9 +268,9 @@ var playState = {
 	            }
 	    }
 
-	}
+	},
 
-	function render() {
+	render: function() {
 	    // Don't render anything unless the user wants to debug
 	    if (debug_toggle === true) {
 	            // Clear the debug render screen, so there isn't any flicker
@@ -291,9 +291,9 @@ var playState = {
 	            }
 
 	    }
-	}
+	},
 
-	function createUI() {
+	createUI: function() {
 	    // Set up text for the large countdown to respawn
 	    // We use game.width, not game.world.getBounds().width, because the text is locked to the camera
 	    respawnCount = game.add.text(game.width/2, game.height/2, "");
@@ -334,10 +334,10 @@ var playState = {
 	    framerate.stroke = '#000';
 	    framerate.strokeThickness = 3;
 	    framerate.visible = false;
-	}
+	},
 
 
-	function bitshift() {
+	bitshift: function() {
 	    game.shifted = !game.shifted;
 
 	    bullets.forEach(
@@ -357,18 +357,18 @@ var playState = {
 	            music.mute = true;
 	            music_l.mute = false;
 	    }
-	}
+	},
 
-	function shiftOff(object) {
+	shiftOff: function(object) {
 	    object.frame = 0;
-	}
+	},
 
-	function shiftOn(object) {
+	shiftOn: function(object) {
 	    object.frame = 1;
-	}
+	},
 
-	function pause() {
+	pause: function() {
 	    game.paused = !game.paused;
-	}
+	},
 
 };

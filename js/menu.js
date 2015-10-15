@@ -1,63 +1,64 @@
 var menuState = {
 
+	preload: function(){
+		// load menu images
+		game.load.spritesheet('menu', 'assets/menu_spritesheet.png', 800, 600, 3);
+	},
+
 	create: function(){
 
-		// creates a group for all menu displays
-		var displays;
+//		var controls = game.input.keyboard.createCursorKeys();
+//		controls.enter = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
 
+		// display menu images
+		menu = game.add.sprite(0, 0, 'menu');
+
+
+	},
+
+	update: function(){
+
+		// creates menu controls
+		// I know it's not efficient, but this won't work in create function
 		var controls = game.input.keyboard.createCursorKeys();
-		controls.P = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
-
-		// all the shit that goes in the menu
-		game.load.image('neutral', 'assets/Menu1', 600, 800);
-		game.load.image('displayL', 'assets/Menu2', 600, 800);
-		game.load.image('displayR', 'assets/Menu3', 600, 800);
-
-		displays = game.add.group();
-		displays.create(0, 0, 'displayL');
-		displays.create(0, 0, 'displayR');
-		displays.create(0, 0, 'neutral');
-
-		// set selected options screens to invisible
-		displayR.visible = false;
-		displayL.visible = false;
+		controls.enter = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+		var select = 'neutral';
 
 		// if player is still being a jackass
 		if(controls.right.isDown && controls.left.isDown){
-			break;
+			menu.frame = 0;
 		}
 		// if player presses right
 		else if(controls.right.isDown){
-			displayR.visible = true;
-			displayL.visible = false;
-			neutral.visible = false;
+			menu.frame = 2;
+			select = 'right';
 		}
 		// if player presses left
 		else if(controls.left.isDown){
-			displayL.visible = true;
-			displayR.visible = false;
-			neutral.visible = false;
-		}
+			menu.frame = 1;
+			select = 'left';		}
 
 		// what happens when enter is pressed
 		if(controls.enter.isDown){
-			if(displayL){
-				enter.onDown.addOnce(this.start, this);
+			if(menu.frame === 1){
+				console.log("LEFT");
+				game.state.start('play');
 			}
-			else if(displayR){
-				enter.onDown.addOnce(this.maps, this);
+			else if(menu.frame === 2){
+				console.log("RIGHT");
+				game.state.start('loadmap');
 			}
 		}
 	},
 
-	// when correctly prompted,
+	/*// when correctly prompted,
 	// call the function that starts the game
 	start: function (){
-		game.state.start('play');
+		
 	},
 	// when correctly prompted,
 	// call the function that loads a JSON file
 	maps: function(){
-		game.state.start('loadmap')	
-	},
+		
+	},*/
 };
