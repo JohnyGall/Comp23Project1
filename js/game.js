@@ -122,7 +122,6 @@ function preload () {
         game.load.spritesheet('floatleft', backgroundSprites.floatleft.url, backgroundSprites.floatleft.sizeX, backgroundSprites.floatleft.sizeY, backgroundSprites.floatleft.number);
         game.load.spritesheet('miniledge', backgroundSprites.miniledge.url, backgroundSprites.miniledge.sizeX, backgroundSprites.miniledge.sizeY, backgroundSprites.miniledge.number);
 
-
         // Makes FPS counter work
         game.time.advancedTiming = true;
         // Allows Google Fonts to be used remotely
@@ -261,7 +260,6 @@ function create() {
         // Create the sprites of the game
         boulder = new Boulder(game, 500, 150);
         boulder.scale.setTo(1.5,1.5);
-
         obstacles = game.add.group();
         for (var i = 0; i < platforms.length; i++) {
                 obstacles.add(platforms.getAt(i));
