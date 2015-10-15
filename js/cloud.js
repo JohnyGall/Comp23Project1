@@ -1,11 +1,11 @@
-function Cloud(game, x, y){
+function Cloud(game, x, y, sprite){
         //Initial variables
         this.game = game;
         this.INIT_X = x;
         this.INIT_Y = y;
 
         //Set up the cloud
-        Phaser.Sprite.call(this, game, x, y, 'cloud');
+        Phaser.Sprite.call(this, game, x, y, sprite);
         this.anchor.setTo(0.5, 0.5);
 
         game.physics.enable(this, Phaser.Physics.ARCADE);

@@ -179,9 +179,9 @@ function create() {
 
         //create a clouds group
         clouds = game.add.group();
-        cloud = new Cloud(game, 600, 250);
+        cloud = new Cloud(game, 600, 250, 'cloud');
         clouds.add(cloud);
-        cloud = new Cloud(game, 500, 500);
+        cloud = new Cloud(game, 500, 500, 'cloud');
         clouds.add(cloud);
         for(var i = 0; i< clouds.length; i++){
                 obstacles.add(clouds.getAt(i));
