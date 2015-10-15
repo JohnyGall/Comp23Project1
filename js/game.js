@@ -13,6 +13,7 @@ WebFontConfig = {
 game.state.add('menu', menuState);
 game.state.add('play', playState);
 game.state.add('win', winState);
+game.state.add('loadmap', loadState);
 
 function preload () {
         // Level background
