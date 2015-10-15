@@ -57,7 +57,7 @@ function Player(game, controls) {
         // jumping
         this.animations.add('jright', [18, 19, 20], 4, false);
         this.animations.add('jleft', [21, 22, 23], 4, false);
-}
+},
 
 Player.prototype = Object.create(Phaser.Sprite.prototype);
 Player.prototype.constructor = Player;
@@ -391,25 +391,21 @@ Player.prototype.update = function() {
                         this.frame = 27;
         }
 
->>>>>>> clouds
         // V Key (speedboost)
         if (this.controls.V.isDown) {
                 // Add the speedboost speed to the player's velocity.
                 // The weird math makes it so if the player is facing
                 // right the speed added will be 1 * V_SPEED as 2 * 1 - 1 = 1,
-<<<<<<< HEAD
                 // whereas if the player is facing left 2 * 0 - 1 = -1,
                 // and a velocity of -V_SPEED will be added.
                 this.body.velocity.x += ((2 * this.facingRight) - 1) * this.V_SPEED;
         }
 
-=======
                 // whereas if the player is facing left 2 * 0 - 1 = -1, 
                 // and a velocity of -V_SPEED will be added.  
                 this.body.velocity.x += ((2 * this.facingRight) - 1) * this.V_SPEED;
         }
     
->>>>>>> clouds
         if(this.x >= game.world.width) {
                 this.x -= 1;
                 this.body.velocity.x = 0;
@@ -437,8 +433,4 @@ Player.prototype.respawn = function() {
         this.body.gravity.y = this.ORIG_GRAV;
         this.position.x = this.INIT_X;
         this.position.y = this.INIT_Y;
-<<<<<<< HEAD
 };
-=======
-};
->>>>>>> clouds
