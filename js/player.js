@@ -5,6 +5,11 @@ function Player(game, controls) {
         this.facingRight = true;
         this.killTime = 0;
     
+        this.sfx_jump = game.add.audio('player_jump');
+        this.sfx_jump.volume = 0.25;
+        this.sfx_spawn = game.add.audio('player_spawn');
+        this.sfx_spawn.volume = 0.25;
+    
         // if player is on slope
         this.onSlope = false;
     
@@ -153,6 +158,7 @@ Player.prototype.update = function() {
                 if (this.body.velocity.y > this.JUMP_SPEED) {
                     this.y -= 1;
                     this.body.velocity.y = this.JUMP_SPEED;
+                    this.sfx_jump.play();
                 }
                 // Play jump animations
                 if (this.facingRight){
@@ -233,4 +239,5 @@ Player.prototype.respawn = function() {
         this.body.gravity.y = this.ORIG_GRAV;
         this.position.x = this.INIT_X;
         this.position.y = this.INIT_Y;
+        this.sfx_spawn.play();
 };

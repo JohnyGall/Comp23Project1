@@ -35,7 +35,16 @@ function preload () {
         game.load.audio('wordl1_l', ['assets/music/bitshift2_lr.wav', 'assets/music/bitshift2_lr.ogg']);
         game.load.audio('wordl1', ['assets/music/bitshift2.wav', 'assets/music/bitshift2.ogg']);   
         game.load.audio('wordl2_l', ['assets/music/bitshift3_lr.wav', 'assets/music/bitshift3_lr.ogg']);
-        game.load.audio('wordl2', ['assets/music/bitshift3.wav', 'assets/music/bitshift3.ogg']);   
+        game.load.audio('wordl2', ['assets/music/bitshift3.wav', 'assets/music/bitshift3.ogg']);
+    
+        // Other sfx
+        game.load.audio('player_jump', ['assets/music/player_jump.wav', 'assets/music/player_jump.ogg']);
+        game.load.audio('player_spawn', ['assets/music/player_spawn.wav', 'assets/music/player_spawn.ogg']);
+
+        game.load.audio('turret_charge_hr', ['assets/music/turret_charge_hr.wav', 'assets/music/turret_charge_hr.ogg']);
+        game.load.audio('turret_fire_hr', ['assets/music/turret_fire_hr.wav', 'assets/music/turret_fire_hr.ogg']); 
+        game.load.audio('turret_fire_lr', ['assets/music/turret_fire_lr.wav', 'assets/music/turret_fire_lr.ogg']); 
+
 //=======
 //        // Customise the sprites used
 //        var backgroundSprites = {
@@ -189,10 +198,10 @@ function create() {
     
         // Make wonderful music
         music = game.add.audio('wordl1');
-        music.volume = 0.25;
+        music.volume = 0.15;
         music.loop = true;
         music_l = game.add.audio('wordl1_l');
-        music_l.volume = 0.25;
+        music_l.volume = 0.15;
         music_l.mute = true;
         music_l.loop = true;
     
@@ -332,7 +341,10 @@ function create() {
 }
 
 function update() {
-
+        if(!music.isPlaying) {
+            music.play()
+            music_l.play()
+        }
         // Collision detection for all objects
         game.physics.arcade.collide(player, platforms);
         game.physics.arcade.collide(platforms, boulders);
@@ -434,13 +446,20 @@ function bitshift() {
         bullets.forEach(
                 function(b) { b.shift(); }
         , this);
+        turrets.forEach(
+                function(t) { t.bmd.clear(); }
+        , this);
         if (!game.shifted) {
                 platforms.forEach(shiftOff, this);
                 background.forEach(shiftOff, this);
+                music.mute = false;
+                music_l.mute = true;
         }
         else {
                 platforms.forEach(shiftOn, this);
                 background.forEach(shiftOn, this);
+                music.mute = true;
+                music_l.mute = false;
         }
 }
 

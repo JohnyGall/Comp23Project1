@@ -11,6 +11,13 @@ function Turret(game, target, obstacles, slopes, bullets, x, y) {
         // Is the target in the respawn countdown?
         this.targetdying = false;
 
+        this.sfx_tracking = game.add.audio('turret_charge_hr');
+        this.sfx_tracking.volume = 0.25;
+        this.sfx_fire_hr = game.add.audio('turret_fire_hr');
+        this.sfx_fire_hr.volume = 0.25;
+        this.sfx_fire_lr = game.add.audio('turret_fire_lr');
+        this.sfx_fire_lr.volume = 0.25;
+    
         // Store constants
         // Position
         this.INIT_X = x;
@@ -51,7 +58,8 @@ Turret.prototype.update = function() {
         if (Math.abs(this.x-this.target.x) > game.width/2 + this.body.width *this.anchor.x ||
             Math.abs(this.y-this.target.y) > game.height/2 + this.body.height *this.anchor.y) {
             this.targetdying = false;
-
+            this.sfx_tracking.stop();
+            
             if(game.shifted) {
                     this.bmd.clear();
                     this.frame = 5;
@@ -72,6 +80,12 @@ Turret.prototype.update = function() {
         
             // If there was no intersection
             if (!intersect) {
+                if(!game.shifted && !this.sfx_tracking.isPlaying && this.target.health > 1) {
+                    this.sfx_tracking.play();
+                } else if (game.shifted) {
+                    this.sfx_tracking.stop();
+                }
+                
                 if(!this.targetdying) {
                     this.targetdying = true;
                     this.lastShotTime = game.time.now;                    
@@ -109,6 +123,11 @@ Turret.prototype.update = function() {
                    };
              
                 if (this.targetdying && game.time.now - this.lastShotTime >= waitTime) {
+                    if (game.shifted)
+                        this.sfx_fire_lr.play();
+                    else
+                        this.sfx_fire_hr.play();
+                    
                     var bullet = new Bullet(game, this.target, this);
                     this.lastShotTime = game.time.now;
                 }
@@ -117,6 +136,7 @@ Turret.prototype.update = function() {
                 // any residual raytraces
                 this.targetdying = false;
                 this.bmd.clear();
+                this.sfx_tracking.stop();
 
                 if(game.shifted) {
                         this.frame = 5;
