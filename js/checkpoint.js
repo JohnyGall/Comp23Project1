@@ -19,10 +19,12 @@ CheckPoint.prototype = Object.create(Phaser.Sprite.prototype);
 CheckPoint.prototype.constructor = CheckPoint;
 
 CheckPoint.prototype.update = function() {
-        if (game.physics.arcade.overlap(this.target, this) && !this.hit) {
-                this.target.INIT_X = this.INIT_X;
-                this.target.INIT_Y = this.INIT_Y;
-                this.hit = true;
+        if (!this.hit) {
+                if(this.target.body.x >= this.INIT_X){
+                        this.target.INIT_X = this.INIT_X;
+                        this.target.INIT_Y = this.INIT_Y;
+                        this.hit = true;
+                }
         }
 
 }
