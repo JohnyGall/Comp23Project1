@@ -109,12 +109,13 @@ function create() {
                 groundshadow.body.immovable = true;
         }
 
-                var ground = platforms.create(1900, game.world.height - 100, 'hgrass');
-                var groundshadow = platforms.create(1900, game.world.height - 21, 'darkgrass');
+        for(var i = 0; i < 2; i++) {
+                var ground = platforms.create(1900 + 252*i, game.world.height - 64, 'hgrass');
+                var groundshadow = platforms.create(1900 + 252*i, game.world.height - 21, 'darkgrass');
                 ground.body.immovable = true;
                 ground.body.setSize(252, 37, 0, 6);
                 groundshadow.body.immovable = true;
-
+        }
 
                 var ground = platforms.create(930, game.world.height - 290, 'hgrass');
                 var groundshadow = platforms.create(930, game.world.height - 270, 'darkgrass');
@@ -175,6 +176,17 @@ function create() {
 
         // Create the sprites of the 
         boulders = game.add.group();
+
+        // Add slopes
+        slopes = game.add.group();
+        for(var i = 0; i < 2; i++) {
+                var slope = new Slope(this, 860-128+128 * i, 482+128-128*i, boulders);
+                slopes.add(slope);
+        }    
+
+        //Add player
+        player = new Player(game, controls);
+
         var boulder = new Boulder(game, 500, 150);
         boulder.scale.setTo(1.5,1.5);
         boulders.add(boulder);
@@ -182,17 +194,7 @@ function create() {
         boulder = new Boulder(game, 1700, -100);
         boulder.scale.setTo(1.5,1.5);
         boulders.add(boulder);
-
-        // Add slopes
-        slopes = game.add.group();
-        for(var i = 0; i < 2; i++) {
-                var slope = new Slope(this, 860-145 * i, 510+160*i, boulders);
-                slopes.add(slope);
-        }    
-
-        //Add player
-        player = new Player(game, controls);
-
+    
     //         Add turrets
         turrets = game.add.group();
         turret = new Turret(game, player, platforms, slopes, bullets, 975, 475);

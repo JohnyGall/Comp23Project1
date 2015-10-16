@@ -62,9 +62,9 @@ Slope.prototype.update = function() {
 if (game.physics.arcade.overlap(thing, this) && this.scale.x*thing.x >= this.scale.x*(this.x-0.5*this.width) && this.scale.x*thing.x  <= this.scale.x*(this.x+0.5*this.width)) {
             var rel_x = this.scale.x*(thing.x - this.x+0.5*this.width*this.scale.x);
             if (this.scale.x > 0) 
-                var rel_y = (1-rel_x / this.width) * this.height + this.y - thing.anchor.y*thing.height;
+                var rel_y = (1-rel_x / this.width) * this.height + this.y - thing.anchor.y*thing.height-.25*thing.width;
             else
-                var rel_y = (rel_x / this.width) * this.height + this.y - thing.anchor.y*thing.height;
+                var rel_y = (rel_x / this.width) * this.height + this.y - thing.anchor.y*thing.height-.25*thing.width;
 
 
 //            if (thing.x >= this.x + this.width-5) {
@@ -98,9 +98,9 @@ Slope.prototype.isOn = function(thing) {
             var rel_x = this.scale.x*(thing.x - this.x+0.5*this.width*this.scale.x);
             var rel_y = 0;
             if (this.scale.x > 0) 
-                rel_y = (1-rel_x / this.width) * this.height + this.y - thing.anchor.y*thing.height - 1;
+                rel_y = (1-rel_x / this.width) * this.height + this.y - thing.anchor.y*thing.height -.25*thing.width - 1;
             else
-                rel_y = (rel_x / this.width) * this.height + this.y - thing.anchor.y*thing.height - 1;
+                rel_y = (rel_x / this.width) * this.height + this.y - thing.anchor.y*thing.height -.25*thing.width - 1;
 
             if (thing.y > rel_y) 
                 return true; 
