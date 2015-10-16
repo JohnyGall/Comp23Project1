@@ -46,7 +46,6 @@ Turret.prototype = Object.create(Phaser.Sprite.prototype);
 Turret.prototype.constructor = Turret;
 
 Turret.prototype.update = function() {
-        this.target.tint = 0xffffff;
         var waitTime = this.HIGH_DELAY;
         
         if (Math.abs(this.x-this.target.x) > game.width/2 + this.body.width *this.anchor.x ||
@@ -115,7 +114,7 @@ Turret.prototype.update = function() {
                 }
             } else {
                 // If the target is not being hit, update their dying status (kill the death countdown), clear
-                // any residual raytraces, and reset the target's tint
+                // any residual raytraces
                 this.targetdying = false;
                 this.bmd.clear();
 

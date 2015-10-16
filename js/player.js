@@ -4,10 +4,10 @@ function Player(game, controls) {
         this.controls = controls;
         this.facingRight = true;
         this.killTime = 0;
-
+    
         // if player is on slope
         this.onSlope = false;
-
+    
         //Store constants
         // Player initial coordinates
         this.INIT_X = 200;
@@ -48,7 +48,7 @@ function Player(game, controls) {
         game.camera.follow(this);
         // Initialize alive-ness
         this.health = this.MAX_HEALTH;
-
+    
         //  Name animations for the player
         // walking
         //                   name,     frames from sheet,    FPS, loop
@@ -70,7 +70,7 @@ Player.prototype.update = function() {
                         if (this.y > game.world.height)
                                 this.kill();
             }, this);
-
+        
         // If the player is dead and waiting to be respawned, don't let the user
         // move the player around.
         if (this.health < 2) {
@@ -87,7 +87,7 @@ Player.prototype.update = function() {
         if (this.body.blocked.down) {
                 this.body.velocity.y = 0;
         }
-
+        
 
         // CONTROLS
 
@@ -109,7 +109,7 @@ Player.prototype.update = function() {
                 if(this.body.touching.down || this.body.blocked.down || this.onSlope) {
                         this.animations.play('right');
                 }
-
+            
                 // This is rightwards motion, so if we are moving to the left with a high
                 // velocity, decay that speed until we are back at the default. Otherwise,
                 // it is business as usual and we go to the right at our default speed.
@@ -127,7 +127,7 @@ Player.prototype.update = function() {
                 if(this.body.touching.down || this.body.blocked.down || this.onSlope) {
                         this.animations.play('left');
                 }
-
+            
                 // Same as above, if we are going fast to the right, the left arrow key should
                 // slow us down. If not, then just change our speed to the default walking speed.
                 if (this.body.velocity.x > this.DEFAULT_SPEED) {
@@ -136,7 +136,7 @@ Player.prototype.update = function() {
                         this.body.velocity.x = -1 * this.DEFAULT_SPEED;
                 }
         }
-
+    
         // Reset the animation when the player is idle, so we don't walk in place
         if (!this.controls.left.isDown && !this.controls.right.isDown && (this.body.touching.down || this.body.blocked.down || this.onSlope)) {
                 if(this.facingRight){
@@ -145,7 +145,7 @@ Player.prototype.update = function() {
                         this.frame = 8;
                 }
         }
-
+        
         // Up Arrow
         // If the up arrow is being pushed, give the player a velocity upwards as long as
         // the player is touching the ground.
@@ -162,12 +162,12 @@ Player.prototype.update = function() {
                 }
         }
         // If the user is not holding down the up key, we make the jump decay faster than
-        // it normally would. This makes it so holding down the up arrow leads to a
+        // it normally would. This makes it so holding down the up arrow leads to a 
         // higher jump.
         else if (!this.controls.up.isDown && this.body.velocity.y <= this.UP_DECAY_THRESH) {
                 this.body.velocity.y *= this.UP_DECAY_FACTOR;
-        }
-
+        } 
+        
         // Down Arrow
         //  Allows player to descend rapidly if airborne
         if (this.controls.down.isDown && !(this.body.touching.down || this.body.blocked.down)) {
@@ -187,12 +187,12 @@ Player.prototype.update = function() {
                         }
                 }
         }
-
+    
         //change to low-res graphics if shifted
         if(game.shifted) {
                 if (this.facingRight)
                         this.frame = 26;
-                else
+                else  
                         this.frame = 27;
         }
 
@@ -201,11 +201,11 @@ Player.prototype.update = function() {
                 // Add the speedboost speed to the player's velocity.
                 // The weird math makes it so if the player is facing
                 // right the speed added will be 1 * V_SPEED as 2 * 1 - 1 = 1,
-                // whereas if the player is facing left 2 * 0 - 1 = -1,
-                // and a velocity of -V_SPEED will be added.
+                // whereas if the player is facing left 2 * 0 - 1 = -1, 
+                // and a velocity of -V_SPEED will be added.  
                 this.body.velocity.x += ((2 * this.facingRight) - 1) * this.V_SPEED;
         }
-
+    
         if(this.x >= game.world.width) {
                 this.x -= 1;
                 this.body.velocity.x = 0;
