@@ -145,6 +145,9 @@ var controls;
 var boulder;
 var turrets;
 var bullets;
+
+//checkpoints
+var checkpoints;
 // UI text elements
 var respawnText;
 var respawnCount;
@@ -276,6 +279,9 @@ function create() {
         obstacles.add(boulder);
         //Add player
         player = new Player(game, controls);
+
+        checkpoints = new CheckPoint(game, 1173, 52, player);
+        checkpoints = new CheckPoint(game, 300, 500, player);
 
         //create a clouds group
         clouds = game.add.group();
