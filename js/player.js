@@ -1,6 +1,7 @@
-function Player(game, controls) {
+function Player(game, controls, playstate) {
         // Store variables
         this.game = game;
+        this.playstate = playstate;
         this.controls = controls;
         this.facingRight = true;
         this.killTime = 0;
@@ -68,7 +69,7 @@ Player.prototype = Object.create(Phaser.Sprite.prototype);
 Player.prototype.constructor = Player;
 
 Player.prototype.update = function() {
-            var slopes = playState.slopes;
+            var slopes = this.playstate.slopes;
     
             this.onSlope = false;
             slopes.forEach(function(slope) {this.onSlope = (slope.isOn(this) || this.onSlope);}, this);

@@ -1,10 +1,10 @@
-function Turret(game, target, obstacles, slopes, bullets, x, y) {
+function Turret(game, target, obstacles, slopes, playstate, x, y) {
         // Store variables
         this.game = game;
         this.target = target;
         this.obstacles = obstacles;
         this.slopes = slopes;
-        this.bullets = bullets;
+        this.playstate = playstate;
 
         // Used for counting down to player death
         this.lastShotTime = game.time.now;
@@ -126,7 +126,7 @@ Turret.prototype.update = function() {
                                 else
                                         this.sfx_fire_hr.play();
                     
-                                var bullet = new Bullet(game, this.target, this);
+                                var bullet = new Bullet(game, this.target, this, this.playstate);
                                 this.lastShotTime = game.time.now;
                         }
                 } else {

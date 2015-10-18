@@ -1,6 +1,7 @@
-function Slope (game, x, y, boulders) {
+function Slope (game, x, y, boulders, playstate) {
         // Store variables, mostly for accessing the bitshift value
         this.game = game;
+        this.playstate = playstate;
         this.INIT_X = x;
         this.INIT_Y = y;
         this.boulders = boulders;
@@ -58,7 +59,7 @@ Slope.prototype.update = function() {
         }
     }, this);
 
-    var thing = playState.player;
+    var thing = this.playstate.player;
 if (game.physics.arcade.overlap(thing, this) && this.scale.x*thing.x >= this.scale.x*(this.x-0.5*this.width) && this.scale.x*thing.x  <= this.scale.x*(this.x+0.5*this.width)) {
             var rel_x = this.scale.x*(thing.x - this.x+0.5*this.width*this.scale.x);
             if (this.scale.x > 0) 

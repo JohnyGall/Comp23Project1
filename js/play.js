@@ -319,26 +319,26 @@ create: function() {
         // Add this.slopes
         this.slopes = game.add.group();
         for(var i = 0; i < 2; i++) {
-                var slope = new Slope(this, 860-128+128 * i, 482+128-128*i, this.boulders);
+                var slope = new Slope(this, 860-128+128 * i, 482+128-128*i, this.boulders, this);
                 this.slopes.add(slope);
         }    
         for(var i = 0; i < 2; i++) {
-                var slope = new Slope(this, 3924+128 * i, 400+128*i, this.boulders);
+                var slope = new Slope(this, 3924+128 * i, 400+128*i, this.boulders, this);
                 this.slopes.add(slope);
                 slope.scale.x = -1;
         }
-        var slope = new Slope(this, 4438, 528, this.boulders);
+        var slope = new Slope(this, 4438, 528, this.boulders, this);
         this.slopes.add(slope);
         for(var i = 0; i < 3; i++) {
-                var slope = new Slope(this, 7440+128 * i, 300+128*i, this.boulders);
+                var slope = new Slope(this, 7440+128 * i, 300+128*i, this.boulders, this);
                 this.slopes.add(slope);
                 slope.scale.x = -1;
         }
-        var slope = new Slope(this, 8072, 556, this.boulders);
+        var slope = new Slope(this, 8072, 556, this.boulders, this);
         this.slopes.add(slope);
 
         //Add this.player
-        this.player = new Player(game, this.controls);
+        this.player = new Player(game, this.controls, this);
     
         //Checkpoints
         checkpoints = game.add.group();
@@ -365,15 +365,15 @@ create: function() {
     
     //         Add this.turrets
         this.turrets = game.add.group();
-        turret = new Turret(game, this.player, this.platforms, this.slopes, this.bullets, 975, 475);
+        turret = new Turret(game, this.player, this.platforms, this.slopes, this, 975, 475);
         turret.scale.x *= -1;
         this.turrets.add(turret); 
-        turret = new Turret(game, this.player, this.platforms, this.slopes, this.bullets, 2470, 700);
+        turret = new Turret(game, this.player, this.platforms, this.slopes, this, 2470, 700);
         this.turrets.add(turret);
-        turret = new Turret(game, this.player, this.platforms, this.slopes, this.bullets, 3200, 700);
+        turret = new Turret(game, this.player, this.platforms, this.slopes, this, 3200, 700);
         turret.scale.x = -1;
         this.turrets.add(turret);
-        turret = new Turret(game, this.player, this.platforms, this.slopes, this.bullets, 6730, 560);
+        turret = new Turret(game, this.player, this.platforms, this.slopes, this, 6730, 560);
         turret.scale.x = -1;
         this.turrets.add(turret);
 
