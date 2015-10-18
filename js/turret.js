@@ -42,7 +42,7 @@ function Turret(game, target, obstacles, slopes, bullets, x, y) {
 
         // Initialization code to create a blank bitmap image to be drawn over the screen.
         // This bitmap will be used to draw the tracking line from the turret to the target.
-        this.bmd = game.add.bitmapData(game.world.getBounds().width, game.world.getBounds().height);
+        this.bmd = game.add.bitmapData(game.world.width, game.world.height);
         this.bmdimg = game.add.image(0, 0, this.bmd);
         this.bmdimg.visible = true;
     
@@ -107,7 +107,7 @@ Turret.prototype.update = function() {
                                 this.frame = frame;
  
                        // Clear whatever was on the bitmap before, so we don't end up with a million red lines on the screen
-                       this.bmd.context.clearRect(0, 0, this.game.world.getBounds().width, this.game.world.getBounds().height);
+                       this.bmd.context.clearRect(0, 0, this.game.world.width, this.game.world.height);
                        // Draw a red line from the turret to the target
                        this.bmd.context.beginPath();
                        this.bmd.context.strokeStyle = 'rgb(255, 0, 0)';
