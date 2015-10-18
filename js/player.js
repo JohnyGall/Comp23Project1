@@ -211,11 +211,8 @@ Player.prototype.update = function() {
                 // and a velocity of -V_SPEED will be added.  
                 this.body.velocity.x += ((2 * this.facingRight) - 1) * this.V_SPEED;
         }
-    
-        if(this.x >= game.world.width) {
-                this.x -= 1;
-                this.body.velocity.x = 0;
-        } else if(this.x <= 0) {
+
+        if(this.x <= 0) {
                 this.x += 1;
                 this.body.velocity.x = 0;
         }

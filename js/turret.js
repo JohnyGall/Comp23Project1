@@ -61,7 +61,6 @@ Turret.prototype.update = function() {
             this.sfx_tracking.stop();
             
                 if(game.shifted) {
-                        this.bmd.clear();
                         this.frame = 5;
                         waitTime = this.LOW_DELAY;
                 } else {
@@ -143,7 +142,7 @@ Turret.prototype.update = function() {
                         } else {
                                 this.frame = 0;
                         }
-         }
+                }  
 }
 
 // Method to find the intersection of the turret and its target via raycasting.

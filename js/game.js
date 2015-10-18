@@ -171,13 +171,13 @@ var then = Date.now();
 // Are we in debug mode?
 var debug_toggle = 0;
 
-//first cloud
+//first cloud  
 var clouds;
 
 function create() {
         // Create world, with the sky and background grass
         game.physics.startSystem(Phaser.Physics.ARCADE);
-        game.world.setBounds(0, 0, 8000, 800);
+        game.world.setBounds(0, 0, 9700, 800);
     
         // Make wonderful music
         music = game.add.audio('wordl1');
@@ -189,10 +189,13 @@ function create() {
         music_l.loop = true;
     
         background = game.add.group();
-        background.create(0,0, 'sky');
-        background.create(1920,0, 'sky');
-
-        background.create(0, 500, 'backgrass');
+        for (var i = 0; i <= game.world.width; i += 1920) {
+            background.create(i,0, 'sky');
+        }
+    
+        for (var i = 0; i <= game.world.width; i += 1008) {
+            background.create(i,500, 'backgrass');
+        }
         background.create(1008, 500, 'backgrass');
 
         // Create a new part of the game keeping track of the world resolution
@@ -210,6 +213,14 @@ function create() {
         for(var i = 0; i < 6; i++) {
                 var ground = platforms.create(252 * i, game.world.height - 64, 'hgrass');
                 var groundshadow = platforms.create(252 * i, game.world.height - 21, 'darkgrass');
+                ground.body.immovable = true;
+                ground.body.setSize(252, 37, 0, 6);
+                groundshadow.body.immovable = true;
+        }
+    
+        for(var i = 0; i < 2; i++) {
+                var ground = platforms.create(9300+252 * i, game.world.height - 64, 'hgrass');
+                var groundshadow = platforms.create(9300*252 * i, game.world.height - 21, 'darkgrass');
                 ground.body.immovable = true;
                 ground.body.setSize(252, 37, 0, 6);
                 groundshadow.body.immovable = true;
@@ -245,8 +256,10 @@ function create() {
         }
 
         var ground = platforms.create(930, game.world.height - 533, 'hgrass');
+        ground.body.setSize(252, 37, 0, 6);
         ground.body.immovable = true;
         var ground = platforms.create(1050, game.world.height - 533, 'hgrass');
+        ground.body.setSize(252, 37, 0, 6);
         ground.body.immovable = true;
 
         var ground = platforms.create(3600, 400, 'hgrass');
@@ -263,6 +276,9 @@ function create() {
                 groundshadow.body.immovable = true;
         }
 
+        var ground = platforms.create(7760, 684, 'hgrass');
+        ground.body.setSize(252, 37, 0, 6);
+        ground.body.immovable = true;
 
 
 
@@ -297,6 +313,9 @@ function create() {
         var floating = platforms.create(6686, 600, 'floatleft');
         floating.body.immovable = true;
         floating.body.setSize(64, 54, 0, 6);
+        var floating = platforms.create(6990, 600, 'floatright');
+        floating.body.immovable = true;
+        floating.body.setSize(64, 54, 0, 6);
     
         // Add controls to the game
         controls = game.input.keyboard.createCursorKeys();
@@ -329,6 +348,8 @@ function create() {
         clouds.add(cloud);
         cloud = new Cloud(this,6500,600);
         clouds.add(cloud);
+        cloud = new Cloud(this,7200,450);
+        clouds.add(cloud);
 
         // Add slopes
         slopes = game.add.group();
@@ -343,12 +364,21 @@ function create() {
         }
         var slope = new Slope(this, 4438, 528, boulders);
         slopes.add(slope);
+        for(var i = 0; i < 3; i++) {
+                var slope = new Slope(this, 7440+128 * i, 300+128*i, boulders);
+                slopes.add(slope);
+                slope.scale.x = -1;
+        }
+        var slope = new Slope(this, 8072, 556, boulders);
+        slopes.add(slope);
 
         //Add player
         player = new Player(game, controls);
     
         //Checkpoints
         checkpoints = game.add.group();
+        var checkpoint = new CheckPoint(game, 6845, 573.5, player);
+        checkpoints.add(checkpoint);
         var checkpoint = new CheckPoint(game, 5259, 573.5, player);
         checkpoints.add(checkpoint);
         var checkpoint = new CheckPoint(game, 3300, 709.5, player);
