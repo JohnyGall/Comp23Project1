@@ -15,7 +15,6 @@ preload: function() {
         game.load.audio('turret_fire_hr', ['assets/music/turret_fire_hr.wav', 'assets/music/turret_fire_hr.ogg']); 
         game.load.audio('turret_fire_lr', ['assets/music/turret_fire_lr.wav', 'assets/music/turret_fire_lr.ogg']); 
 
-//=======
         // Customise the sprites used
         var backgroundSprites = {
                 "sky":{
@@ -140,9 +139,9 @@ create: function() {
 	// Are we in debug mode?
 	this.debug_toggle = 0;
     
-        // Create world, with the sky and this.background grass
+        // Create world
         game.physics.startSystem(Phaser.Physics.ARCADE);
-        game.world.setBounds(0, 0, 9700, 800);
+        game.world.setBounds(0, 0, 8191, 800);
     
         // Make wonderful this.music
         this.music = game.add.audio('wordl1');
@@ -153,28 +152,26 @@ create: function() {
         this.music_l.mute = true;
         this.music_l.loop = true;
     
+        // Create looping background images
         this.background = game.add.group();
         for (var i = 0; i <= game.world.width; i += 1920) {
             this.background.create(i,0, 'sky');
         }
-    
         for (var i = 0; i <= game.world.width; i += 1008) {
             this.background.create(i,500, 'backgrass');
         }
-        this.background.create(1008, 500, 'backgrass');
 
         // Create a new part of the game keeping track of the world resolution
         game.shifted = false;
 
         // Create this.platforms group
         this.platforms = game.add.group();
-
         this.platforms.enableBody = true;
 
-        // Create a this.bullets
+        // Create a this.bullets group
         this.bullets = game.add.group();
 
-        // Add the "ground" this.platforms to the bottom of the screen
+        // ALL STANDARD GROUND PLATFORMS GO HERE
         for(var i = 0; i < 6; i++) {
                 var ground = this.platforms.create(252 * i, game.world.height - 64, 'hgrass');
                 var groundshadow = this.platforms.create(252 * i, game.world.height - 21, 'darkgrass');
@@ -244,17 +241,15 @@ create: function() {
         var ground = this.platforms.create(7760, 684, 'hgrass');
         ground.body.setSize(252, 37, 0, 6);
         ground.body.immovable = true;
+    
 
-
-
-        // Create the floating rocky grass this.platforms
+        // ALL FLOATING PLATFORMS GO HERE
         for(var i = 0; i < 2; i++) {
                 var floating = this.platforms.create(240 * i, game.world.height - 250, 'floatgrass');
                 floating.body.immovable = true;
                 floating.body.setSize(252, 56, 0, 6);
         }
 
-        // Create the ledge that ends the floating rocky grass this.platforms
         var ledge = this.platforms.create(474, game.world.height - 250, 'floatright');
         ledge.body.immovable = true;
         ledge.body.setSize(64, 54, 0, 6);
@@ -264,13 +259,13 @@ create: function() {
                 floating.body.immovable = true;
                 floating.body.setSize(252, 56, 0, 6);
         }
-                 var floating = this.platforms.create(5580, 600, 'floatright');
-                floating.body.immovable = true;
-                floating.body.setSize(64, 54, 0, 6);
+        var floating = this.platforms.create(5580, 600, 'floatright');
+        floating.body.immovable = true;
+        floating.body.setSize(64, 54, 0, 6);
 
-                 var floating = this.platforms.create(5036, 600, 'floatleft');
-                floating.body.immovable = true;
-                floating.body.setSize(64, 54, 0, 6);
+        var floating = this.platforms.create(5036, 600, 'floatleft');
+        floating.body.immovable = true;
+        floating.body.setSize(64, 54, 0, 6);
 
         var floating = this.platforms.create(6750, 600, 'floatgrass');
         floating.body.immovable = true;
@@ -300,10 +295,7 @@ create: function() {
         this.controls.P = game.input.keyboard.addKey(Phaser.Keyboard.P);
         this.controls.P.onDown.add(this.pause);
 
-        // Create the sprites of the 
-        this.boulders = game.add.group();
-
-        //create a clouds group
+        // ALL CLOUDS GO HERE
         clouds = game.add.group();
         cloud = new Cloud(this,3500,600);
         clouds.add(cloud);
@@ -316,7 +308,34 @@ create: function() {
         cloud = new Cloud(this,7200,450);
         clouds.add(cloud);
 
-        // Add this.slopes
+        // PLAYER IS MADE HERE
+        this.player = new Player(game, this.controls, this);
+    
+        // ALL CHECKPOINTS GO HERE
+        checkpoints = game.add.group();
+        var checkpoint = new CheckPoint(game, 6845, 573.5, this.player);
+        checkpoints.add(checkpoint);
+        var checkpoint = new CheckPoint(game, 5259, 573.5, this.player);
+        checkpoints.add(checkpoint);
+        var checkpoint = new CheckPoint(game, 3300, 709.5, this.player);
+        checkpoints.add(checkpoint);
+        var checkpoint = new CheckPoint(game, 2100, 709.5, this.player);
+        checkpoints.add(checkpoint);
+        var checkpoint = new CheckPoint(game, 1173, 52, this.player);
+        checkpoints.add(checkpoint);
+        var checkpoint = new CheckPoint(game, 300, 500, this.player);
+        checkpoints.add(checkpoint);
+
+        // ALL BOULDERS GO HERE
+        this.boulders = game.add.group();
+        var boulder = new Boulder(game, 500, 150);
+        this.boulders.add(boulder);
+        boulder = new Boulder(game, 1700, -100);
+        this.boulders.add(boulder);
+        boulder = new Boulder(game, 2420, 300);
+        this.boulders.add(boulder);
+    
+        // ALL SLOPES GO HERE
         this.slopes = game.add.group();
         for(var i = 0; i < 2; i++) {
                 var slope = new Slope(this, 860-128+128 * i, 482+128-128*i, this.boulders, this);
@@ -336,34 +355,8 @@ create: function() {
         }
         var slope = new Slope(this, 8072, 556, this.boulders, this);
         this.slopes.add(slope);
-
-        //Add this.player
-        this.player = new Player(game, this.controls, this);
     
-        //Checkpoints
-        checkpoints = game.add.group();
-        var checkpoint = new CheckPoint(game, 6845, 573.5, this.player);
-        checkpoints.add(checkpoint);
-        var checkpoint = new CheckPoint(game, 5259, 573.5, this.player);
-        checkpoints.add(checkpoint);
-        var checkpoint = new CheckPoint(game, 3300, 709.5, this.player);
-        checkpoints.add(checkpoint);
-        var checkpoint = new CheckPoint(game, 2100, 709.5, this.player);
-        checkpoints.add(checkpoint);
-        var checkpoint = new CheckPoint(game, 1173, 52, this.player);
-        checkpoints.add(checkpoint);
-        var checkpoint = new CheckPoint(game, 300, 500, this.player);
-        checkpoints.add(checkpoint);
-
-        var boulder = new Boulder(game, 500, 150);
-        this.boulders.add(boulder);
-        boulder = new Boulder(game, 1700, -100);
-        this.boulders.add(boulder);
-        boulder = new Boulder(game, 2420, 300);
-        this.boulders.add(boulder);
-    
-    
-    //         Add this.turrets
+        // ALL TURRETS GO HERE
         this.turrets = game.add.group();
         turret = new Turret(game, this.player, this.platforms, this.slopes, this, 975, 475);
         turret.scale.x *= -1;
