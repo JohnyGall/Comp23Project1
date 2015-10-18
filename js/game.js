@@ -177,7 +177,7 @@ var clouds;
 function create() {
         // Create world, with the sky and background grass
         game.physics.startSystem(Phaser.Physics.ARCADE);
-        game.world.setBounds(0, 0, 6000, 800);
+        game.world.setBounds(0, 0, 8000, 800);
     
         // Make wonderful music
         music = game.add.audio('wordl1');
@@ -276,17 +276,27 @@ function create() {
         // Create the ledge that ends the floating rocky grass platforms
         var ledge = platforms.create(474, game.world.height - 250, 'floatright');
         ledge.body.immovable = true;
-        ledge.body.setSize(80, 54, 0, 6);
+        ledge.body.setSize(64, 54, 0, 6);
 
         for(var i = 0; i < 2; i++) {
-                var floating = platforms.create(5000 + 240 * i, 600, 'floatgrass');
+                var floating = platforms.create(5100 + 240 * i, 600, 'floatgrass');
                 floating.body.immovable = true;
                 floating.body.setSize(252, 56, 0, 6);
         }
-                 var floating = platforms.create(5480, 600, 'floatright');
+                 var floating = platforms.create(5580, 600, 'floatright');
                 floating.body.immovable = true;
-                 var floating = platforms.create(4936, 600, 'floatleft');
+                floating.body.setSize(64, 54, 0, 6);
+
+                 var floating = platforms.create(5036, 600, 'floatleft');
                 floating.body.immovable = true;
+                floating.body.setSize(64, 54, 0, 6);
+
+        var floating = platforms.create(6750, 600, 'floatgrass');
+        floating.body.immovable = true;
+        floating.body.setSize(252, 56, 0, 6);
+        var floating = platforms.create(6686, 600, 'floatleft');
+        floating.body.immovable = true;
+        floating.body.setSize(64, 54, 0, 6);
     
         // Add controls to the game
         controls = game.input.keyboard.createCursorKeys();
@@ -309,14 +319,15 @@ function create() {
         // Create the sprites of the 
         boulders = game.add.group();
 
-        var checkpoint = new CheckPoint(game, 1173, 52, player);
-        checkpoints.add(checkpoint);
-        var checkpoint = new CheckPoint(game, 300, 500, player);
-        checkpoints.add(checkpoint);
-
         //create a clouds group
         clouds = game.add.group();
         cloud = new Cloud(this,3500,600);
+        clouds.add(cloud);
+        cloud = new Cloud(this,5900,600);
+        clouds.add(cloud);
+        cloud = new Cloud(this,6200,600);
+        clouds.add(cloud);
+        cloud = new Cloud(this,6500,600);
         clouds.add(cloud);
 
         // Add slopes
@@ -335,6 +346,19 @@ function create() {
 
         //Add player
         player = new Player(game, controls);
+    
+        //Checkpoints
+        checkpoints = game.add.group();
+        var checkpoint = new CheckPoint(game, 5259, 573.5, player);
+        checkpoints.add(checkpoint);
+        var checkpoint = new CheckPoint(game, 3300, 709.5, player);
+        checkpoints.add(checkpoint);
+        var checkpoint = new CheckPoint(game, 2100, 709.5, player);
+        checkpoints.add(checkpoint);
+        var checkpoint = new CheckPoint(game, 1173, 52, player);
+        checkpoints.add(checkpoint);
+        var checkpoint = new CheckPoint(game, 300, 500, player);
+        checkpoints.add(checkpoint);
 
         var boulder = new Boulder(game, 500, 150);
         boulders.add(boulder);
@@ -355,7 +379,9 @@ function create() {
         turret = new Turret(game, player, platforms, slopes, bullets, 3200, 700);
         turret.scale.x = -1;
         turrets.add(turret);
-
+        turret = new Turret(game, player, platforms, slopes, bullets, 6730, 560);
+        turret.scale.x = -1;
+        turrets.add(turret);
 
 
         // Set up UI text
