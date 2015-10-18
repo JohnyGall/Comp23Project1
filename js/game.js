@@ -309,8 +309,10 @@ function create() {
         // Create the sprites of the 
         boulders = game.add.group();
 
-        checkpoints = new CheckPoint(game, 1173, 52, player);
-        checkpoints = new CheckPoint(game, 300, 500, player);
+        var checkpoint = new CheckPoint(game, 1173, 52, player);
+        checkpoints.add(checkpoint);
+        var checkpoint = new CheckPoint(game, 300, 500, player);
+        checkpoints.add(checkpoint);
 
         //create a clouds group
         clouds = game.add.group();
