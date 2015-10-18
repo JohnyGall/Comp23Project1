@@ -174,7 +174,7 @@ var clouds;
 function create() {
         // Create world, with the sky and background grass
         game.physics.startSystem(Phaser.Physics.ARCADE);
-        game.world.setBounds(0, 0, 4500, 800);
+        game.world.setBounds(0, 0, 6000, 800);
     
         // Make wonderful music
         music = game.add.audio('wordl1');
@@ -252,6 +252,14 @@ function create() {
                 var groundshadow = platforms.create(3600, 423+35*i, 'darkgrass');
                 groundshadow.body.immovable = true;
         }
+    
+        var ground = platforms.create(4120, 657, 'hgrass');
+        ground.body.immovable = true;
+        for (var i = 0; i < 10; i++) {
+                var groundshadow = platforms.create(4120, 675+35*i, 'darkgrass');
+                groundshadow.body.immovable = true;
+        }
+
 
 
 
@@ -267,6 +275,16 @@ function create() {
         ledge.body.immovable = true;
         ledge.body.setSize(80, 54, 0, 6);
 
+        for(var i = 0; i < 2; i++) {
+                var floating = platforms.create(5000 + 240 * i, 600, 'floatgrass');
+                floating.body.immovable = true;
+                floating.body.setSize(252, 56, 0, 6);
+        }
+                 var floating = platforms.create(5480, 600, 'floatright');
+                floating.body.immovable = true;
+                 var floating = platforms.create(4936, 600, 'floatleft');
+                floating.body.immovable = true;
+    
         // Add controls to the game
         controls = game.input.keyboard.createCursorKeys();
         controls.space = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -303,7 +321,9 @@ function create() {
                 var slope = new Slope(this, 3924+128 * i, 400+128*i, boulders);
                 slopes.add(slope);
                 slope.scale.x = -1;
-        }    
+        }
+        var slope = new Slope(this, 4438, 528, boulders);
+        slopes.add(slope);
 
         //Add player
         player = new Player(game, controls);
