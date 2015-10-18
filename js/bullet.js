@@ -44,12 +44,10 @@ Bullet.prototype = Object.create(Phaser.Sprite.prototype);
 Bullet.prototype.constructor = Bullet;
 
 Bullet.prototype.update = function() {
-                this.checkWorldBounds = true;
-                this.events.onOutOfBounds.add(function() {
-                        this.destroy();
-                }, this);
-
-
+        this.checkWorldBounds = true;
+        this.events.onOutOfBounds.add(function() {
+                this.destroy();
+        }, this);
 
         if (this.target.health < this.target.MAX_HEALTH) {
                 this.destroy();

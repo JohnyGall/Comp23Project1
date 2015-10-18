@@ -218,7 +218,7 @@ function create() {
                 floating.body.setSize(252, 56, 0, 6);
         }
     
-        for(var i = 0; i < 6; i++) {
+        for(var i = 0; i < 7; i++) {
                 var ground = platforms.create(1900 + 252*i, game.world.height - 64, 'hgrass');
                 var groundshadow = platforms.create(1900 + 252*i, game.world.height - 21, 'darkgrass');
                 ground.body.immovable = true;
@@ -245,6 +245,13 @@ function create() {
         ground.body.immovable = true;
         var ground = platforms.create(1050, game.world.height - 533, 'hgrass');
         ground.body.immovable = true;
+
+        var ground = platforms.create(3600, 400, 'hgrass');
+        ground.body.immovable = true;
+        for (var i = 0; i < 10; i++) {
+                var groundshadow = platforms.create(3600, 423+35*i, 'darkgrass');
+                groundshadow.body.immovable = true;
+        }
 
 
 
@@ -283,12 +290,19 @@ function create() {
 
         //create a clouds group
         clouds = game.add.group();
+        cloud = new Cloud(this,3500,600);
+        clouds.add(cloud);
 
         // Add slopes
         slopes = game.add.group();
         for(var i = 0; i < 2; i++) {
                 var slope = new Slope(this, 860-128+128 * i, 482+128-128*i, boulders);
                 slopes.add(slope);
+        }    
+        for(var i = 0; i < 2; i++) {
+                var slope = new Slope(this, 3924+128 * i, 400+128*i, boulders);
+                slopes.add(slope);
+                slope.scale.x = -1;
         }    
 
         //Add player
@@ -368,6 +382,8 @@ function render() {
                 boulders.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
                 turrets.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
                 platforms.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
+                clouds.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
+
                 slopes.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
                 // Animate the favicon, for fun
                 if(Date.now() - then >= 50) {

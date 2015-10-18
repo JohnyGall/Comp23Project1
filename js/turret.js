@@ -79,15 +79,15 @@ Turret.prototype.update = function() {
         
             // If there was no intersection
             if (!intersect) {
-                if(!game.shifted && !this.sfx_tracking.isPlaying && this.target.health > 1) {
-                    this.sfx_tracking.play();
-                } else if (game.shifted) {
-                    this.sfx_tracking.stop();
-                }
-                
                 if(!this.targetdying) {
                     this.targetdying = true;
                     this.lastShotTime = game.time.now;                    
+                }
+                if(!game.shifted && !this.sfx_tracking.isPlaying && this.target.health > 1) {
+                    this.sfx_tracking.startTime = game.time.now - this.lastShotTime;
+                    this.sfx_tracking.play();
+                } else if (game.shifted) {
+                    this.sfx_tracking.stop();
                 }
                    if(game.shifted) {
                         this.frame = 5;
@@ -115,7 +115,6 @@ Turret.prototype.update = function() {
                        this.bmd.context.moveTo(this.position.x, this.position.y);
                         var fraction = 1 - (game.time.now - this.lastShotTime) / waitTime; 
                        this.bmd.context.lineTo(this.target.position.x - (fraction * (this.target.x - this.x)), this.target.position.y - (fraction * (this.target.y - this.y)));
-                       console.log('drawing line');
                        this.bmd.context.stroke();
         
                                 // This just tells the engine it should update the texture cache so the bitmap can be redrawn
