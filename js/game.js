@@ -207,6 +207,8 @@ function create() {
     
         background = game.add.group();
         background.create(0,0, 'sky');
+        background.create(1920,0, 'sky');
+
         background.create(0, 500, 'backgrass');
         background.create(1008, 500, 'backgrass');
 
@@ -325,8 +327,7 @@ function create() {
         turrets = game.add.group();
         turret = new Turret(game, player, platforms, slopes, bullets, 975, 475);
         turret.scale.x *= -1;
-        turrets.add(turret);
-
+        turrets.add(turret); 
         turret = new Turret(game, player, platforms, slopes, bullets, 2470, 700);
         turrets.add(turret);
         turret = new Turret(game, player, platforms, slopes, bullets, 3200, 700);
@@ -345,6 +346,7 @@ function update() {
             music.play()
             music_l.play()
         }
+    
         // Collision detection for all objects
         game.physics.arcade.collide(player, platforms);
         game.physics.arcade.collide(platforms, boulders);
