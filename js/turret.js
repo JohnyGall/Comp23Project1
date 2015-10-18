@@ -55,19 +55,18 @@ Turret.prototype.constructor = Turret;
 Turret.prototype.update = function() {
         var waitTime = this.HIGH_DELAY;
         
-        if (Math.abs(this.x-this.target.x) > game.width/2 + this.body.width *this.anchor.x ||
-            Math.abs(this.y-this.target.y) > game.height/2 + this.body.height*this.anchor.y) {
+        if (Math.abs(this.x-this.target.x) > game.width/2 + this.body.width *this.anchor.x ||                       Math.abs(this.y-this.target.y) > game.height/2 + this.body.height*this.anchor.y) {
             this.targetdying = false;
             this.sfx_tracking.stop();
             
-            if(game.shifted) {
-                    this.bmd.clear();
-                    this.frame = 5;
-                    waitTime = this.LOW_DELAY;
-            } else {
-                    this.frame = 0;
-            }
-            return;
+                if(game.shifted) {
+                        this.bmd.clear();
+                        this.frame = 5;
+                        waitTime = this.LOW_DELAY;
+                } else {
+                        this.frame = 0;
+                }
+                return;
         }
 
         // The first thing to do when updating the turret is to raytrace to the target to
@@ -76,7 +75,6 @@ Turret.prototype.update = function() {
         var ray = new Phaser.Line(this.target.x, this.target.y, this.x, this.y);
         // Call the raytracing method, and store the result
         var intersect = this.findTarget(ray, this.obstacles);
-        intersect = intersect && this.findTarget(ray, boulders);
         
             // If there was no intersection
             if (!intersect) {
@@ -102,49 +100,49 @@ Turret.prototype.update = function() {
                         // Measure the angle between the turret and the target, and add 180 to it to get it in the range of 0-90 degrees
                         var angle = 180 + Math.atan2(this.position.y - this.target.position.y, (this.position.x - this.target.position.x)*this.scale.x) * -57.2957795;
              
-                         // Convert the angle to a number 0 to 4, and then set it as the current frame
-                        var frame = Math.round(angle / 90 * 4);
-                        if (frame > 4 || frame < 0) 
-                            frame = 0;
-                        this.frame = frame;
+                                // Convert the angle to a number 0 to 4, and then set it as the current frame
+                                var frame = Math.round(angle / 90 * 4);
+                                if (frame > 4 || frame < 0) 
+                                        frame = 0;
+                                this.frame = frame;
  
-                       // Clear whatever was on the bitmap before, so we don't end up with a million red lines on the screen
-                       this.bmd.context.clearRect(0, 0, this.game.world.getBounds().width, this.game.world.getBounds().height);
-                       // Draw a red line from the turret to the target
-                       this.bmd.context.beginPath();
-                       this.bmd.context.strokeStyle = 'rgb(255, 0, 0)';
-                       this.bmd.context.fillStyle = 'rgb(255, 0, 0)';
-                       this.bmd.context.moveTo(this.position.x, this.position.y);
-                        var fraction = 1 - (game.time.now - this.lastShotTime) / waitTime; 
-                       this.bmd.context.lineTo(this.target.position.x - (fraction * (this.target.x - this.x)), this.target.position.y - (fraction * (this.target.y - this.y)));
-                       this.bmd.context.stroke();
+                                // Clear whatever was on the bitmap before, so we don't end up with a million red lines on the screen
+                                this.bmd.context.clearRect(0, 0, this.game.world.width, this.game.world.height);
+                                // Draw a red line from the turret to the target
+                                this.bmd.context.beginPath();
+                                this.bmd.context.strokeStyle = 'rgb(255, 0, 0)';
+                                this.bmd.context.fillStyle = 'rgb(255, 0, 0)';
+                                this.bmd.context.moveTo(this.position.x, this.position.y);
+                                var fraction = 1 - (game.time.now - this.lastShotTime) / waitTime; 
+                                this.bmd.context.lineTo(this.target.position.x - (fraction * (this.target.x - this.x)), this.target.position.y - (fraction * (this.target.y - this.y)));
+                                this.bmd.context.stroke();
         
-                       // This just tells the engine it should update the texture cache so the bitmap can be redrawn
-                       this.bmd.dirty = true;
-                   };
+                                // This just tells the engine it should update the texture cache so the bitmap can be redrawn
+                                this.bmd.dirty = true;
+                        }
              
-                if (this.targetdying && game.time.now - this.lastShotTime >= waitTime) {
-                    if (game.shifted)
-                        this.sfx_fire_lr.play();
-                    else
-                        this.sfx_fire_hr.play();
+                        if (this.targetdying && game.time.now - this.lastShotTime >= waitTime) {
+                                if (game.shifted)
+                                        this.sfx_fire_lr.play();
+                                else
+                                        this.sfx_fire_hr.play();
                     
-                    var bullet = new Bullet(game, this.target, this);
-                    this.lastShotTime = game.time.now;
-                }
-            } else {
-                // If the target is not being hit, update their dying status (kill the death countdown), clear
-                // any residual raytraces
-                this.targetdying = false;
-                this.bmd.clear();
-                this.sfx_tracking.stop();
-
-                if(game.shifted) {
-                        this.frame = 5;
-                        waitTime = this.LOW_DELAY;
+                                var bullet = new Bullet(game, this.target, this);
+                                this.lastShotTime = game.time.now;
+                        }
                 } else {
-                        this.frame = 0;
-                }
+                        // If the target is not being hit, update their dying status (kill the death countdown), clear
+                        // any residual raytraces
+                        this.targetdying = false;
+                        this.bmd.clear();
+                        this.sfx_tracking.stop();
+
+                        if(game.shifted) {
+                                this.frame = 5;
+                                waitTime = this.LOW_DELAY;
+                        } else {
+                                this.frame = 0;
+                        }
          }
 }
 

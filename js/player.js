@@ -1,4 +1,4 @@
-function Player(game, controls) {
+function Player(game, x, y, controls) {
         // Store variables
         this.game = game;
         this.controls = controls;
@@ -15,8 +15,8 @@ function Player(game, controls) {
     
         //Store constants
         // Player initial coordinates
-        this.INIT_X = 200;
-        this.INIT_Y = this.game.world.height-100;
+        this.INIT_X = x;
+        this.INIT_Y = y;
         // Walking and jumping speeds
         this.DEFAULT_SPEED = 150;
         this.SLIDE_SPEED = 150;
@@ -68,13 +68,14 @@ Player.prototype = Object.create(Phaser.Sprite.prototype);
 Player.prototype.constructor = Player;
 
 Player.prototype.update = function() {
-            this.onSlope = false;
-            slopes.forEach(function(slope) {this.onSlope = (slope.isOn(this) || this.onSlope);}, this);
-            this.checkWorldBounds = true;
-            this.events.onOutOfBounds.add(function() {
-                        if (this.y > game.world.height)
-                                this.kill();
-            }, this);
+        this.onSlope = false;
+        slopes.forEach(function(slope) {this.onSlope = (slope.isOn(this) || this.onSlope);}, this);
+        this.checkWorldBounds = true;
+        if (this.y > game.world.height) {
+                // to avoid infinite triggering of this if-statement
+                this.y -= 1;
+                this.kill();
+        }
         
         // If the player is dead and waiting to be respawned, don't let the user
         // move the player around.

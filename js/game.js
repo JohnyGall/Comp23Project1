@@ -10,27 +10,122 @@ WebFontConfig = {
         }
 };
 
-function preload () {
-        // Level background
-        game.load.spritesheet('sky', 'assets/sky_spritesheet.png', 1920, 1080, 2);
-        game.load.spritesheet('backgrass', 'assets/background_grass_spritesheet.png',1008, 311, 2);
-        game.load.spritesheet('hgrass', 'assets/grass_h_spritesheet.png',252, 48, 2);
-        game.load.spritesheet('tgrass', 'assets/grass_t_spritesheet.png',48, 66, 2);
-        game.load.spritesheet('vgrass', 'assets/grass_v_spritesheet.png', 144, 144, 2);
-        game.load.spritesheet('darkgrass', 'assets/darkgrass.png', 252, 48, 2);
-        game.load.spritesheet('floatgrass', 'assets/floating_spritesheet.png', 252, 48, 2);
-        game.load.spritesheet('floatright', 'assets/floatingledge_spritesheet.png', 64, 48, 2);
-        game.load.spritesheet('floatleft', 'assets/floatingledge1_spritesheet.png', 64, 48, 2);
-        game.load.spritesheet('miniledge', 'assets/mini_floating_spritesheet.png', 48, 48, 2);
+var bgs;
+var sprites;
 
-        // Sprites and stuff
-        game.load.spritesheet('cloud', 'assets/cloud_spritesheet.png',96, 32, 2);
-        game.load.spritesheet('boulder', 'assets/boulder_spritesheet.png',48, 48, 2);
-        game.load.spritesheet('player', 'assets/protag_spritesheet.png', 37, 65);
-        game.load.spritesheet('turret', 'assets/turretspritesheet.png', 96, 96, 6);
-        game.load.spritesheet('bullet', 'assets/bullet_spritesheet.png', 16, 16, 2);
-        game.load.spritesheet('spike', 'assets/spike_spritesheet.png', 48, 85, 2);
-    
+function preload () {
+
+       // Customise the sprites used
+       bgs = {
+               "sky":{
+                       "url":"assets/sky_spritesheet.png",
+                       "sizeX":1920,
+                       "sizeY":1080,
+                       "number":2
+               },
+               "backgrass":{
+                       "url":"assets/background_grass_spritesheet.png",
+                       "sizeX":1008,
+                       "sizeY":311,
+                       "number":2
+               },
+               "hgrass":{
+                       "url":"assets/grass_h_spritesheet.png",
+                       "sizeX":252,
+                       "sizeY":48,
+                       "number":2
+               },
+               "vgrass":{
+                       "url":"assets/grass_v_spritesheet.png",
+                       "sizeX":144,
+                       "sizeY":144,
+                       "number":2
+               },
+               "darkgrass":{
+                       "url":"assets/darkgrass.png",
+                       "sizeX":252,
+                       "sizeY":48,
+                       "number":2
+
+               },
+               "floatgrass":{
+                       "url":"assets/floating_spritesheet.png",
+                       "sizeX":252,
+                       "sizeY":48,
+                       "number":2
+               },
+               "floatright":{
+                       "url":"assets/floatingledge_spritesheet.png",
+                       "sizeX":64,
+                       "sizeY":48,
+                       "number":2
+               },
+               "floatleft":{
+                       "url":"assets/floatingledge1_spritesheet.png",
+                       "sizeX":64,
+                       "sizeY":48,
+                       "number":2
+               },
+               "miniledge":{
+                       "url":"assets/mini_floating_spritesheet.png",
+                       "sizeX":48,
+                       "sizeY":48,
+                       "number":2
+               }
+       }
+
+       sprites = {
+               "boulder":{
+                       "url":"assets/boulder_spritesheet.png",
+                       "sizeX":48,
+                       "sizeY":48,
+                       "number":2
+               },
+               "player":{
+                       "url":"assets/protag_spritesheet.png",
+                       "sizeX":37,
+                       "sizeY":65,
+                       // no "number" because the player sprite uses the defualt value (1)
+               },
+               "turret":{
+                       "url":"assets/turretspritesheet.png",
+                       "sizeX":96,
+                       "sizeY":96,
+                       "number":6
+               },
+               "bullet":{
+                       "url":"assets/bullet_spritesheet.png",
+                       "sizeX":16,
+                       "sizeY":16,
+                       "number":2
+               },
+               "cloud":{
+                       "url":"assets/cloud_spritesheet.png",
+                       "sizeX":96,
+                       "sizeY":32,
+                       "number":2
+
+               }
+       }
+
+       // Object and player Sprites and stuff
+       game.load.spritesheet('boulder',sprites.boulder.url ,sprites.boulder.sizeX, sprites.boulder.sizeY, sprites.boulder.number);
+       game.load.spritesheet('player', sprites.player.url, sprites.player.sizeX, sprites.player.sizeY);
+       game.load.spritesheet('turret', sprites.turret.url ,sprites.turret.sizeX, sprites.turret.sizeY, sprites.turret.number);
+       game.load.spritesheet('bullet', sprites.bullet.url ,sprites.bullet.sizeX, sprites.bullet.sizeY, sprites.bullet.number);
+       game.load.spritesheet('cloud', sprites.cloud.url ,sprites.cloud.sizeX, sprites.cloud.sizeY, sprites.cloud.number);
+
+       // Level background sprites
+       game.load.spritesheet('sky', bgs.sky.url, bgs.sky.sizeX, bgs.sky.sizeY, bgs.sky.number);
+       game.load.spritesheet('backgrass', bgs.backgrass.url,bgs.backgrass.sizeX, bgs.backgrass.sizeY, bgs.backgrass.number);
+       game.load.spritesheet('hgrass', bgs.hgrass.url,bgs.hgrass.sizeX, bgs.hgrass.sizeY, bgs.hgrass.number);
+       game.load.spritesheet('vgrass', bgs.vgrass.url, bgs.vgrass.sizeX, bgs.vgrass.sizeY, bgs.vgrass.number);
+       game.load.spritesheet('darkgrass', bgs.darkgrass.url, bgs.darkgrass.sizeX, bgs.darkgrass.sizeY, bgs.darkgrass.number);
+       game.load.spritesheet('floatgrass', bgs.floatgrass.url, bgs.floatgrass.sizeX, bgs.floatgrass.sizeY, bgs.floatgrass.number);
+       game.load.spritesheet('floatright', bgs.floatright.url, bgs.floatright.sizeX, bgs.floatright.sizeY, bgs.floatright.number);
+       game.load.spritesheet('floatleft', bgs.floatleft.url, bgs.floatleft.sizeX, bgs.floatleft.sizeY, bgs.floatleft.number);
+       game.load.spritesheet('miniledge', bgs.miniledge.url, bgs.miniledge.sizeX, bgs.miniledge.sizeY, bgs.miniledge.number);
+
         // Music
         game.load.audio('wordl1_l', ['assets/music/bitshift2_lr.wav', 'assets/music/bitshift2_lr.ogg']);
         game.load.audio('wordl1', ['assets/music/bitshift2.wav', 'assets/music/bitshift2.ogg']);   
@@ -44,119 +139,6 @@ function preload () {
         game.load.audio('turret_charge_hr', ['assets/music/turret_charge_hr.wav', 'assets/music/turret_charge_hr.ogg']);
         game.load.audio('turret_fire_hr', ['assets/music/turret_fire_hr.wav', 'assets/music/turret_fire_hr.ogg']); 
         game.load.audio('turret_fire_lr', ['assets/music/turret_fire_lr.wav', 'assets/music/turret_fire_lr.ogg']); 
-
-//=======
-//        // Customise the sprites used
-//        var backgroundSprites = {
-//                "sky":{
-//                        "url":"assets/sky_spritesheet.png",
-//                        "sizeX":1920,
-//                        "sizeY":1080,
-//                        "number":2
-//                },
-//                "backgrass":{
-//                        "url":"assets/background_grass_spritesheet.png",
-//                        "sizeX":1008,
-//                        "sizeY":311,
-//                        "number":2
-//                },
-//                "hgrass":{
-//                        "url":"assets/grass_h_spritesheet.png",
-//                        "sizeX":252,
-//                        "sizeY":48,
-//                        "number":2
-//                },
-//                "vgrass":{
-//                        "url":"assets/grass_v_spritesheet.png",
-//                        "sizeX":144,
-//                        "sizeY":208,
-//                        "number":2
-//                },
-//                "darkgrass":{
-//                        "url":"assets/darkgrass.png",
-//                        "sizeX":252,
-//                        "sizeY":48,
-//                        "number":2
-//
-//                },
-//                "floatgrass":{
-//                        "url":"assets/floating_spritesheet.png",
-//                        "sizeX":252,
-//                        "sizeY":48,
-//                        "number":2
-//                },
-//                "floatright":{
-//                        "url":"assets/floatingledge_spritesheet.png",
-//                        "sizeX":65,
-//                        "sizeY":48,
-//                        "number":2
-//                },
-//                "floatleft":{
-//                        "url":"assets/floatingledge1_spritesheet.png",
-//                        "sizeX":65,
-//                        "sizeY":48,
-//                        "number":2
-//                },
-//                "miniledge":{
-//                        "url":"assets/mini_floating_spritesheet.png",
-//                        "sizeX":48,
-//                        "sizeY":48,
-//                        "number":2
-//                }
-//        }
-//
-//        var playerObjectSprites = {
-//                "boulder":{
-//                        "url":"assets/boulder_spritesheet.png",
-//                        "sizeX":48,
-//                        "sizeY":48,
-//                        "number":2
-//                },
-//                "player":{
-//                        "url":"assets/protag_spritesheet.png",
-//                        "sizeX":37,
-//                        "sizeY":65,
-//                        // no "number" because the player sprite uses the defualt value (1)
-//                },
-//                "turret":{
-//                        "url":"assets/turretspritesheet.png",
-//                        "sizeX":96,
-//                        "sizeY":96,
-//                        "number":6
-//                },
-//                "bullet":{
-//                        "url":"assets/bullet_spritesheet.png",
-//                        "sizeX":16,
-//                        "sizeY":16,
-//                        "number":2
-//                },
-//                "cloud":{
-//                        "url":"assets/cloud_spritesheet.png",
-//                        "sizeX":96,
-//                        "sizeY":32,
-//                        "number":2
-//
-//                }
-//        }
-//
-//        // Object and player Sprites and stuff
-//        game.load.spritesheet('boulder',playerObjectSprites.boulder.url ,playerObjectSprites.boulder.sizeX, playerObjectSprites.boulder.sizeY, playerObjectSprites.boulder.number);
-//        game.load.spritesheet('player', playerObjectSprites.player.url, playerObjectSprites.player.sizeX, playerObjectSprites.player.sizeY);
-//        game.load.spritesheet('turret', playerObjectSprites.turret.url ,playerObjectSprites.turret.sizeX, playerObjectSprites.turret.sizeY, playerObjectSprites.turret.number);
-//        game.load.spritesheet('bullet', playerObjectSprites.bullet.url ,playerObjectSprites.bullet.sizeX, playerObjectSprites.bullet.sizeY, playerObjectSprites.bullet.number);
-//        game.load.spritesheet('cloud', playerObjectSprites.cloud.url ,playerObjectSprites.cloud.sizeX, playerObjectSprites.cloud.sizeY, playerObjectSprites.cloud.number);
-//
-//        // Level background sprites
-//        game.load.spritesheet('sky', backgroundSprites.sky.url, backgroundSprites.sky.sizeX, backgroundSprites.sky.sizeY, backgroundSprites.sky.number);
-//        game.load.spritesheet('backgrass', backgroundSprites.backgrass.url,backgroundSprites.backgrass.sizeX, backgroundSprites.backgrass.sizeY, backgroundSprites.backgrass.number);
-//        game.load.spritesheet('hgrass', backgroundSprites.hgrass.url,backgroundSprites.hgrass.sizeX, backgroundSprites.hgrass.sizeY, backgroundSprites.hgrass.number);
-//        game.load.spritesheet('vgrass', backgroundSprites.vgrass.url, backgroundSprites.vgrass.sizeX, backgroundSprites.vgrass.sizeY, backgroundSprites.vgrass.number);
-//        game.load.spritesheet('darkgrass', backgroundSprites.darkgrass.url, backgroundSprites.darkgrass.sizeX, backgroundSprites.darkgrass.sizeY, backgroundSprites.darkgrass.number);
-//        game.load.spritesheet('floatgrass', backgroundSprites.floatgrass.url, backgroundSprites.floatgrass.sizeX, backgroundSprites.floatgrass.sizeY, backgroundSprites.floatgrass.number);
-//        game.load.spritesheet('floatright', backgroundSprites.floatright.url, backgroundSprites.floatright.sizeX, backgroundSprites.floatright.sizeY, backgroundSprites.floatright.number);
-//        game.load.spritesheet('floatleft', backgroundSprites.floatleft.url, backgroundSprites.floatleft.sizeX, backgroundSprites.floatleft.sizeY, backgroundSprites.floatleft.number);
-//        game.load.spritesheet('miniledge', backgroundSprites.miniledge.url, backgroundSprites.miniledge.sizeX, backgroundSprites.miniledge.sizeY, backgroundSprites.miniledge.number);
-//>>>>>>> refs/remotes/origin/dev
 
         // Makes FPS counter work
         game.time.advancedTiming = true;
@@ -175,7 +157,7 @@ var slopes;
 var background;
 // The controls
 var controls;
-// sprites
+// sprite groups
 var boulders;
 var turrets;
 var bullets;
@@ -194,7 +176,7 @@ var clouds;
 function create() {
         // Create world, with the sky and background grass
         game.physics.startSystem(Phaser.Physics.ARCADE);
-        game.world.setBounds(0, 0, 4500, 800);
+        game.world.setBounds(0, 0, 4500, 600);
     
         // Make wonderful music
         music = game.add.audio('wordl1');
@@ -217,75 +199,25 @@ function create() {
 
         // Create platforms group
         platforms = game.add.group();
-
         platforms.enableBody = true;
 
-        // Create a bullets
+        // Create other groups
         bullets = game.add.group();
+        boulders = game.add.group();
+        turrets = game.add.group();
+        clouds = game.add.group();
+        slopes = game.add.group();
 
-        // Add the "ground" platforms to the bottom of the screen
-        for(var i = 0; i < 6; i++) {
-                var ground = platforms.create(252 * i, game.world.height - 64, 'hgrass');
-                var groundshadow = platforms.create(252 * i, game.world.height - 21, 'darkgrass');
-                ground.body.immovable = true;
-                ground.body.setSize(252, 37, 0, 6);
-                groundshadow.body.immovable = true;
-        }
-
-        for(var i = 0; i < 1; i++) {
-                var floating = platforms.create(2200+240 * i, game.world.height - 300, 'floatgrass');
-                floating.body.immovable = true;
-                floating.body.setSize(252, 56, 0, 6);
-        }
-    
-        for(var i = 0; i < 6; i++) {
-                var ground = platforms.create(1900 + 252*i, game.world.height - 64, 'hgrass');
-                var groundshadow = platforms.create(1900 + 252*i, game.world.height - 21, 'darkgrass');
-                ground.body.immovable = true;
-                ground.body.setSize(252, 37, 0, 6);
-                groundshadow.body.immovable = true;
-        }
-
-                var ground = platforms.create(930, game.world.height - 290, 'hgrass');
-                var groundshadow = platforms.create(930, game.world.height - 270, 'darkgrass');
-                ground.body.immovable = true;
-                ground.body.setSize(252, 37, 0, 6);
-                groundshadow.body.immovable = true;
-
-        for (var i = 0; i < 12; i++) {
-                var groundshadow = platforms.create(1050, game.world.height - 500+40*i, 'darkgrass');
-                groundshadow.body.immovable = true;
-        }
-        for (var i = 0; i < 3; i++) {
-                var groundshadow = platforms.create(930, game.world.height - 500+35*i, 'darkgrass');
-                groundshadow.body.immovable = true;
-        }
-
-        var ground = platforms.create(930, game.world.height - 533, 'hgrass');
-        ground.body.immovable = true;
-        var ground = platforms.create(1050, game.world.height - 533, 'hgrass');
-        ground.body.immovable = true;
-
-
-
-        // Create the floating rocky grass platforms
-        for(var i = 0; i < 2; i++) {
-                var floating = platforms.create(240 * i, game.world.height - 250, 'floatgrass');
-                floating.body.immovable = true;
-                floating.body.setSize(252, 56, 0, 6);
-        }
-
-        // Create the ledge that ends the floating rocky grass platforms
-        var ledge = platforms.create(474, game.world.height - 250, 'floatright');
-        ledge.body.immovable = true;
-        ledge.body.setSize(80, 54, 0, 6);
-
+        //Set up level
+        level1();
+        
         // Add controls to the game
         controls = game.input.keyboard.createCursorKeys();
         controls.space = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         controls.space.onDown.add(bitshift);
         controls.V = game.input.keyboard.addKey(Phaser.Keyboard.V);
         controls.tilde = game.input.keyboard.addKey(Phaser.Keyboard.TILDE);
+
         // Tilde toggles debug mode
         controls.tilde.onDown.add(function() {
                 debug_toggle = debug_toggle ? false : true;
@@ -297,19 +229,6 @@ function create() {
         }, this);
         controls.P = game.input.keyboard.addKey(Phaser.Keyboard.P);
         controls.P.onDown.add(pause);
-
-        // Create the sprites of the 
-        boulders = game.add.group();
-
-        //create a clouds group
-        clouds = game.add.group();
-
-        // Add slopes
-        slopes = game.add.group();
-        for(var i = 0; i < 2; i++) {
-                var slope = new Slope(this, 860-128+128 * i, 482+128-128*i, boulders);
-                slopes.add(slope);
-        }    
 
         //Add player
         player = new Player(game, controls);
@@ -335,8 +254,6 @@ function create() {
         turret = new Turret(game, player, platforms, slopes, bullets, 3200, 700);
         turret.scale.x = -1;
         turrets.add(turret);
-
-
 
         // Set up UI text
         createUI();
@@ -402,7 +319,7 @@ function render() {
 
 function createUI() {
         // Set up text for the large countdown to respawn
-        // We use game.width, not game.world.getBounds().width, because the text is locked to the camera
+        // We use game.width, not game.world.width, because the text is locked to the camera
         respawnCount = game.add.text(game.width/2, game.height/2, "");
         // Keep text from moving when player moves
         respawnCount.fixedToCamera = true;
@@ -450,9 +367,11 @@ function bitshift() {
         bullets.forEach(
                 function(b) { b.shift(); }
         , this);
+
         turrets.forEach(
                 function(t) { t.bmd.clear(); }
         , this);
+
         if (!game.shifted) {
                 platforms.forEach(shiftOff, this);
                 background.forEach(shiftOff, this);
@@ -477,4 +396,36 @@ function shiftOn(object) {
 
 function pause() {
         game.paused = !game.paused;
+}
+
+function level1() {
+        var w = game.world.width;
+        var h = game.world.height;
+
+        // add infinite sky
+        var c = 0;
+        while (c < w) {
+                background.create(c, 0, 'sky');
+                c += bgs.sky.sizeX;
+        }
+
+        // add infinite rolling hills
+        c = 0;
+        while (c < w) {
+                background.create(c, h - bgs.backgrass.sizeY, 'backgrass');
+                c += bgs.backgrass.sizeX;
+        }
+
+        // ZONE 1
+        // create three flat platforms and dark grass to go underneath them
+        for (var i = 0; i < 4; i++) {
+                var ground = platforms.create(bgs.hgrass.sizeX * i, h - bgs.hgrass.sizeY * 2, 'hgrass');
+                ground.body.immovable = true;
+                ground.body.setSize(bgs.hgrass.sizeX, 37, 0, 6);
+
+                var groundshadow = platforms.create(bgs.darkgrass.sizeX * i, h - bgs.darkgrass.sizeY, 'darkgrass');
+                groundshadow.body.immovable = true;
+        }
+
+
 }
