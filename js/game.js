@@ -247,8 +247,6 @@ function create() {
         turret = new Turret(game, player, platforms, slopes, bullets, 975, 475);
         turret.scale.x *= -1;
         turrets.add(turret); 
-        turret = new Turret(game, player, platforms, slopes, bullets, 1000, 100);
-        turrets.add(turret); 
         turret = new Turret(game, player, platforms, slopes, bullets, 2470, 700);
         turrets.add(turret);
         turret = new Turret(game, player, platforms, slopes, bullets, 3200, 700);

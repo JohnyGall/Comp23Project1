@@ -42,7 +42,7 @@ function Turret(game, target, obstacles, slopes, bullets, x, y) {
 
         // Initialization code to create a blank bitmap image to be drawn over the screen.
         // This bitmap will be used to draw the tracking line from the turret to the target.
-        this.bmd = game.add.bitmapData(game.world.width, game.world.height);
+        this.bmd = game.add.bitmapData(game.world.getBounds().width, game.world.getBounds().height);
         this.bmdimg = game.add.image(0, 0, this.bmd);
         this.bmdimg.visible = true;
     
@@ -78,21 +78,20 @@ Turret.prototype.update = function() {
         
             // If there was no intersection
             if (!intersect) {
-                if(!this.targetdying) {
-                    this.targetdying = true;
-                    this.lastShotTime = game.time.now;                    
-                }
-                if(!game.shifted && !this.sfx_tracking.isPlaying) {
-                    this.sfx_tracking.startTime = game.time.now - this.lastShotTime;
-                    console.log(this.sfx_tracking.startTime);
+                if(!game.shifted && !this.sfx_tracking.isPlaying && this.target.health > 1) {
                     this.sfx_tracking.play();
                 } else if (game.shifted) {
                     this.sfx_tracking.stop();
                 }
                 
+                if(!this.targetdying) {
+                    this.targetdying = true;
+                    this.lastShotTime = game.time.now;                    
+                }
                    if(game.shifted) {
                         this.frame = 5;
                         waitTime = this.LOW_DELAY;
+                        this.bmd.context.lineWidth = 16;
                    } else {
                         this.frame = 0;
                         this.bmd.context.lineWidth = 1;
@@ -106,16 +105,17 @@ Turret.prototype.update = function() {
                                         frame = 0;
                                 this.frame = frame;
  
-                                // Clear whatever was on the bitmap before, so we don't end up with a million red lines on the screen
-                                this.bmd.context.clearRect(0, 0, this.game.world.width, this.game.world.height);
-                                // Draw a red line from the turret to the target
-                                this.bmd.context.beginPath();
-                                this.bmd.context.strokeStyle = 'rgb(255, 0, 0)';
-                                this.bmd.context.fillStyle = 'rgb(255, 0, 0)';
-                                this.bmd.context.moveTo(this.position.x, this.position.y);
-                                var fraction = 1 - (game.time.now - this.lastShotTime) / waitTime; 
-                                this.bmd.context.lineTo(this.target.position.x - (fraction * (this.target.x - this.x)), this.target.position.y - (fraction * (this.target.y - this.y)));
-                                this.bmd.context.stroke();
+                       // Clear whatever was on the bitmap before, so we don't end up with a million red lines on the screen
+                       this.bmd.context.clearRect(0, 0, this.game.world.getBounds().width, this.game.world.getBounds().height);
+                       // Draw a red line from the turret to the target
+                       this.bmd.context.beginPath();
+                       this.bmd.context.strokeStyle = 'rgb(255, 0, 0)';
+                       this.bmd.context.fillStyle = 'rgb(255, 0, 0)';
+                       this.bmd.context.moveTo(this.position.x, this.position.y);
+                        var fraction = 1 - (game.time.now - this.lastShotTime) / waitTime; 
+                       this.bmd.context.lineTo(this.target.position.x - (fraction * (this.target.x - this.x)), this.target.position.y - (fraction * (this.target.y - this.y)));
+                       console.log('drawing line');
+                       this.bmd.context.stroke();
         
                                 // This just tells the engine it should update the texture cache so the bitmap can be redrawn
                                 this.bmd.dirty = true;
@@ -191,8 +191,10 @@ Turret.prototype.findTarget = function(ray) {
         
         }, this);
     
+        //this.slopes = slopes;
+
         this.slopes.forEach(function(wall) {
-                // Create an array of lines to represent the three edges of each slope
+                // Create an array of lines to represent the four edges of each wall
                 var lines = [
                         new Phaser.Line(wall.x+wall.scale.x*(wall.anchor.x*wall.width), wall.y-(wall.anchor.y*wall.height), wall.x+wall.scale.x*(wall.anchor.x*wall.width), wall.y+((1-wall.anchor.y)*wall.height)),
                         new Phaser.Line(wall.x-wall.scale.x*(wall.anchor.x*wall.width), wall.y-(wall.anchor.y*wall.height), wall.x+wall.scale.x*(wall.anchor.x*wall.width), wall.y-(wall.anchor.y*wall.height)),
