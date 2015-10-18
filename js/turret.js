@@ -42,7 +42,7 @@ function Turret(game, target, obstacles, slopes, bullets, x, y) {
 
         // Initialization code to create a blank bitmap image to be drawn over the screen.
         // This bitmap will be used to draw the tracking line from the turret to the target.
-        this.bmd = game.add.bitmapData(game.world.getBounds().width, game.world.getBounds().height);
+        this.bmd = game.add.bitmapData(game.world.width, game.world.height);
         this.bmdimg = game.add.image(0, 0, this.bmd);
         this.bmdimg.visible = true;
     
@@ -56,7 +56,7 @@ Turret.prototype.update = function() {
         var waitTime = this.HIGH_DELAY;
         
         if (Math.abs(this.x-this.target.x) > game.width/2 + this.body.width *this.anchor.x ||
-            Math.abs(this.y-this.target.y) > game.height/2 + this.body.height *this.anchor.y) {
+            Math.abs(this.y-this.target.y) > game.height/2 + this.body.height*this.anchor.y) {
             this.targetdying = false;
             this.sfx_tracking.stop();
             
@@ -80,20 +80,21 @@ Turret.prototype.update = function() {
         
             // If there was no intersection
             if (!intersect) {
-                if(!game.shifted && !this.sfx_tracking.isPlaying && this.target.health > 1) {
+                if(!this.targetdying) {
+                    this.targetdying = true;
+                    this.lastShotTime = game.time.now;                    
+                }
+                if(!game.shifted && !this.sfx_tracking.isPlaying) {
+                    this.sfx_tracking.startTime = game.time.now - this.lastShotTime;
+                    console.log(this.sfx_tracking.startTime);
                     this.sfx_tracking.play();
                 } else if (game.shifted) {
                     this.sfx_tracking.stop();
                 }
                 
-                if(!this.targetdying) {
-                    this.targetdying = true;
-                    this.lastShotTime = game.time.now;                    
-                }
                    if(game.shifted) {
                         this.frame = 5;
                         waitTime = this.LOW_DELAY;
-                        this.bmd.context.lineWidth = 16;
                    } else {
                         this.frame = 0;
                         this.bmd.context.lineWidth = 1;
@@ -116,7 +117,6 @@ Turret.prototype.update = function() {
                        this.bmd.context.moveTo(this.position.x, this.position.y);
                         var fraction = 1 - (game.time.now - this.lastShotTime) / waitTime; 
                        this.bmd.context.lineTo(this.target.position.x - (fraction * (this.target.x - this.x)), this.target.position.y - (fraction * (this.target.y - this.y)));
-                       console.log('drawing line');
                        this.bmd.context.stroke();
         
                        // This just tells the engine it should update the texture cache so the bitmap can be redrawn
@@ -193,10 +193,8 @@ Turret.prototype.findTarget = function(ray) {
         
         }, this);
     
-        //this.slopes = slopes;
-
         this.slopes.forEach(function(wall) {
-                // Create an array of lines to represent the four edges of each wall
+                // Create an array of lines to represent the three edges of each slope
                 var lines = [
                         new Phaser.Line(wall.x+wall.scale.x*(wall.anchor.x*wall.width), wall.y-(wall.anchor.y*wall.height), wall.x+wall.scale.x*(wall.anchor.x*wall.width), wall.y+((1-wall.anchor.y)*wall.height)),
                         new Phaser.Line(wall.x-wall.scale.x*(wall.anchor.x*wall.width), wall.y-(wall.anchor.y*wall.height), wall.x+wall.scale.x*(wall.anchor.x*wall.width), wall.y-(wall.anchor.y*wall.height)),
