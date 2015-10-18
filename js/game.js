@@ -12,99 +12,21 @@ WebFontConfig = {
 
 function preload () {
         // Customise the sprites used
-        var backgroundSprites = {
-                "sky":{
-                        "url":"assets/sky_spritesheet.png",
-                        "sizeX":1920,
-                        "sizeY":1080,
-                        "number":2
-                },
-                "backgrass":{
-                        "url":"assets/background_grass_spritesheet.png",
-                        "sizeX":1008,
-                        "sizeY":311,
-                        "number":2
-                },
-                "hgrass":{
-                        "url":"assets/grass_h_spritesheet.png",
-                        "sizeX":252,
-                        "sizeY":48,
-                        "number":2
-                },
-                "vgrass":{
-                        "url":"assets/grass_v_spritesheet.png",
-                        "sizeX":144,
-                        "sizeY":208,
-                        "number":2
-                },
-                "darkgrass":{
-                        "url":"assets/darkgrass.png",
-                        "sizeX":252,
-                        "sizeY":48,
-                        "number":2
 
-                },
-                "floatgrass":{
-                        "url":"assets/floating_spritesheet.png",
-                        "sizeX":252,
-                        "sizeY":48,
-                        "number":2
-                },
-                "floatright":{
-                        "url":"assets/floatingledge_spritesheet.png",
-                        "sizeX":65,
-                        "sizeY":48,
-                        "number":2
-                },
-                "floatleft":{
-                        "url":"assets/floatingledge1_spritesheet.png",
-                        "sizeX":65,
-                        "sizeY":48,
-                        "number":2
-                },
-                "miniledge":{
-                        "url":"assets/mini_floating_spritesheet.png",
-                        "sizeX":48,
-                        "sizeY":48,
-                        "number":2
-                }
-        }
+        // Somewhere we should allow the player to choose a custom art set without having to edit this varible (yay for tuneable via JSON)
+        // At the moment this happens through a mega ugly pop-up box (just click ok or the game won't load)
+        var currentArtSet = window.prompt("Choose the art set you would like to use","default");
 
-        var playerObjectSprites = {
-                "boulder":{
-                        "url":"assets/boulder_spritesheet.png",
-                        "sizeX":48,
-                        "sizeY":48,
-                        "number":2
-                },
-                "player":{
-                        "url":"assets/protag_spritesheet.png",
-                        "sizeX":37,
-                        "sizeY":65,
-                        // no "number" because the player sprite uses the defualt value (1)
-                },
-                "turret":{
-                        "url":"assets/turretspritesheet.png",
-                        "sizeX":96,
-                        "sizeY":96,
-                        "number":6
-                },
-                "bullet":{
-                        "url":"assets/bullet_spritesheet.png",
-                        "sizeX":16,
-                        "sizeY":16,
-                        "number":2
-                },
-                "cloud":{
-                        "url":"assets/cloud_spritesheet.png",
-                        "sizeX":96,
-                        "sizeY":32,
-                        "number":2
 
-                }
-        }
+        //Load the chosen art set
+        var loadSprites = new XMLHttpRequest();
+        loadSprites.open("GET", "assets/art/"+currentArtSet+".json", false);
+        loadSprites.send(null);
+        var sprites = JSON.parse(loadSprites.responseText);
+        var playerObjectSprites = sprites.playerObjectSprites;
+        var backgroundSprites = sprites.backgroundSprites;
 
-        // Object and player Sprites and stuff
+        // Object and player sprites
         game.load.spritesheet('boulder',playerObjectSprites.boulder.url ,playerObjectSprites.boulder.sizeX, playerObjectSprites.boulder.sizeY, playerObjectSprites.boulder.number);
         game.load.spritesheet('player', playerObjectSprites.player.url, playerObjectSprites.player.sizeX, playerObjectSprites.player.sizeY);
         game.load.spritesheet('turret', playerObjectSprites.turret.url ,playerObjectSprites.turret.sizeX, playerObjectSprites.turret.sizeY, playerObjectSprites.turret.number);
@@ -147,7 +69,7 @@ var turrets;
 var bullets;
 
 //checkpoints
-var checkpoints;
+//var checkpoints;
 // UI text elements
 var respawnText;
 var respawnCount;
@@ -164,7 +86,7 @@ function create() {
         // Create world, with the sky and background grass
         game.physics.startSystem(Phaser.Physics.ARCADE);
         game.world.setBounds(0, 0, 4500, 600);
-    
+
         // Make wonderful music
         music = game.add.audio('wordl1');
         music.volume = 0.25;
@@ -173,7 +95,7 @@ function create() {
         music_l.volume = 0.25;
         music_l.mute = true;
         music_l.loop = true;
-    
+
         background = game.add.group();
         background.create(0,0, 'sky');
         background.create(0, 300, 'backgrass');
@@ -280,8 +202,8 @@ function create() {
         //Add player
         player = new Player(game, controls);
 
-        checkpoints = new CheckPoint(game, 1173, 52, player);
-        checkpoints = new CheckPoint(game, 300, 500, player);
+        //checkpoints = new CheckPoint(game, 1173, 52, player);
+        //checkpoints = new CheckPoint(game, 300, 500, player);
 
         //create a clouds group
         clouds = game.add.group();
