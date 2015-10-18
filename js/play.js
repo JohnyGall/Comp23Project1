@@ -1,5 +1,6 @@
-function preload () {
+var playState = {
 
+preload: function() {
         // Music
         game.load.audio('wordl1_l', ['assets/music/bitshift2_lr.wav', 'assets/music/bitshift2_lr.ogg']);
         game.load.audio('wordl1', ['assets/music/bitshift2.wav', 'assets/music/bitshift2.ogg']);   
@@ -131,200 +132,176 @@ function preload () {
         // Allows Google Fonts to be used remotely
         game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
 
-}
+},
 
-// The player sprite, extended from Phaser.Sprite
-var player;
-// A group of the static platforms in the level
-var platforms;
-// A group for all slopes
-var slopes;
-// A group containing the background elements
-var background;
-// The controls
-var controls;
-// sprites
-var boulders;
-var turrets;
-var bullets;
+create: function() {
 
-//checkpoints
-var checkpoints;
-// UI text elements
-var respawnText;
-var respawnCount;
-var framerate;
-// Time, used for favicon animation
-var then = Date.now();
-// Are we in debug mode?
-var debug_toggle = 0;
-
-//first cloud  
-var clouds;
-
-function create() {
-        // Create world, with the sky and background grass
+	this.then = Date.now();
+	// Are we in debug mode?
+	this.debug_toggle = 0;
+    
+        // Create world, with the sky and this.background grass
         game.physics.startSystem(Phaser.Physics.ARCADE);
         game.world.setBounds(0, 0, 9700, 800);
     
-        // Make wonderful music
-        music = game.add.audio('wordl1');
-        music.volume = 0.15;
-        music.loop = true;
-        music_l = game.add.audio('wordl1_l');
-        music_l.volume = 0.15;
-        music_l.mute = true;
-        music_l.loop = true;
+        // Make wonderful this.music
+        this.music = game.add.audio('wordl1');
+        this.music.volume = 0.15;
+        this.music.loop = true;
+        this.music_l = game.add.audio('wordl1_l');
+        this.music_l.volume = 0.15;
+        this.music_l.mute = true;
+        this.music_l.loop = true;
     
-        background = game.add.group();
+        this.background = game.add.group();
         for (var i = 0; i <= game.world.width; i += 1920) {
-            background.create(i,0, 'sky');
+            this.background.create(i,0, 'sky');
         }
     
         for (var i = 0; i <= game.world.width; i += 1008) {
-            background.create(i,500, 'backgrass');
+            this.background.create(i,500, 'backgrass');
         }
-        background.create(1008, 500, 'backgrass');
+        this.background.create(1008, 500, 'backgrass');
 
         // Create a new part of the game keeping track of the world resolution
         game.shifted = false;
 
-        // Create platforms group
-        platforms = game.add.group();
+        // Create this.platforms group
+        this.platforms = game.add.group();
 
-        platforms.enableBody = true;
+        this.platforms.enableBody = true;
 
-        // Create a bullets
-        bullets = game.add.group();
+        // Create a this.bullets
+        this.bullets = game.add.group();
 
-        // Add the "ground" platforms to the bottom of the screen
+        // Add the "ground" this.platforms to the bottom of the screen
         for(var i = 0; i < 6; i++) {
-                var ground = platforms.create(252 * i, game.world.height - 64, 'hgrass');
-                var groundshadow = platforms.create(252 * i, game.world.height - 21, 'darkgrass');
+                var ground = this.platforms.create(252 * i, game.world.height - 64, 'hgrass');
+                var groundshadow = this.platforms.create(252 * i, game.world.height - 21, 'darkgrass');
                 ground.body.immovable = true;
                 ground.body.setSize(252, 37, 0, 6);
                 groundshadow.body.immovable = true;
         }
     
         for(var i = 0; i < 2; i++) {
-                var ground = platforms.create(9300+252 * i, game.world.height - 64, 'hgrass');
-                var groundshadow = platforms.create(9300*252 * i, game.world.height - 21, 'darkgrass');
+                var ground = this.platforms.create(9300+252 * i, game.world.height - 64, 'hgrass');
+                var groundshadow = this.platforms.create(9300*252 * i, game.world.height - 21, 'darkgrass');
                 ground.body.immovable = true;
                 ground.body.setSize(252, 37, 0, 6);
                 groundshadow.body.immovable = true;
         }
 
         for(var i = 0; i < 1; i++) {
-                var floating = platforms.create(2200+240 * i, game.world.height - 300, 'floatgrass');
+                var floating = this.platforms.create(2200+240 * i, game.world.height - 300, 'floatgrass');
                 floating.body.immovable = true;
                 floating.body.setSize(252, 56, 0, 6);
         }
     
         for(var i = 0; i < 7; i++) {
-                var ground = platforms.create(1900 + 252*i, game.world.height - 64, 'hgrass');
-                var groundshadow = platforms.create(1900 + 252*i, game.world.height - 21, 'darkgrass');
+                var ground = this.platforms.create(1900 + 252*i, game.world.height - 64, 'hgrass');
+                var groundshadow = this.platforms.create(1900 + 252*i, game.world.height - 21, 'darkgrass');
                 ground.body.immovable = true;
                 ground.body.setSize(252, 37, 0, 6);
                 groundshadow.body.immovable = true;
         }
 
-                var ground = platforms.create(930, game.world.height - 290, 'hgrass');
-                var groundshadow = platforms.create(930, game.world.height - 270, 'darkgrass');
+                var ground = this.platforms.create(930, game.world.height - 290, 'hgrass');
+                var groundshadow = this.platforms.create(930, game.world.height - 270, 'darkgrass');
                 ground.body.immovable = true;
                 ground.body.setSize(252, 37, 0, 6);
                 groundshadow.body.immovable = true;
 
         for (var i = 0; i < 12; i++) {
-                var groundshadow = platforms.create(1050, game.world.height - 500+40*i, 'darkgrass');
+                var groundshadow = this.platforms.create(1050, game.world.height - 500+40*i, 'darkgrass');
                 groundshadow.body.immovable = true;
         }
         for (var i = 0; i < 3; i++) {
-                var groundshadow = platforms.create(930, game.world.height - 500+35*i, 'darkgrass');
+                var groundshadow = this.platforms.create(930, game.world.height - 500+35*i, 'darkgrass');
                 groundshadow.body.immovable = true;
         }
 
-        var ground = platforms.create(930, game.world.height - 533, 'hgrass');
+        var ground = this.platforms.create(930, game.world.height - 533, 'hgrass');
         ground.body.setSize(252, 37, 0, 6);
         ground.body.immovable = true;
-        var ground = platforms.create(1050, game.world.height - 533, 'hgrass');
+        var ground = this.platforms.create(1050, game.world.height - 533, 'hgrass');
         ground.body.setSize(252, 37, 0, 6);
         ground.body.immovable = true;
 
-        var ground = platforms.create(3600, 400, 'hgrass');
+        var ground = this.platforms.create(3600, 400, 'hgrass');
         ground.body.immovable = true;
         for (var i = 0; i < 10; i++) {
-                var groundshadow = platforms.create(3600, 423+35*i, 'darkgrass');
+                var groundshadow = this.platforms.create(3600, 423+35*i, 'darkgrass');
                 groundshadow.body.immovable = true;
         }
     
-        var ground = platforms.create(4120, 657, 'hgrass');
+        var ground = this.platforms.create(4120, 657, 'hgrass');
         ground.body.immovable = true;
         for (var i = 0; i < 10; i++) {
-                var groundshadow = platforms.create(4120, 675+35*i, 'darkgrass');
+                var groundshadow = this.platforms.create(4120, 675+35*i, 'darkgrass');
                 groundshadow.body.immovable = true;
         }
 
-        var ground = platforms.create(7760, 684, 'hgrass');
+        var ground = this.platforms.create(7760, 684, 'hgrass');
         ground.body.setSize(252, 37, 0, 6);
         ground.body.immovable = true;
 
 
 
-        // Create the floating rocky grass platforms
+        // Create the floating rocky grass this.platforms
         for(var i = 0; i < 2; i++) {
-                var floating = platforms.create(240 * i, game.world.height - 250, 'floatgrass');
+                var floating = this.platforms.create(240 * i, game.world.height - 250, 'floatgrass');
                 floating.body.immovable = true;
                 floating.body.setSize(252, 56, 0, 6);
         }
 
-        // Create the ledge that ends the floating rocky grass platforms
-        var ledge = platforms.create(474, game.world.height - 250, 'floatright');
+        // Create the ledge that ends the floating rocky grass this.platforms
+        var ledge = this.platforms.create(474, game.world.height - 250, 'floatright');
         ledge.body.immovable = true;
         ledge.body.setSize(64, 54, 0, 6);
 
         for(var i = 0; i < 2; i++) {
-                var floating = platforms.create(5100 + 240 * i, 600, 'floatgrass');
+                var floating = this.platforms.create(5100 + 240 * i, 600, 'floatgrass');
                 floating.body.immovable = true;
                 floating.body.setSize(252, 56, 0, 6);
         }
-                 var floating = platforms.create(5580, 600, 'floatright');
+                 var floating = this.platforms.create(5580, 600, 'floatright');
                 floating.body.immovable = true;
                 floating.body.setSize(64, 54, 0, 6);
 
-                 var floating = platforms.create(5036, 600, 'floatleft');
+                 var floating = this.platforms.create(5036, 600, 'floatleft');
                 floating.body.immovable = true;
                 floating.body.setSize(64, 54, 0, 6);
 
-        var floating = platforms.create(6750, 600, 'floatgrass');
+        var floating = this.platforms.create(6750, 600, 'floatgrass');
         floating.body.immovable = true;
         floating.body.setSize(252, 56, 0, 6);
-        var floating = platforms.create(6686, 600, 'floatleft');
+        var floating = this.platforms.create(6686, 600, 'floatleft');
         floating.body.immovable = true;
         floating.body.setSize(64, 54, 0, 6);
-        var floating = platforms.create(6990, 600, 'floatright');
+        var floating = this.platforms.create(6990, 600, 'floatright');
         floating.body.immovable = true;
         floating.body.setSize(64, 54, 0, 6);
     
-        // Add controls to the game
-        controls = game.input.keyboard.createCursorKeys();
-        controls.space = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-        controls.space.onDown.add(bitshift);
-        controls.V = game.input.keyboard.addKey(Phaser.Keyboard.V);
-        controls.tilde = game.input.keyboard.addKey(Phaser.Keyboard.TILDE);
+        // Add this.controls to the game
+        this.controls = game.input.keyboard.createCursorKeys();
+        this.controls.space = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        this.controls.space.onDown.add(this.bitshift);
+        this.controls.V = game.input.keyboard.addKey(Phaser.Keyboard.V);
+        this.controls.tilde = game.input.keyboard.addKey(Phaser.Keyboard.TILDE);
         // Tilde toggles debug mode
-        controls.tilde.onDown.add(function() {
-                debug_toggle = debug_toggle ? false : true;
+        this.controls.tilde.onDown.add(function() {
+                this.debug_toggle = this.debug_toggle ? false : true;
                 // If debug is turned off, we want to clear the bounding boxes and make the FPS
                 // counter invisible. This code is put here because in render it would be called
                 // at every frame.
-                framerate.visible = false;
+                this.framerate.visible = false;
                 game.debug.reset();
         }, this);
-        controls.P = game.input.keyboard.addKey(Phaser.Keyboard.P);
-        controls.P.onDown.add(pause);
+        this.controls.P = game.input.keyboard.addKey(Phaser.Keyboard.P);
+        this.controls.P.onDown.add(this.pause);
 
         // Create the sprites of the 
-        boulders = game.add.group();
+        this.boulders = game.add.group();
 
         //create a clouds group
         clouds = game.add.group();
@@ -339,208 +316,209 @@ function create() {
         cloud = new Cloud(this,7200,450);
         clouds.add(cloud);
 
-        // Add slopes
-        slopes = game.add.group();
+        // Add this.slopes
+        this.slopes = game.add.group();
         for(var i = 0; i < 2; i++) {
-                var slope = new Slope(this, 860-128+128 * i, 482+128-128*i, boulders);
-                slopes.add(slope);
+                var slope = new Slope(this, 860-128+128 * i, 482+128-128*i, this.boulders);
+                this.slopes.add(slope);
         }    
         for(var i = 0; i < 2; i++) {
-                var slope = new Slope(this, 3924+128 * i, 400+128*i, boulders);
-                slopes.add(slope);
+                var slope = new Slope(this, 3924+128 * i, 400+128*i, this.boulders);
+                this.slopes.add(slope);
                 slope.scale.x = -1;
         }
-        var slope = new Slope(this, 4438, 528, boulders);
-        slopes.add(slope);
+        var slope = new Slope(this, 4438, 528, this.boulders);
+        this.slopes.add(slope);
         for(var i = 0; i < 3; i++) {
-                var slope = new Slope(this, 7440+128 * i, 300+128*i, boulders);
-                slopes.add(slope);
+                var slope = new Slope(this, 7440+128 * i, 300+128*i, this.boulders);
+                this.slopes.add(slope);
                 slope.scale.x = -1;
         }
-        var slope = new Slope(this, 8072, 556, boulders);
-        slopes.add(slope);
+        var slope = new Slope(this, 8072, 556, this.boulders);
+        this.slopes.add(slope);
 
-        //Add player
-        player = new Player(game, controls);
+        //Add this.player
+        this.player = new Player(game, this.controls);
     
         //Checkpoints
         checkpoints = game.add.group();
-        var checkpoint = new CheckPoint(game, 6845, 573.5, player);
+        var checkpoint = new CheckPoint(game, 6845, 573.5, this.player);
         checkpoints.add(checkpoint);
-        var checkpoint = new CheckPoint(game, 5259, 573.5, player);
+        var checkpoint = new CheckPoint(game, 5259, 573.5, this.player);
         checkpoints.add(checkpoint);
-        var checkpoint = new CheckPoint(game, 3300, 709.5, player);
+        var checkpoint = new CheckPoint(game, 3300, 709.5, this.player);
         checkpoints.add(checkpoint);
-        var checkpoint = new CheckPoint(game, 2100, 709.5, player);
+        var checkpoint = new CheckPoint(game, 2100, 709.5, this.player);
         checkpoints.add(checkpoint);
-        var checkpoint = new CheckPoint(game, 1173, 52, player);
+        var checkpoint = new CheckPoint(game, 1173, 52, this.player);
         checkpoints.add(checkpoint);
-        var checkpoint = new CheckPoint(game, 300, 500, player);
+        var checkpoint = new CheckPoint(game, 300, 500, this.player);
         checkpoints.add(checkpoint);
 
         var boulder = new Boulder(game, 500, 150);
-        boulders.add(boulder);
-
+        this.boulders.add(boulder);
         boulder = new Boulder(game, 1700, -100);
-        boulders.add(boulder);
+        this.boulders.add(boulder);
         boulder = new Boulder(game, 2420, 300);
-        boulders.add(boulder);
+        this.boulders.add(boulder);
     
     
-    //         Add turrets
-        turrets = game.add.group();
-        turret = new Turret(game, player, platforms, slopes, bullets, 975, 475);
+    //         Add this.turrets
+        this.turrets = game.add.group();
+        turret = new Turret(game, this.player, this.platforms, this.slopes, this.bullets, 975, 475);
         turret.scale.x *= -1;
-        turrets.add(turret); 
-        turret = new Turret(game, player, platforms, slopes, bullets, 2470, 700);
-        turrets.add(turret);
-        turret = new Turret(game, player, platforms, slopes, bullets, 3200, 700);
+        this.turrets.add(turret); 
+        turret = new Turret(game, this.player, this.platforms, this.slopes, this.bullets, 2470, 700);
+        this.turrets.add(turret);
+        turret = new Turret(game, this.player, this.platforms, this.slopes, this.bullets, 3200, 700);
         turret.scale.x = -1;
-        turrets.add(turret);
-        turret = new Turret(game, player, platforms, slopes, bullets, 6730, 560);
+        this.turrets.add(turret);
+        turret = new Turret(game, this.player, this.platforms, this.slopes, this.bullets, 6730, 560);
         turret.scale.x = -1;
-        turrets.add(turret);
+        this.turrets.add(turret);
 
 
         // Set up UI text
-        createUI();
+        this.createUI();
 
-}
+},
 
-function update() {
-        if(!music.isPlaying) {
-            music.play()
-            music_l.play()
+update: function() {
+        if(!this.music.isPlaying) {
+            this.music.play()
+            this.music_l.play()
         }
     
         // Collision detection for all objects
-        game.physics.arcade.collide(player, platforms);
-        game.physics.arcade.collide(platforms, boulders);
-        game.physics.arcade.collide(player, boulders);
-        game.physics.arcade.collide(player, turrets);
-        game.physics.arcade.collide(boulders, turrets);
+        game.physics.arcade.collide(this.player, this.platforms);
+        game.physics.arcade.collide(this.platforms, this.boulders);
+        game.physics.arcade.collide(this.player, this.boulders);
+        game.physics.arcade.collide(this.player, this.turrets);
+        game.physics.arcade.collide(this.boulders, this.turrets);
 
         if(game.shifted){
-                game.physics.arcade.collide(player, clouds);
+                game.physics.arcade.collide(this.player, clouds);
         }
 
         // Update UI
-        if(player.health < 2) {
-                respawnCount.visible = true;
-                respawnText.visible = true;
-                respawnCount.text = Math.ceil((player.RESPAWN_TIME - (Date.now() - player.killTime)) / 1000);
-                if (Date.now() - player.killTime >= player.RESPAWN_TIME) {
-                        respawnCount.visible = false;
-                        respawnText.visible = false;
-                        player.respawn();
-                        boulders.forEach(function(b) {b.respawn();},this);
+        if(this.player.health < 2) {
+                this.respawnCount.visible = true;
+                this.respawnText.visible = true;
+                this.respawnCount.text = Math.ceil((this.player.RESPAWN_TIME - (Date.now() - this.player.killTime)) / 1000);
+                if (Date.now() - this.player.killTime >= this.player.RESPAWN_TIME) {
+                        this.respawnCount.visible = false;
+                        this.respawnText.visible = false;
+                        this.player.respawn();
+                        this.boulders.forEach(function(b) {b.respawn();},this);
                         if(this.game.shifted)
-                                bitshift();
+                                this.bitshift();
                 }
         }
 
-}
+},
 
-function render() {
+render: function() {
         // Don't render anything unless the user wants to debug
-        if (debug_toggle === true) {
+        if (this.debug_toggle === true) {
                 // Clear the debug render screen, so there isn't any flicker
                 game.debug.context.clearRect(0, 0, game.world.width, game.world.height);
-                // Show and update the framerate
-                framerate.visible = true;
-                framerate.text = game.time.fps;
+                // Show and update the this.framerate
+                this.framerate.visible = true;
+                this.framerate.text = game.time.fps;
                 // Draw bounding boxes
-                game.debug.body(player);
-                boulders.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
-                turrets.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
-                platforms.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
+                game.debug.body(this.player);
+                this.boulders.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
+                this.turrets.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
+                this.platforms.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
                 clouds.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
 
-                slopes.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
+                this.slopes.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
                 // Animate the favicon, for fun
-                if(Date.now() - then >= 50) {
-                        then = Date.now();
+                if(Date.now() - this.then >= 50) {
+                        this.then = Date.now();
                         favicon();
                 }
 
         }
-}
+},
 
-function createUI() {
+createUI: function() {
         // Set up text for the large countdown to respawn
         // We use game.width, not game.world.getBounds().width, because the text is locked to the camera
-        respawnCount = game.add.text(game.width/2, game.height/2, "");
-        // Keep text from moving when player moves
-        respawnCount.fixedToCamera = true;
+        this.respawnCount = game.add.text(game.width/2, game.height/2, "");
+        // Keep text from moving when this.player moves
+        this.respawnCount.fixedToCamera = true;
         // Set the anchor so centering isn't based off the top left corner
-        respawnCount.anchor.setTo(0.5);
+        this.respawnCount.anchor.setTo(0.5);
         // font settings
-        respawnCount.font = fontname;
-        respawnCount.fontSize = 150;
-        respawnCount.align = 'center';
-        respawnCount.fill = '#fff';
-        respawnCount.stroke = '#000';
-        respawnCount.strokeThickness = 3;
-        respawnCount.setShadow(5, 5, 'rgba(0,0,0,1)', 0);
+        this.respawnCount.font = fontname;
+        this.respawnCount.fontSize = 150;
+        this.respawnCount.align = 'center';
+        this.respawnCount.fill = '#fff';
+        this.respawnCount.stroke = '#000';
+        this.respawnCount.strokeThickness = 3;
+        this.respawnCount.setShadow(5, 5, 'rgba(0,0,0,1)', 0);
         // Make the text invisible until a respawn countdown is needed
-        respawnCount.visible = false;
+        this.respawnCount.visible = false;
 
-        // Similarly, we need text above the countdown to tell the player they will respawn
-        respawnText = game.add.text(game.width/2, game.height/2 - 150, "Respawn in:");
-        respawnText.fixedToCamera = true;
-        respawnText.anchor.setTo(0.5);
-        respawnText.font = fontname;
-        respawnText.fontSize = 48;
-        respawnText.align = 'center';
-        respawnText.fill = '#fff';
-        respawnText.stroke = '#000';
-        respawnText.strokeThickness = 3;
-        respawnText.setShadow(3, 3, 'rgba(0,0,0,1)', 0);
-        respawnText.visible = false;
+        // Similarly, we need text above the countdown to tell the this.player they will respawn
+        this.respawnText = game.add.text(game.width/2, game.height/2 - 150, "Respawn in:");
+        this.respawnText.fixedToCamera = true;
+        this.respawnText.anchor.setTo(0.5);
+        this.respawnText.font = fontname;
+        this.respawnText.fontSize = 48;
+        this.respawnText.align = 'center';
+        this.respawnText.fill = '#fff';
+        this.respawnText.stroke = '#000';
+        this.respawnText.strokeThickness = 3;
+        this.respawnText.setShadow(3, 3, 'rgba(0,0,0,1)', 0);
+        this.respawnText.visible = false;
 
         // Add an FPS counter to the top left corner, to be turned on with debug mode
-        framerate = game.add.text(25, 25, game.time.fps);
-        framerate.fixedToCamera = true;
-        framerate.font = fontname;
-        framerate.fontSize = 14;
-        framerate.fill = '#33ff33';
-        framerate.stroke = '#000';
-        framerate.strokeThickness = 3;
-        framerate.visible = false;
-}
+        this.framerate = game.add.text(25, 25, game.time.fps);
+        this.framerate.fixedToCamera = true;
+        this.framerate.font = fontname;
+        this.framerate.fontSize = 14;
+        this.framerate.fill = '#33ff33';
+        this.framerate.stroke = '#000';
+        this.framerate.strokeThickness = 3;
+        this.framerate.visible = false;
+},
 
 
-function bitshift() {
+bitshift: function() {
         game.shifted = !game.shifted;
 
-        bullets.forEach(
+        playState.bullets.forEach(
                 function(b) { b.shift(); }
         , this);
-        turrets.forEach(
+        playState.turrets.forEach(
                 function(t) { t.bmd.clear(); }
         , this);
         if (!game.shifted) {
-                platforms.forEach(shiftOff, this);
-                background.forEach(shiftOff, this);
-                music.mute = false;
-                music_l.mute = true;
+                playState.platforms.forEach(playState.shiftOff, this);
+                playState.background.forEach(playState.shiftOff, this);
+                playState.music.mute = false;
+                playState.music_l.mute = true;
         }
         else {
-                platforms.forEach(shiftOn, this);
-                background.forEach(shiftOn, this);
-                music.mute = true;
-                music_l.mute = false;
+                playState.platforms.forEach(playState.shiftOn, this);
+                playState.background.forEach(playState.shiftOn, this);
+                playState.music.mute = true;
+                playState.music_l.mute = false;
         }
-}
+},
 
-function shiftOff(object) {
+shiftOff: function(object) {
         object.frame = 0;
-}
+},
 
-function shiftOn(object) {
+shiftOn: function(object) {
         object.frame = 1;
-}
+},
 
-function pause() {
+pause: function() {
         game.paused = !game.paused;
-}
+},
+
+};

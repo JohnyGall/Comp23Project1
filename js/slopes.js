@@ -58,7 +58,7 @@ Slope.prototype.update = function() {
         }
     }, this);
 
-    var thing = player;
+    var thing = playState.player;
 if (game.physics.arcade.overlap(thing, this) && this.scale.x*thing.x >= this.scale.x*(this.x-0.5*this.width) && this.scale.x*thing.x  <= this.scale.x*(this.x+0.5*this.width)) {
             var rel_x = this.scale.x*(thing.x - this.x+0.5*this.width*this.scale.x);
             if (this.scale.x > 0) 

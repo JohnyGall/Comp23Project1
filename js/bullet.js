@@ -18,7 +18,7 @@ function Bullet (game, target, source) {
         game.physics.enable(this, Phaser.Physics.ARCADE);
         game.add.existing(this);
 
-        bullets.add(this);
+        playState.bullets.add(this);
 
         // Remove once it leaves the visible field (Phaser built-in)
         this.body.outOfBoundsKill = true;
@@ -55,7 +55,7 @@ Bullet.prototype.update = function() {
         if (game.physics.arcade.overlap(this.target, this)) {
                 this.target.kill();
         }
-        if (game.physics.arcade.overlap(boulders, this) || game.physics.arcade.overlap(platforms, this)) {
+        if (game.physics.arcade.overlap(playState.boulders, this) || game.physics.arcade.overlap(playState.platforms, this)) {
                 this.destroy();
         }
 }

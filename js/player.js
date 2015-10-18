@@ -68,6 +68,8 @@ Player.prototype = Object.create(Phaser.Sprite.prototype);
 Player.prototype.constructor = Player;
 
 Player.prototype.update = function() {
+            var slopes = playState.slopes;
+    
             this.onSlope = false;
             slopes.forEach(function(slope) {this.onSlope = (slope.isOn(this) || this.onSlope);}, this);
             this.checkWorldBounds = true;
