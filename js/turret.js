@@ -56,6 +56,7 @@ Turret.prototype.update = function() {
         var waitTime = this.HIGH_DELAY;
         
         if (Math.abs(this.x-this.target.x) > game.width/2 + this.body.width *this.anchor.x ||                       Math.abs(this.y-this.target.y) > game.height/2 + this.body.height*this.anchor.y) {
+
             this.targetdying = false;
             this.sfx_tracking.stop();
             
