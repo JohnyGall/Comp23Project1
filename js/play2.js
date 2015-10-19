@@ -350,6 +350,8 @@ create: function() {
 
         // PLAYER IS MADE HERE
         this.player = new Player(game, this.controls, this);
+        this.player.x = 0;
+        this.player.SLIDE_SPEED = 125;
     
         // ALL CHECKPOINTS GO HERE
         checkpoints = game.add.group();
