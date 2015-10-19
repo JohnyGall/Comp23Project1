@@ -10,9 +10,9 @@ function CheckPoint(game, x, y, target) {
         // Set up the spike
         Phaser.Sprite.call(this, game, this.INIT_X, this.INIT_Y, 'player');
         game.physics.enable(this, Phaser.Physics.ARCADE);
+        game.add.existing(this);
         this.body.immovable = true;
         this.anchor.setTo(0.5,0.5);
-        game.add.existing(this);
 }
 
 CheckPoint.prototype = Object.create(Phaser.Sprite.prototype);

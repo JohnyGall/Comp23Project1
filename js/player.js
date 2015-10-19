@@ -1,9 +1,15 @@
-function Player(game, controls) {
+function Player(game, controls, playstate) {
         // Store variables
         this.game = game;
+        this.playstate = playstate;
         this.controls = controls;
         this.facingRight = true;
         this.killTime = 0;
+    
+        this.sfx_jump = game.add.audio('player_jump');
+        this.sfx_jump.volume = 0.25;
+        this.sfx_spawn = game.add.audio('player_spawn');
+        this.sfx_spawn.volume = 0.25;
     
         // if player is on slope
         this.onSlope = false;
@@ -11,7 +17,7 @@ function Player(game, controls) {
         //Store constants
         // Player initial coordinates
         this.INIT_X = 200;
-        this.INIT_Y = 500;
+        this.INIT_Y = this.game.world.height-100;
         // Walking and jumping speeds
         this.DEFAULT_SPEED = 150;
         this.SLIDE_SPEED = 150;
@@ -63,6 +69,8 @@ Player.prototype = Object.create(Phaser.Sprite.prototype);
 Player.prototype.constructor = Player;
 
 Player.prototype.update = function() {
+            var slopes = this.playstate.slopes;
+    
             this.onSlope = false;
             slopes.forEach(function(slope) {this.onSlope = (slope.isOn(this) || this.onSlope);}, this);
             this.checkWorldBounds = true;
@@ -150,11 +158,10 @@ Player.prototype.update = function() {
         // If the up arrow is being pushed, give the player a velocity upwards as long as
         // the player is touching the ground.
         if (this.controls.up.isDown && (this.body.touching.down || this.body.blocked.down || this.onSlope)) {
-            console.log('jump?');
                 if (this.body.velocity.y > this.JUMP_SPEED) {
-                                console.log('jump!');
                     this.y -= 1;
                     this.body.velocity.y = this.JUMP_SPEED;
+                    this.sfx_jump.play();
                 }
                 // Play jump animations
                 if (this.facingRight){
@@ -207,11 +214,8 @@ Player.prototype.update = function() {
                 // and a velocity of -V_SPEED will be added.  
                 this.body.velocity.x += ((2 * this.facingRight) - 1) * this.V_SPEED;
         }
-    
-        if(this.x >= game.world.width) {
-                this.x -= 1;
-                this.body.velocity.x = 0;
-        } else if(this.x <= 0) {
+
+        if(this.x <= 0) {
                 this.x += 1;
                 this.body.velocity.x = 0;
         }
@@ -235,4 +239,5 @@ Player.prototype.respawn = function() {
         this.body.gravity.y = this.ORIG_GRAV;
         this.position.x = this.INIT_X;
         this.position.y = this.INIT_Y;
+        this.sfx_spawn.play();
 };

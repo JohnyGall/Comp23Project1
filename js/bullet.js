@@ -1,4 +1,4 @@
-function Bullet (game, target, source) {
+function Bullet (game, target, source, playstate) {
         //SET DEFAULT SPEED OF PROJECTILES
         //High-res
         this.H_SPEED = 3000;
@@ -7,6 +7,7 @@ function Bullet (game, target, source) {
 
         // Store variables, mostly for accessing the bitshift value
         this.game = game;
+        this.playstate = playstate;
         this.INIT_X = source.x;
         this.INIT_Y = source.y;
         this.target = target;
@@ -18,7 +19,7 @@ function Bullet (game, target, source) {
         game.physics.enable(this, Phaser.Physics.ARCADE);
         game.add.existing(this);
 
-        bullets.add(this);
+        this.playstate.bullets.add(this);
 
         // Remove once it leaves the visible field (Phaser built-in)
         this.body.outOfBoundsKill = true;
@@ -44,12 +45,10 @@ Bullet.prototype = Object.create(Phaser.Sprite.prototype);
 Bullet.prototype.constructor = Bullet;
 
 Bullet.prototype.update = function() {
-                this.checkWorldBounds = true;
-                this.events.onOutOfBounds.add(function() {
-                        this.destroy();
-                }, this);
-
-
+        this.checkWorldBounds = true;
+        this.events.onOutOfBounds.add(function() {
+                this.destroy();
+        }, this);
 
         if (this.target.health < this.target.MAX_HEALTH) {
                 this.destroy();
@@ -57,7 +56,7 @@ Bullet.prototype.update = function() {
         if (game.physics.arcade.overlap(this.target, this)) {
                 this.target.kill();
         }
-        if (game.physics.arcade.overlap(obstacles, this)) {
+        if (game.physics.arcade.overlap(this.playstate.boulders, this) || game.physics.arcade.overlap(this.playstate.platforms, this)) {
                 this.destroy();
         }
 }
@@ -73,7 +72,7 @@ Bullet.prototype.shift = function() {
                 }
         } else {
                 this.frame = 1;
-//                this.body.velocity.x *= this.H_SPEED / this.L_SPEED;
-//                this.body.velocity.y *= this.H_SPEED / this.L_SPEED;
+                this.body.velocity.x *= this.H_SPEED / this.L_SPEED;
+                this.body.velocity.y *= this.H_SPEED / this.L_SPEED;
         }
 }
