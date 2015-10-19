@@ -14,8 +14,9 @@ WebFontConfig = {
 
 // menu state
 game.state.add('menu', menuState);
-// gameplay state
+// gameplay states
 game.state.add('play', playState);
+game.state.add('play2', playState2);
 // state for when end of lv2 is reached
 game.state.add('win', winState);
 // state for loading JSON map

@@ -121,7 +121,7 @@ Player.prototype.update = function() {
                 // This is rightwards motion, so if we are moving to the left with a high
                 // velocity, decay that speed until we are back at the default. Otherwise,
                 // it is business as usual and we go to the right at our default speed.
-                if (this.body.velocity.x < -1 * this.DEFAULT_SPEED) {
+                if (this.body.velocity.x < -1 * this.SLIDE_SPEED) {
                         this.body.velocity.x += this.SIDE_DECAY_NUM;
                 } else if (this.body.velocity.x <= this.DEFAULT_SPEED) {
                         this.body.velocity.x = this.DEFAULT_SPEED;
@@ -138,7 +138,7 @@ Player.prototype.update = function() {
             
                 // Same as above, if we are going fast to the right, the left arrow key should
                 // slow us down. If not, then just change our speed to the default walking speed.
-                if (this.body.velocity.x > this.DEFAULT_SPEED) {
+                if (this.body.velocity.x > this.SLIDE_SPEED) {
                         this.body.velocity.x -= this.SIDE_DECAY_NUM;
                 } else if (this.body.velocity.x >= -1 * this.DEFAULT_SPEED) {
                         this.body.velocity.x = -1 * this.DEFAULT_SPEED;
@@ -235,9 +235,9 @@ Player.prototype.kill = function() {
 
 // Reset the player
 Player.prototype.respawn = function() {
-        this.health = this.MAX_HEALTH;
         this.body.gravity.y = this.ORIG_GRAV;
         this.position.x = this.INIT_X;
         this.position.y = this.INIT_Y;
+        this.health = this.MAX_HEALTH;
         this.sfx_spawn.play();
 };

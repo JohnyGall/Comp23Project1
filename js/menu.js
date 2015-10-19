@@ -56,6 +56,11 @@ var menuState = {
 				game.state.start('loadmap');
 			}
 		}
+        if(controls.up.isDown && controls.down.isDown) {
+				console.log("SKIP");
+                this.music.stop();
+				game.state.start('play2');            
+        }
 	},
 
 	/*// when correctly prompted,
