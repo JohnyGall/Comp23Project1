@@ -235,9 +235,9 @@ Player.prototype.kill = function() {
 
 // Reset the player
 Player.prototype.respawn = function() {
-        this.health = this.MAX_HEALTH;
         this.body.gravity.y = this.ORIG_GRAV;
         this.position.x = this.INIT_X;
         this.position.y = this.INIT_Y;
+        this.health = this.MAX_HEALTH;
         this.sfx_spawn.play();
 };
