@@ -132,6 +132,8 @@ preload: function() {
         game.load.spritesheet('floatright', backgroundSprites.floatright.url, backgroundSprites.floatright.sizeX, backgroundSprites.floatright.sizeY, backgroundSprites.floatright.number);
         game.load.spritesheet('floatleft', backgroundSprites.floatleft.url, backgroundSprites.floatleft.sizeX, backgroundSprites.floatleft.sizeY, backgroundSprites.floatleft.number);
         game.load.spritesheet('miniledge', backgroundSprites.miniledge.url, backgroundSprites.miniledge.sizeX, backgroundSprites.miniledge.sizeY, backgroundSprites.miniledge.number);
+        game.load.spritesheet('hice', "assets/ice_h_spritesheet.png",backgroundSprites.hgrass.sizeX, backgroundSprites.hgrass.sizeY, backgroundSprites.hgrass.number);
+
 
         // Makes FPS counter work
         game.time.advancedTiming = true;
@@ -259,10 +261,10 @@ create: function() {
         }
 
 
-        var ground = this.platforms.create(8650-504, 300, 'hgrass');
+        var ground = this.platforms.create(8650-504, 300, 'hice');
         ground.body.setSize(252, 37, 0, 6);
         ground.body.immovable = true;
-        for (var i = 330; i < game.world.height; i += 48) {
+        for (var i = 346; i < game.world.height; i += 48) {
                 var groundshadow = this.platforms.create(8650-504, i, 'darkgrass');
                 groundshadow.body.immovable = true;
         }
@@ -430,7 +432,7 @@ update: function() {
         if(this.player.health < 2) {
                 this.respawnCount.visible = true;
                 this.respawnText.visible = true;
-                this.respawnCount.text = Math.ceil((this.player.RESPAWN_TIME - (Date.now() - this.player.killTime)) / 1000);
+                this.respawnCount.text = Math.ceil((this.player.RESPAWN_TIME - (Date.now() - this.player.killTime)) / 500);
                 if (Date.now() - this.player.killTime >= this.player.RESPAWN_TIME) {
                         this.respawnCount.visible = false;
                         this.respawnText.visible = false;

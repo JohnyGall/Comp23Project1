@@ -34,7 +34,7 @@ function Player(game, controls, playstate) {
         // Speedboost speed
         this.V_SPEED = 30;
         // Respawn time, in milliseconds
-        this.RESPAWN_TIME = 3000;
+        this.RESPAWN_TIME = 1500;
 
         // Player health. We only have one-hit deaths, but setting
         // health to zero triggers some default Phaser code, so we
