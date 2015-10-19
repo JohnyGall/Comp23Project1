@@ -48,7 +48,7 @@ preload: function() {
                         "number":2
                 },
                 "darkgrass":{
-                        "url":"assets/art/default/darkgrass.png",
+                        "url":"assets/art/ice/darkice.png",
                         "sizeX":252,
                         "sizeY":48,
                         "number":2
@@ -83,8 +83,8 @@ preload: function() {
         var playerObjectSprites = {
                 "boulder":{
                         "url":"assets/art/ice/ice_boulder_spritesheet.png",
-                        "sizeX":48,
-                        "sizeY":48,
+                        "sizeX":80,
+                        "sizeY":80,
                         "number":2
                 },
                 "player":{
