@@ -1,4 +1,4 @@
-var playState = {
+var playState2 = {
 
 preload: function() {
         // Music
@@ -15,7 +15,7 @@ preload: function() {
         game.load.audio('turret_fire_hr', ['assets/music/turret_fire_hr.wav', 'assets/music/turret_fire_hr.ogg']); 
         game.load.audio('turret_fire_lr', ['assets/music/turret_fire_lr.wav', 'assets/music/turret_fire_lr.ogg']); 
 
-        // Customise the sprites used
+        //Customize sprites used
         var backgroundSprites = {
                 "sky":{
                         "url":"assets/art/default/sky_spritesheet.png",
@@ -30,13 +30,13 @@ preload: function() {
                         "number":2
                 },
                 "hgrass":{
-                        "url":"assets/art/default/grass_h_spritesheet.png",
+                        "url":"assets/art/ice/ice_h_spritesheet.png",
                         "sizeX":252,
                         "sizeY":48,
                         "number":2
                 },
                 "vgrass":{
-                        "url":"assets/art/default/grass_v_spritesheet.png",
+                        "url":"assets/art/ice/ice_v_spritesheet.png",
                         "sizeX":144,
                         "sizeY":144,
                         "number":2
@@ -55,25 +55,25 @@ preload: function() {
 
                 },
                 "floatgrass":{
-                        "url":"assets/art/default/floating_spritesheet.png",
+                        "url":"assets/art/ice/floating_ice_spritesheet.png",
                         "sizeX":252,
                         "sizeY":48,
                         "number":2
                 },
                 "floatright":{
-                        "url":"assets/art/default/floatingledge_spritesheet.png",
+                        "url":"assets/art/ice/floatingiceledge_spritesheet.png",
                         "sizeX":64,
                         "sizeY":48,
                         "number":2
                 },
                 "floatleft":{
-                        "url":"assets/art/default/floatingledge1_spritesheet.png",
+                        "url":"assets/art/ice/floatingiceledge1_spritesheet.png",
                         "sizeX":64,
                         "sizeY":48,
                         "number":2
                 },
                 "miniledge":{
-                        "url":"assets/art/default/mini_floating_spritesheet.png",
+                        "url":"assets/art/ice/mini_floating_ice_spritesheet.png",
                         "sizeX":48,
                         "sizeY":48,
                         "number":2
@@ -82,7 +82,7 @@ preload: function() {
 
         var playerObjectSprites = {
                 "boulder":{
-                        "url":"assets/art/default/boulder_spritesheet.png",
+                        "url":"assets/art/ice/ice_boulder_spritesheet.png",
                         "sizeX":48,
                         "sizeY":48,
                         "number":2
@@ -456,7 +456,7 @@ update: function() {
         if (this.player.x > this.world.width) {
             this.music.stop();
             this.music_l.stop();
-            game.state.start('play2');
+            game.state.start('menu');
         }
 },
 
