@@ -1,4 +1,4 @@
-// THIS IS FOR PLAYING LEVEL 1
+// THIS IS FOR PLAYING LEVEL 2
 
 function preload () {
 
