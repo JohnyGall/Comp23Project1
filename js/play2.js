@@ -209,11 +209,11 @@ create: function() {
                 groundshadow.body.immovable = true;
         }
         
-        for (var i = game.world.height - 500; i < game.world.height; i += 48) {
+        for (var i = game.world.height - 700; i < game.world.height; i += 48) {
                 var groundshadow = this.platforms.create(798, i, 'darkgrass');
                 groundshadow.body.immovable = true;
         }
-        for (var i = game.world.height - 500; i < game.world.height; i += 48) {
+        for (var i = game.world.height - 700; i < game.world.height; i += 48) {
                 var groundshadow = this.platforms.create(778, i, 'darkgrass');
                 groundshadow.body.immovable = true;
         }
@@ -285,11 +285,11 @@ create: function() {
         ledge.body.setSize(64, 54, 0, 6);
         
         //second ledge, above clouds
-        var floating = this.platforms.create(520+64, 100, 'floatgrass');
+        var floating = this.platforms.create(520+64, 94, 'floatgrass');
         floating.body.immovable = true;
         floating.body.setSize(252, 56, 0, 6);
 
-        var ledge = this.platforms.create(520, 100, 'floatleft');
+        var ledge = this.platforms.create(520, 94, 'floatleft');
         ledge.body.immovable = true;
         ledge.body.setSize(64, 54, 0, 6);
 
@@ -366,7 +366,7 @@ create: function() {
         // ALL CHECKPOINTS GO HERE
         checkpoints = game.add.group();
         
-        var checkpoint = new CheckPoint(game, 760, 60, this.player);
+        var checkpoint = new CheckPoint(game, 800, 60, this.player);
         checkpoints.add(checkpoint);
         /*
         var checkpoint = new CheckPoint(game, 5259-502, 573.5, this.player);
