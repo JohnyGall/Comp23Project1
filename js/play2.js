@@ -275,15 +275,23 @@ create: function() {
 
         // ALL FLOATING PLATFORMS GO HERE
         
-        //first boulder ledge
-        var floating = this.platforms.create(0, 375, 'floatgrass');
+        //first ledge, above start
+        var floating = this.platforms.create(0, 175, 'floatgrass');
         floating.body.immovable = true;
         floating.body.setSize(252, 56, 0, 6);
 
-        var ledge = this.platforms.create(230, 375, 'floatright');
+        var ledge = this.platforms.create(252 - 20, 175, 'floatright');
         ledge.body.immovable = true;
         ledge.body.setSize(64, 54, 0, 6);
         
+        //second ledge, above clouds
+        var floating = this.platforms.create(520+64, 100, 'floatgrass');
+        floating.body.immovable = true;
+        floating.body.setSize(252, 56, 0, 6);
+
+        var ledge = this.platforms.create(520, 100, 'floatleft');
+        ledge.body.immovable = true;
+        ledge.body.setSize(64, 54, 0, 6);
 
 
         //second boulder ledge
@@ -357,9 +365,10 @@ create: function() {
     
         // ALL CHECKPOINTS GO HERE
         checkpoints = game.add.group();
-        /*
-        var checkpoint = new CheckPoint(game, 6845-502, 573.5, this.player);
+        
+        var checkpoint = new CheckPoint(game, 760, 60, this.player);
         checkpoints.add(checkpoint);
+        /*
         var checkpoint = new CheckPoint(game, 5259-502, 573.5, this.player);
         checkpoints.add(checkpoint);
         var checkpoint = new CheckPoint(game, 3300-502, 709.5, this.player);
