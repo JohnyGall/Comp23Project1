@@ -17,16 +17,10 @@ preload: function() {
 
         //Customize sprites used
         var backgroundSprites = {
-                "sky":{
-                        "url":"assets/art/default/sky_spritesheet.png",
-                        "sizeX":1920,
-                        "sizeY":1080,
-                        "number":2
-                },
-                "backgrass":{
-                        "url":"assets/art/default/background_grass_spritesheet.png",
-                        "sizeX":1008,
-                        "sizeY":311,
+                "cave":{
+                        "url":"assets/art/ice/ice_bg_spritesheet.png",
+                        "sizeX":1000,
+                        "sizeY":800,
                         "number":2
                 },
                 "hgrass":{
@@ -135,8 +129,7 @@ preload: function() {
         game.load.spritesheet('spike', playerObjectSprites.spike.url ,playerObjectSprites.spike.sizeX, playerObjectSprites.spike.sizeY, playerObjectSprites.spike.number);
     
         // Level background sprites
-        game.load.spritesheet('sky', backgroundSprites.sky.url, backgroundSprites.sky.sizeX, backgroundSprites.sky.sizeY, backgroundSprites.sky.number);
-        game.load.spritesheet('backgrass', backgroundSprites.backgrass.url,backgroundSprites.backgrass.sizeX, backgroundSprites.backgrass.sizeY, backgroundSprites.backgrass.number);
+        game.load.spritesheet('cave', backgroundSprites.cave.url, backgroundSprites.cave.sizeX, backgroundSprites.cave.sizeY, backgroundSprites.cave.number);
         game.load.spritesheet('hgrass', backgroundSprites.hgrass.url,backgroundSprites.hgrass.sizeX, backgroundSprites.hgrass.sizeY, backgroundSprites.hgrass.number);
         game.load.spritesheet('vgrass', backgroundSprites.vgrass.url, backgroundSprites.vgrass.sizeX, backgroundSprites.vgrass.sizeY, backgroundSprites.vgrass.number);
         game.load.spritesheet('onegrass', backgroundSprites.onegrass.url, backgroundSprites.onegrass.sizeX, backgroundSprites.onegrass.sizeY, backgroundSprites.onegrass.number);
@@ -174,11 +167,8 @@ create: function() {
     
         // Create looping background images
         this.background = game.add.group();
-        for (var i = 0; i <= game.world.width; i += 1920) {
-            this.background.create(i,0, 'sky');
-        }
-        for (var i = 0; i <= game.world.width; i += 1008) {
-            this.background.create(i,500, 'backgrass');
+        for (var i = 0; i <= game.world.width; i += 1000) {
+            this.background.create(i,0, 'cave');
         }
 
         // Create a new part of the game keeping track of the world resolution
