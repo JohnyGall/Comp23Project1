@@ -189,21 +189,38 @@ create: function() {
                 ground.body.setSize(252, 37, 0, 6);
                 groundshadow.body.immovable = true;
         }
-
+        
+        // turret cliff
                 var ground = this.platforms.create(930-252, game.world.height - 290, 'hgrass');
                 var groundshadow = this.platforms.create(930-252, game.world.height - 270, 'darkgrass');
+                var groundshadow = this.platforms.create(930-252, game.world.height - 222, 'darkgrass');
                 ground.body.immovable = true;
                 ground.body.setSize(252, 37, 0, 6);
                 groundshadow.body.immovable = true;
 
-        for (var i = 0; i < 12; i++) {
-                var groundshadow = this.platforms.create(1050-252, game.world.height - 500+40*i, 'darkgrass');
+        for (var i = game.world.height - 500; i < game.world.height; i += 48) {
+                var groundshadow = this.platforms.create(798, i, 'darkgrass');
                 groundshadow.body.immovable = true;
         }
-        for (var i = 0; i < 3; i++) {
-                var groundshadow = this.platforms.create(930-252, game.world.height - 500+35*i, 'darkgrass');
+        for (var i = game.world.height - 500; i < game.world.height; i += 48) {
+                var groundshadow = this.platforms.create(778, i, 'darkgrass');
                 groundshadow.body.immovable = true;
         }
+        // intangible slope filler bars
+        for (var i = 626; i < game.world.height; i += 48) {
+                this.background.create(552, i, 'darkgrass');
+        }
+        for (var i = 700; i < game.world.height; i += 48) {
+                var groundshadow = this.platforms.create(552, i, 'darkgrass');
+                groundshadow.body.immovable = true;
+        }
+        this.slopefill(3348,520);
+        this.slopefill(3476,648);
+        this.slopefill(3865,648);
+        this.slopefill(6864,430);
+        this.slopefill(6985,558);
+        this.slopefill(7116,686);
+        this.slopefill(7499,686);
 
         var ground = this.platforms.create(930-252, game.world.height - 533, 'hgrass');
         ground.body.setSize(252, 37, 0, 6);
@@ -212,28 +229,33 @@ create: function() {
         ground.body.setSize(252, 37, 0, 6);
         ground.body.immovable = true;
 
-        var ground = this.platforms.create(3600-504, 400, 'hgrass');
+        var ground = this.platforms.create(3096, 400, 'hgrass');
         ground.body.immovable = true;
-        for (var i = 0; i < 10; i++) {
-                var groundshadow = this.platforms.create(3600-504, 423+35*i, 'darkgrass');
+        for (var i = 423; i < game.world.height; i += 48) {
+                var groundshadow = this.platforms.create(3096, i, 'darkgrass');
                 groundshadow.body.immovable = true;
         }
     
         var ground = this.platforms.create(4120-504, 657, 'hgrass');
         ground.body.immovable = true;
-        for (var i = 0; i < 10; i++) {
-                var groundshadow = this.platforms.create(4120-504, 675+35*i, 'darkgrass');
+        for (var i = 675; i < game.world.height; i += 48) {
+                var groundshadow = this.platforms.create(4120-504, i, 'darkgrass');
                 groundshadow.body.immovable = true;
         }
 
-        var ground = this.platforms.create(7760-504, 684, 'hgrass');
+        var ground = this.platforms.create(7256, 684, 'hgrass');
         ground.body.setSize(252, 37, 0, 6);
         ground.body.immovable = true;
+        for (var i = 700; i < game.world.height; i += 48) {
+                var groundshadow = this.platforms.create(7256, i, 'darkgrass');
+                groundshadow.body.immovable = true;
+        }
+
 
         var ground = this.platforms.create(8650-504, 300, 'hgrass');
         ground.body.setSize(252, 37, 0, 6);
         ground.body.immovable = true;
-        for (var i = 330; i < game.world.height; i += 35) {
+        for (var i = 330; i < game.world.height; i += 48) {
                 var groundshadow = this.platforms.create(8650-504, i, 'darkgrass');
                 groundshadow.body.immovable = true;
         }
@@ -518,4 +540,10 @@ pause: function() {
         game.paused = !game.paused;
 },
 
+slopefill: function(x,y) {
+        for (var i = y; i < game.world.height; i += 48) {
+                var fill = this.background.create(x, i, 'darkgrass');
+                fill.scale.x = 0.56
+        }
+},
 };
