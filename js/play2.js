@@ -362,6 +362,7 @@ create: function() {
         this.player = new Player(game, this.controls, this);
         this.player.x = 0;
         this.player.SLIDE_SPEED = 125;
+        this.player.DEFAULT_SPEED = 175;
     
         // ALL CHECKPOINTS GO HERE
         checkpoints = game.add.group();
