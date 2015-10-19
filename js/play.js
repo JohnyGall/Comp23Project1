@@ -364,9 +364,9 @@ create: function() {
         checkpoints.add(checkpoint);
         var checkpoint = new CheckPoint(game, 2100-252, 709.5, this.player);
         checkpoints.add(checkpoint);
-        var checkpoint = new CheckPoint(game, 1173-252, 52, this.player);
+        var checkpoint = new CheckPoint(game, 1173-252, 240.5, this.player);
         checkpoints.add(checkpoint);
-        var checkpoint = new CheckPoint(game, 300-252, 500, this.player);
+        var checkpoint = new CheckPoint(game, 300-252, 523.5, this.player);
         checkpoints.add(checkpoint);
 
         // ALL BOULDERS GO HERE
