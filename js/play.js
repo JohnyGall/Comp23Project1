@@ -41,6 +41,12 @@ preload: function() {
                         "sizeY":144,
                         "number":2
                 },
+                "onegrass":{
+                        "url":"assets/art/default/grass_one_spritesheet.png",
+                        "sizeX":1,
+                        "sizeY":144,
+                        "number":2
+                },
                 "darkgrass":{
                         "url":"assets/art/default/darkgrass.png",
                         "sizeX":252,
@@ -127,11 +133,13 @@ preload: function() {
         game.load.spritesheet('backgrass', backgroundSprites.backgrass.url,backgroundSprites.backgrass.sizeX, backgroundSprites.backgrass.sizeY, backgroundSprites.backgrass.number);
         game.load.spritesheet('hgrass', backgroundSprites.hgrass.url,backgroundSprites.hgrass.sizeX, backgroundSprites.hgrass.sizeY, backgroundSprites.hgrass.number);
         game.load.spritesheet('vgrass', backgroundSprites.vgrass.url, backgroundSprites.vgrass.sizeX, backgroundSprites.vgrass.sizeY, backgroundSprites.vgrass.number);
+        game.load.spritesheet('onegrass', backgroundSprites.onegrass.url, backgroundSprites.onegrass.sizeX, backgroundSprites.onegrass.sizeY, backgroundSprites.onegrass.number);
         game.load.spritesheet('darkgrass', backgroundSprites.darkgrass.url, backgroundSprites.darkgrass.sizeX, backgroundSprites.darkgrass.sizeY, backgroundSprites.darkgrass.number);
         game.load.spritesheet('floatgrass', backgroundSprites.floatgrass.url, backgroundSprites.floatgrass.sizeX, backgroundSprites.floatgrass.sizeY, backgroundSprites.floatgrass.number);
         game.load.spritesheet('floatright', backgroundSprites.floatright.url, backgroundSprites.floatright.sizeX, backgroundSprites.floatright.sizeY, backgroundSprites.floatright.number);
         game.load.spritesheet('floatleft', backgroundSprites.floatleft.url, backgroundSprites.floatleft.sizeX, backgroundSprites.floatleft.sizeY, backgroundSprites.floatleft.number);
         game.load.spritesheet('miniledge', backgroundSprites.miniledge.url, backgroundSprites.miniledge.sizeX, backgroundSprites.miniledge.sizeY, backgroundSprites.miniledge.number);
+
         game.load.spritesheet('hice', "assets/ice_h_spritesheet.png",backgroundSprites.hgrass.sizeX, backgroundSprites.hgrass.sizeY, backgroundSprites.hgrass.number);
 
 
@@ -387,6 +395,8 @@ create: function() {
                 var slope = new Slope(this, 7440-504+128 * i, 300+128*i, this.boulders, this);
                 this.slopes.add(slope);
                 slope.scale.x = -1;
+                var wall = this.platforms.create(7440-504-72, 556-110*i, 'onegrass');
+                wall.body.immovable = true;
         }
         var slope = new Slope(this, 8072-504, 556, this.boulders, this);
         this.slopes.add(slope);
