@@ -423,7 +423,7 @@ update: function() {
         if(this.player.health < 2) {
                 this.respawnCount.visible = true;
                 this.respawnText.visible = true;
-                this.respawnCount.text = Math.ceil((this.player.RESPAWN_TIME - (Date.now() - this.player.killTime)) / 1000);
+                this.respawnCount.text = Math.ceil((this.player.RESPAWN_TIME - (Date.now() - this.player.killTime)) / 500);
                 if (Date.now() - this.player.killTime >= this.player.RESPAWN_TIME) {
                         this.respawnCount.visible = false;
                         this.respawnText.visible = false;
