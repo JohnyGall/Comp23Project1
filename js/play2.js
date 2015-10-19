@@ -413,7 +413,12 @@ create: function() {
         
         //spikes in second puzzle w/ spikes
         for (var i = 0; i < 3; i++) {
-                var spike = new Spike(game,2650+50*i, 676,this.player);
+                var spike = new Spike(game,2900+50*i, 700,this.player);
+                spike.scale.y = -1;
+                this.spikes.add(spike);
+        }
+        for (var i = 0; i < 3; i++) {
+                var spike = new Spike(game,2600+50*i, 550,this.player);
                 spike.scale.y = -1;
                 this.spikes.add(spike);
         }
