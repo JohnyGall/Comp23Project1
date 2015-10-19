@@ -15,6 +15,7 @@ var menuState = {
 		// display menu images
 		menu = game.add.sprite(0, 0, 'menu');
         this.music = game.add.audio('typing');
+        this.music.volume = 0.1;
 
 	},
 
@@ -46,10 +47,12 @@ var menuState = {
 		if(controls.enter.isDown){
 			if(menu.frame === 1){
 				console.log("LEFT");
+                this.music.stop();
 				game.state.start('play');
 			}
 			else if(menu.frame === 2){
 				console.log("RIGHT");
+                this.music.stop();
 				game.state.start('loadmap');
 			}
 		}
