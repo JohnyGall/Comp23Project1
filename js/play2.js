@@ -154,7 +154,7 @@ create: function() {
     
         // Create world
         game.physics.startSystem(Phaser.Physics.ARCADE);
-        game.world.setBounds(0, 0, 5400, 800);
+        game.world.setBounds(0, 0, 5800, 800);
     
         // Make wonderful this.music
         this.music = game.add.audio('wordl2');
@@ -232,7 +232,9 @@ create: function() {
         this.slopefill(3348,440);
         this.slopefill(3448,540);
         this.slopefill(3548,640);
-        this.slopefill(3911,640);
+        this.slopefill(3648,740);
+
+        this.slopefill(4011,740);
 
         /*
         var ground = this.platforms.create(930-252, game.world.height - 533, 'hgrass');
@@ -256,10 +258,10 @@ create: function() {
         ground.body.immovable = true;
         ground.body.setSize(252, 37, 0, 6);
 
-        var ground = this.platforms.create(5200, 700, 'hgrass');
+        var ground = this.platforms.create(5600, 700, 'hgrass');
         ground.body.immovable = true;
         for (var i = 733; i < game.world.height; i += 48) {
-                var groundshadow = this.platforms.create(5200, i, 'darkgrass');
+                var groundshadow = this.platforms.create(5600, i, 'darkgrass');
                 groundshadow.body.immovable = true;
         }
     
@@ -413,18 +415,18 @@ create: function() {
     
         // ALL SLOPES GO HERE
         this.slopes = game.add.group();
-        for(var i = 0; i < 3; i++) {
-                var slope = new Slope(this, 3620-100 * i, 499-100*i, this.boulders, this);
+        for(var i = 0; i < 4; i++) {
+                var slope = new Slope(this, 3720-100 * i, 599-100*i, this.boulders, this);
                 this.slopes.add(slope);
                 slope.scale.x = -1;
         }
-        var ground = this.platforms.create(3670, 620, 'hgrass');
+        var ground = this.platforms.create(3770, 720, 'hgrass');
         ground.body.immovable = true;
-        for (var i = 650; i < game.world.height; i += 48) {
-                var groundshadow = this.platforms.create(3670, i, 'darkgrass');
+        for (var i = 750; i < game.world.height; i += 48) {
+                var groundshadow = this.platforms.create(3770, i, 'darkgrass');
                 groundshadow.body.immovable = true;
         }
-        var slope = new Slope(this, 3980, 499, this.boulders, this);
+        var slope = new Slope(this, 4080, 599, this.boulders, this);
         this.slopes.add(slope);
 
     /*
