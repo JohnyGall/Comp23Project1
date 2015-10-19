@@ -140,9 +140,6 @@ preload: function() {
         game.load.spritesheet('floatleft', backgroundSprites.floatleft.url, backgroundSprites.floatleft.sizeX, backgroundSprites.floatleft.sizeY, backgroundSprites.floatleft.number);
         game.load.spritesheet('miniledge', backgroundSprites.miniledge.url, backgroundSprites.miniledge.sizeX, backgroundSprites.miniledge.sizeY, backgroundSprites.miniledge.number);
 
-        game.load.spritesheet('hice', "assets/ice_h_spritesheet.png",backgroundSprites.hgrass.sizeX, backgroundSprites.hgrass.sizeY, backgroundSprites.hgrass.number);
-
-
         // Makes FPS counter work
         game.time.advancedTiming = true;
         // Allows Google Fonts to be used remotely
@@ -161,10 +158,10 @@ create: function() {
         game.world.setBounds(0, 0, 8191, 800);
     
         // Make wonderful this.music
-        this.music = game.add.audio('wordl1');
+        this.music = game.add.audio('wordl2');
         this.music.volume = 0.15;
         this.music.loop = true;
-        this.music_l = game.add.audio('wordl1_l');
+        this.music_l = game.add.audio('wordl2_l');
         this.music_l.volume = 0.15;
         this.music_l.mute = true;
         this.music_l.loop = true;
@@ -532,23 +529,23 @@ createUI: function() {
 bitshift: function() {
         game.shifted = !game.shifted;
 
-        playState.bullets.forEach(
+        playState2.bullets.forEach(
                 function(b) { b.shift(); }
         , this);
-        playState.turrets.forEach(
+        playState2.turrets.forEach(
                 function(t) { t.bmd.clear(); }
         , this);
         if (!game.shifted) {
-                playState.platforms.forEach(playState.shiftOff, this);
-                playState.background.forEach(playState.shiftOff, this);
-                playState.music.mute = false;
-                playState.music_l.mute = true;
+                playState2.platforms.forEach(playState.shiftOff, this);
+                playState2.background.forEach(playState.shiftOff, this);
+                playState2.music.mute = false;
+                playState2.music_l.mute = true;
         }
         else {
-                playState.platforms.forEach(playState.shiftOn, this);
-                playState.background.forEach(playState.shiftOn, this);
-                playState.music.mute = true;
-                playState.music_l.mute = false;
+                playState2.platforms.forEach(playState.shiftOn, this);
+                playState2.background.forEach(playState.shiftOn, this);
+                playState2.music.mute = true;
+                playState2.music_l.mute = false;
         }
 },
 
