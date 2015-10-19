@@ -380,6 +380,12 @@ create: function() {
         //second puzzle
         cloud = new Cloud(this, 1100, 200); // top right cloud
         clouds.add(cloud);
+    
+        //third puzzle
+        for (var i = 2405; i < 3100; i += 105) {
+                cloud = new Cloud(this, i, 400); // top right cloud
+                clouds.add(cloud);
+        }
 
         // PLAYER IS MADE HERE
         this.player = new Player(game, this.controls, this);
@@ -408,10 +414,13 @@ create: function() {
                 this.spikes.add(spike);
         }
         for (var i = 0; i < 3; i++) {
-                var spike = new Spike(game,2600+50*i, 550,this.player);
+                var spike = new Spike(game,2550+50*i, 550,this.player);
                 spike.scale.y = -1;
                 this.spikes.add(spike);
         }
+        var floating = this.platforms.create(0, 175, 'floatgrass');
+        floating.body.immovable = true;
+        floating.body.setSize(252, 56, 0, 6);
     
         // ALL CHECKPOINTS GO HERE
         this.checkpoints = game.add.group();
@@ -473,6 +482,8 @@ create: function() {
         turret.scale.x *= -1;
         this.turrets.add(turret);
     }
+        turret = new Turret(game, this.player, this.platforms, this.slopes, this, 2400, 300);
+        this.turrets.add(turret);
         /*
         turret = new Turret(game, this.player, this.platforms, this.slopes, this, 2470-504, 700);
         this.turrets.add(turret);
