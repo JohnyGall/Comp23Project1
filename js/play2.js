@@ -215,7 +215,7 @@ create: function() {
         }
     
         // second puzle blocker
-        for (var i = 175; i > -200; i -= 48) {
+        for (var i = 175; i > -400; i -= 48) {
                 var groundshadow = this.platforms.create(1150, i, 'darkgrass');
                 groundshadow.body.immovable = true;
         }
@@ -349,12 +349,7 @@ create: function() {
         this.player.x = 0;
         this.player.DEFAULT_SPEED = 175;
         this.player.SLIDE_SPEED = 125;
-    //remove later
-        this.player.y = 0;
-
-//        this.player.SLIDE_SPEED = 125;
-//        this.player.DEFAULT_SPEED = 175;
-    
+ 
         // ALL SPIKES GO HERE
         this.spikes = game.add.group()
         var spike = new Spike(game,1075,360,this.player);
