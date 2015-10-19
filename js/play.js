@@ -452,7 +452,12 @@ update: function() {
                                 this.bitshift();
                 }
         }
-
+    
+        if (this.player.x > this.world.width) {
+            this.music.stop();
+            this.music_l.stop();
+            game.state.start('menu');
+        }
 },
 
 render: function() {
