@@ -87,6 +87,12 @@ preload: function() {
                         "sizeY":65,
                         // no "number" because the player sprite uses the defualt value (1)
                 },
+                "checkpoint":{
+                        "url":"assets/art/default/checkpoint_spritesheet.png",
+                        "sizeX":37,
+                        "sizeY":65,
+                        "number":4
+                },
                 "turret":{
                         "url":"assets/art/default/turretspritesheet.png",
                         "sizeX":96,
@@ -113,6 +119,7 @@ preload: function() {
         game.load.spritesheet('player', playerObjectSprites.player.url, playerObjectSprites.player.sizeX, playerObjectSprites.player.sizeY);
         game.load.spritesheet('turret', playerObjectSprites.turret.url ,playerObjectSprites.turret.sizeX, playerObjectSprites.turret.sizeY, playerObjectSprites.turret.number);
         game.load.spritesheet('bullet', playerObjectSprites.bullet.url ,playerObjectSprites.bullet.sizeX, playerObjectSprites.bullet.sizeY, playerObjectSprites.bullet.number);
+        game.load.spritesheet('checkpoint', playerObjectSprites.checkpoint.url ,playerObjectSprites.checkpoint.sizeX, playerObjectSprites.checkpoint.sizeY, playerObjectSprites.checkpoint.number);
         game.load.spritesheet('cloud', playerObjectSprites.cloud.url ,playerObjectSprites.cloud.sizeX, playerObjectSprites.cloud.sizeY, playerObjectSprites.cloud.number);
 
         // Level background sprites
