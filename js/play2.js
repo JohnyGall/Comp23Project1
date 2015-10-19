@@ -116,7 +116,12 @@ preload: function() {
                         "sizeX":96,
                         "sizeY":32,
                         "number":2
-
+                },
+                "spike":{
+                        "url":"assets/art/default/spike_spritesheet.png",
+                        "sizeX":48,
+                        "sizeY":85,
+                        "number":2
                 }
         }
 
@@ -127,7 +132,8 @@ preload: function() {
         game.load.spritesheet('bullet', playerObjectSprites.bullet.url ,playerObjectSprites.bullet.sizeX, playerObjectSprites.bullet.sizeY, playerObjectSprites.bullet.number);
         game.load.spritesheet('checkpoint', playerObjectSprites.checkpoint.url ,playerObjectSprites.checkpoint.sizeX, playerObjectSprites.checkpoint.sizeY, playerObjectSprites.checkpoint.number);
         game.load.spritesheet('cloud', playerObjectSprites.cloud.url ,playerObjectSprites.cloud.sizeX, playerObjectSprites.cloud.sizeY, playerObjectSprites.cloud.number);
-
+        game.load.spritesheet('spike', playerObjectSprites.spike.url ,playerObjectSprites.spike.sizeX, playerObjectSprites.spike.sizeY, playerObjectSprites.spike.number);
+    
         // Level background sprites
         game.load.spritesheet('sky', backgroundSprites.sky.url, backgroundSprites.sky.sizeX, backgroundSprites.sky.sizeY, backgroundSprites.sky.number);
         game.load.spritesheet('backgrass', backgroundSprites.backgrass.url,backgroundSprites.backgrass.sizeX, backgroundSprites.backgrass.sizeY, backgroundSprites.backgrass.number);
@@ -217,6 +223,15 @@ create: function() {
                 var groundshadow = this.platforms.create(778, i, 'darkgrass');
                 groundshadow.body.immovable = true;
         }
+    
+        // second puzle blocker
+        var ground = this.platforms.create(4120-504, 657, 'hgrass');
+        ground.body.immovable = true;
+        for (var i = 175; i > -48; i -= 48) {
+                var groundshadow = this.platforms.create(1150, i, 'darkgrass');
+                groundshadow.body.immovable = true;
+        }
+    
         // intangible slope filler bars 
         /*
         for (var i = 626; i < game.world.height; i += 48) {
@@ -272,6 +287,12 @@ create: function() {
                 groundshadow.body.immovable = true;
         }
 
+        var ground = this.platforms.create(620, 94, 'hgrass');
+        ground.body.immovable = true;
+        ground.body.setSize(252, 37, 0, 6);
+        var ground = this.platforms.create(798, 94, 'hgrass');
+        ground.body.immovable = true;
+        ground.body.setSize(252, 37, 0, 6);
 
         // ALL FLOATING PLATFORMS GO HERE
         
@@ -280,26 +301,34 @@ create: function() {
         floating.body.immovable = true;
         floating.body.setSize(252, 56, 0, 6);
 
-        var ledge = this.platforms.create(252 - 20, 175, 'floatright');
-        ledge.body.immovable = true;
-        ledge.body.setSize(64, 54, 0, 6);
-        
-        //second ledge, above clouds
-        var floating = this.platforms.create(520+64, 94, 'floatgrass');
+        var floating = this.platforms.create(1050, 400, 'floatgrass');
+        floating.body.immovable = true;
+        floating.body.setSize(252, 56, 0, 6);
+        var floating = this.platforms.create(1050+248, 400, 'floatgrass');
         floating.body.immovable = true;
         floating.body.setSize(252, 56, 0, 6);
 
-        var ledge = this.platforms.create(520, 94, 'floatleft');
+        var ground = this.platforms.create(1550, 200, 'hgrass');
+        ground.body.immovable = true;
+        ground.body.setSize(252, 37, 0, 6);
+        for (var i = 230; i < game.world.height; i += 48) {
+                var groundshadow = this.platforms.create(1550, i, 'darkgrass');
+                groundshadow.body.immovable = true;
+        }
+
+        // Turret Wall
+        for (var i = 500; i > -48; i -= 48) {
+                var groundshadow = this.platforms.create(2100, i, 'darkgrass');
+                groundshadow.body.immovable = true;
+        }
+        var groundshadow = this.platforms.create(2004, 500, 'darkgrass');
+        groundshadow.body.immovable = true;
+        
+
+        var ledge = this.platforms.create(252 - 20, 175, 'floatright');
         ledge.body.immovable = true;
         ledge.body.setSize(64, 54, 0, 6);
 
-
-        //second boulder ledge
-        for(var i = 0; i < 1; i++) {
-                var floating = this.platforms.create(2200-502+240 * i, game.world.height - 300, 'floatgrass');
-                floating.body.immovable = true;
-                floating.body.setSize(252, 56, 0, 6);
-        }
 
         for(var i = 0; i < 2; i++) {
                 var floating = this.platforms.create(5100-504 + 240 * i, 600, 'floatgrass');
@@ -357,18 +386,52 @@ create: function() {
         clouds.add(cloud);
         cloud = new Cloud(this, 725, 325); // top right cloud
         clouds.add(cloud);
+    
+        //second puzzle
+        cloud = new Cloud(this, 1100, 200); // top right cloud
+        clouds.add(cloud);
 
         // PLAYER IS MADE HERE
         this.player = new Player(game, this.controls, this);
         this.player.x = 0;
-        this.player.SLIDE_SPEED = 125;
         this.player.DEFAULT_SPEED = 175;
+        this.player.SLIDE_SPEED = 125;
+    //remove later
+        this.player.y = 0;
+
+//        this.player.SLIDE_SPEED = 125;
+//        this.player.DEFAULT_SPEED = 175;
+    
+        // ALL SPIKES GO HERE
+        this.spikes = game.add.group()
+        var spike = new Spike(game,1075,360,this.player);
+        spike.scale.y = -1;
+        this.spikes.add(spike);
+        var spike = new Spike(game,1125,360,this.player);
+        spike.scale.y = -1;
+        this.spikes.add(spike);
+        
+        //spikes in second puzzle w/ spikes
+        for (var i = 0; i < 3; i++) {
+                var spike = new Spike(game,2900+50*i, 700,this.player);
+                spike.scale.y = -1;
+                this.spikes.add(spike);
+        }
+        for (var i = 0; i < 3; i++) {
+                var spike = new Spike(game,2600+50*i, 550,this.player);
+                spike.scale.y = -1;
+                this.spikes.add(spike);
+        }
     
         // ALL CHECKPOINTS GO HERE
-        checkpoints = game.add.group();
+        this.checkpoints = game.add.group();
         
         var checkpoint = new CheckPoint(game, 800, 60, this.player);
-        checkpoints.add(checkpoint);
+        this.checkpoints.add(checkpoint);
+        var checkpoint = new CheckPoint(game, 1700, 173.5, this.player);
+        this.checkpoints.add(checkpoint);
+        var checkpoint = new CheckPoint(game, 2120, 709.5, this.player);
+        this.checkpoints.add(checkpoint);
         /*
         var checkpoint = new CheckPoint(game, 5259-502, 573.5, this.player);
         checkpoints.add(checkpoint);
@@ -387,8 +450,6 @@ create: function() {
         var boulder = new Boulder(game, 350, 0);
         this.boulders.add(boulder);
         boulder = new Boulder(game, 1700-252, -100);
-        this.boulders.add(boulder);
-        boulder = new Boulder(game, 2420-502, 300);
         this.boulders.add(boulder);
     
         // ALL SLOPES GO HERE
@@ -416,10 +477,13 @@ create: function() {
         */
         // ALL TURRETS GO HERE
         this.turrets = game.add.group();
-        /*
-        turret = new Turret(game, this.player, this.platforms, this.slopes, this, 975-252, 475);
+        
+    for (var i = 0; i < 4; i++) {
+        turret = new Turret(game, this.player, this.platforms, this.slopes, this, 2052, 452-96*i);
         turret.scale.x *= -1;
-        this.turrets.add(turret); 
+        this.turrets.add(turret);
+    }
+        /*
         turret = new Turret(game, this.player, this.platforms, this.slopes, this, 2470-504, 700);
         this.turrets.add(turret);
         turret = new Turret(game, this.player, this.platforms, this.slopes, this, 3200-504, 700);
@@ -450,7 +514,8 @@ update: function() {
 
         if(game.shifted){
                 game.physics.arcade.collide(this.player, clouds);
-        }
+                game.physics.arcade.collide(this.player, this.spikes);
+        } 
 
         // Update UI
         if(this.player.health < 2) {
@@ -486,6 +551,7 @@ render: function() {
                 game.debug.body(this.player);
                 this.boulders.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
                 this.turrets.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
+                this.spikes.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
                 this.platforms.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
                 clouds.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
 
@@ -555,12 +621,14 @@ bitshift: function() {
         if (!game.shifted) {
                 playState2.platforms.forEach(playState.shiftOff, this);
                 playState2.background.forEach(playState.shiftOff, this);
+                playState2.spikes.forEach(playState.shiftOff, this);
                 playState2.music.mute = false;
                 playState2.music_l.mute = true;
         }
         else {
                 playState2.platforms.forEach(playState.shiftOn, this);
                 playState2.background.forEach(playState.shiftOn, this);
+                playState2.spikes.forEach(playState.shiftOn, this);
                 playState2.music.mute = true;
                 playState2.music_l.mute = false;
         }
