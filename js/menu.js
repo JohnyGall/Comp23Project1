@@ -3,6 +3,8 @@ var menuState = {
 	preload: function(){
 		// load menu images
 		game.load.spritesheet('menu', 'assets/menu_spritesheet.png', 800, 600, 3);
+        game.load.audio('typing', ['assets/music/menuaudio2.wav', 'assets/music/menuaudio.ogg']);
+
 	},
 
 	create: function(){
@@ -12,11 +14,13 @@ var menuState = {
 
 		// display menu images
 		menu = game.add.sprite(0, 0, 'menu');
-
+        this.music = game.add.audio('typing');
 
 	},
 
 	update: function(){
+        if (!this.music.isPlaying)
+            this.music.play();
 
 		// creates menu controls
 		// I know it's not efficient, but this won't work in create function
