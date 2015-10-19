@@ -18,56 +18,56 @@ preload: function() {
         // Customise the sprites used
         var backgroundSprites = {
                 "sky":{
-                        "url":"assets/sky_spritesheet.png",
+                        "url":"assets/art/default/sky_spritesheet.png",
                         "sizeX":1920,
                         "sizeY":1080,
                         "number":2
                 },
                 "backgrass":{
-                        "url":"assets/background_grass_spritesheet.png",
+                        "url":"assets/art/default/background_grass_spritesheet.png",
                         "sizeX":1008,
                         "sizeY":311,
                         "number":2
                 },
                 "hgrass":{
-                        "url":"assets/grass_h_spritesheet.png",
+                        "url":"assets/art/default/grass_h_spritesheet.png",
                         "sizeX":252,
                         "sizeY":48,
                         "number":2
                 },
                 "vgrass":{
-                        "url":"assets/grass_v_spritesheet.png",
+                        "url":"assets/art/default/grass_v_spritesheet.png",
                         "sizeX":144,
                         "sizeY":144,
                         "number":2
                 },
                 "darkgrass":{
-                        "url":"assets/darkgrass.png",
+                        "url":"assets/art/default/darkgrass.png",
                         "sizeX":252,
                         "sizeY":48,
                         "number":2
 
                 },
                 "floatgrass":{
-                        "url":"assets/floating_spritesheet.png",
+                        "url":"assets/art/default/floating_spritesheet.png",
                         "sizeX":252,
                         "sizeY":48,
                         "number":2
                 },
                 "floatright":{
-                        "url":"assets/floatingledge_spritesheet.png",
+                        "url":"assets/art/default/floatingledge_spritesheet.png",
                         "sizeX":64,
                         "sizeY":48,
                         "number":2
                 },
                 "floatleft":{
-                        "url":"assets/floatingledge1_spritesheet.png",
+                        "url":"assets/art/default/floatingledge1_spritesheet.png",
                         "sizeX":64,
                         "sizeY":48,
                         "number":2
                 },
                 "miniledge":{
-                        "url":"assets/mini_floating_spritesheet.png",
+                        "url":"assets/art/default/mini_floating_spritesheet.png",
                         "sizeX":48,
                         "sizeY":48,
                         "number":2
@@ -76,31 +76,31 @@ preload: function() {
 
         var playerObjectSprites = {
                 "boulder":{
-                        "url":"assets/boulder_spritesheet.png",
+                        "url":"assets/art/default/boulder_spritesheet.png",
                         "sizeX":48,
                         "sizeY":48,
                         "number":2
                 },
                 "player":{
-                        "url":"assets/protag_spritesheet.png",
+                        "url":"assets/art/default/protag_spritesheet.png",
                         "sizeX":37,
                         "sizeY":65,
                         // no "number" because the player sprite uses the defualt value (1)
                 },
                 "turret":{
-                        "url":"assets/turretspritesheet.png",
+                        "url":"assets/art/default/turretspritesheet.png",
                         "sizeX":96,
                         "sizeY":96,
                         "number":6
                 },
                 "bullet":{
-                        "url":"assets/bullet_spritesheet.png",
+                        "url":"assets/art/default/bullet_spritesheet.png",
                         "sizeX":16,
                         "sizeY":16,
                         "number":2
                 },
                 "cloud":{
-                        "url":"assets/cloud_spritesheet.png",
+                        "url":"assets/art/default/cloud_spritesheet.png",
                         "sizeX":96,
                         "sizeY":32,
                         "number":2
