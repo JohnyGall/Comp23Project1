@@ -139,29 +139,12 @@ create: function() {
                 groundshadow.body.immovable = true;
         }
 
-        // intangible slope filler bars
-        /*
-        for (var i = 626; i < game.world.height; i += 48) {
-                this.background.create(552, i, 'darkice');
-        }
-        for (var i = 700; i < game.world.height; i += 48) {
-                var groundshadow = this.platforms.create(552, i, 'darkice');
-                groundshadow.body.immovable = true;
-        }*/
-
         this.slopefill(3348,440);
         this.slopefill(3448,540);
         this.slopefill(3548,640);
         this.slopefill(3648,740);
         this.slopefill(4011,740);
-        /*
-        var ground = this.platforms.create(930-252, game.world.height - 533, 'hice');
-        ground.body.setSize(252, 37, 0, 6);
-        ground.body.immovable = true;
-        var ground = this.platforms.create(1050-252, game.world.height - 533, 'hice');
-        ground.body.setSize(252, 37, 0, 6);
-        ground.body.immovable = true;
-        */
+
         var ground = this.platforms.create(3096, 300, 'hice');
         ground.body.immovable = true;
         for (var i = 323; i < game.world.height; i += 48) {
@@ -323,7 +306,7 @@ create: function() {
         // ALL SLOPES GO HERE
         this.slopes = game.add.group();
         for(var i = 0; i < 4; i++) {
-                var slope = new Slope(this, 3720 - 100 * i, 599 - 100 * i,
+                var slope = new Slope(this, 3720 - 100 * i, 600 - 100 * i,
                                                            this.boulders, this);
                 this.slopes.add(slope);
                 slope.scale.x = -1;
