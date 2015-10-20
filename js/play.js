@@ -1,19 +1,31 @@
+// The playstate for Level 1
+
 var playState = {
 
 preload: function() {
         // Music
-        game.load.audio('wordl1_l', ['assets/music/bitshift2_lr.wav', 'assets/music/bitshift2_lr.ogg']);
-        game.load.audio('wordl1', ['assets/music/bitshift2.wav', 'assets/music/bitshift2.ogg']);   
-        game.load.audio('wordl2_l', ['assets/music/bitshift3_lr.wav', 'assets/music/bitshift3_lr.ogg']);
-        game.load.audio('wordl2', ['assets/music/bitshift3.wav', 'assets/music/bitshift3.ogg']);
+        game.load.audio('wordl1_l', ['assets/music/bitshift2_lr.wav', 
+                                     'assets/music/bitshift2_lr.ogg']);
+        game.load.audio('wordl1', ['assets/music/bitshift2.wav', 
+                                   'assets/music/bitshift2.ogg']);   
+        game.load.audio('wordl2_l', ['assets/music/bitshift3_lr.wav', 
+                                     'assets/music/bitshift3_lr.ogg']);
+        game.load.audio('wordl2', ['assets/music/bitshift3.wav', 
+                                   'assets/music/bitshift3.ogg']);
     
         // Other sfx
-        game.load.audio('player_jump', ['assets/music/player_jump.wav', 'assets/music/player_jump.ogg']);
-        game.load.audio('player_spawn', ['assets/music/player_spawn.wav', 'assets/music/player_spawn.ogg']);
+        game.load.audio('player_jump', ['assets/music/player_jump.wav', 
+                                        'assets/music/player_jump.ogg']);
+        game.load.audio('player_spawn', ['assets/music/player_spawn.wav', 
+                                         'assets/music/player_spawn.ogg']);
 
-        game.load.audio('turret_charge_hr', ['assets/music/turret_charge_hr.wav', 'assets/music/turret_charge_hr.ogg']);
-        game.load.audio('turret_fire_hr', ['assets/music/turret_fire_hr.wav', 'assets/music/turret_fire_hr.ogg']); 
-        game.load.audio('turret_fire_lr', ['assets/music/turret_fire_lr.wav', 'assets/music/turret_fire_lr.ogg']); 
+        game.load.audio('turret_charge_hr', 
+                        ['assets/music/turret_charge_hr.wav', 
+                         'assets/music/turret_charge_hr.ogg']);
+        game.load.audio('turret_fire_hr', ['assets/music/turret_fire_hr.wav',
+                                           'assets/music/turret_fire_hr.ogg']); 
+        game.load.audio('turret_fire_lr', ['assets/music/turret_fire_lr.wav', 
+                                           'assets/music/turret_fire_lr.ogg']); 
 
         // Customise the sprites used
         var backgroundSprites = {
@@ -24,7 +36,7 @@ preload: function() {
                         "number":2
                 },
                 "backgrass":{
-                        "url":"assets/art/default/background_grass_spritesheet.png",
+                        "url":"assets/art/default/backgrass_spritesheet.png",
                         "sizeX":1008,
                         "sizeY":311,
                         "number":2
@@ -61,19 +73,19 @@ preload: function() {
                         "number":2
                 },
                 "floatright":{
-                        "url":"assets/art/default/floatingledge_spritesheet.png",
+                        "url":"assets/art/default/floating2_spritesheet.png",
                         "sizeX":64,
                         "sizeY":48,
                         "number":2
                 },
                 "floatleft":{
-                        "url":"assets/art/default/floatingledge1_spritesheet.png",
+                        "url":"assets/art/default/floating1_spritesheet.png",
                         "sizeX":64,
                         "sizeY":48,
                         "number":2
                 },
                 "miniledge":{
-                        "url":"assets/art/default/mini_floating_spritesheet.png",
+                        "url":"assets/art/default/minifloating_spritesheet.png",
                         "sizeX":48,
                         "sizeY":48,
                         "number":2
@@ -91,7 +103,8 @@ preload: function() {
                         "url":"assets/art/default/protag_spritesheet.png",
                         "sizeX":37,
                         "sizeY":65,
-                        // no "number" because the player sprite uses the defualt value (1)
+                        // no "number" because the player sprite
+                        // uses the defualt value (1)
                 },
                 "checkpoint":{
                         "url":"assets/art/default/checkpoint_spritesheet.png",
@@ -351,7 +364,8 @@ create: function() {
         clouds.add(cloud);
 
         // PLAYER IS MADE HERE
-        this.player = new Player(game, this.controls, this);
+        this.player = new Player(game, this.controls, 200, 
+                                 game.world.height - 100, this);
     
         // ALL CHECKPOINTS GO HERE
         checkpoints = game.add.group();

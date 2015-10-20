@@ -1,3 +1,7 @@
+// This class is for clouds, which are a game object that is
+// impassable and solid in low-res mode and does not interact with
+// the player at all in high-res. 
+
 function Cloud(game, x, y){
         //Initial variables
         this.game = game;
@@ -18,11 +22,12 @@ Cloud.prototype = Object.create(Phaser.Sprite.prototype);
 Cloud.prototype.constructor = Cloud;
 
 Cloud.prototype.update = function(){
-        // in high res we want the cloud to be fluffy
+        // In high-res we want the cloud to be fluffy and pretty
         if(!game.shifted){
                 this.frame = 0;
         }
-        else{//in low res we want the cloud to be the block
+        else{
+        // In low-res we want the cloud to be a block
                 this.frame = 1;
         }
 

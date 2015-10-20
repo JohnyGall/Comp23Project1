@@ -345,8 +345,9 @@ create: function() {
         }
 
         // PLAYER IS MADE HERE
-        this.player = new Player(game, this.controls, this);
-        this.player.x = 0;
+        this.player = new Player(game, this.controls, 50, 
+                                 this.game.world.height - 100, this);
+        
         this.player.DEFAULT_SPEED = 175;
         this.player.SLIDE_SPEED = 125;
  
