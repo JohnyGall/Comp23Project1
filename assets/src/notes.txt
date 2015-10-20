@@ -1,0 +1,7 @@
+ART AND DESIGN NOTES:
+
+Low resolution sprites conform to a pixel grid where each 'pixel' comprising the
+sprites is actually a 16x16 pixel block of uniform color.
+
+Swatches for each sprite (Low and high resolution share colors) are in the
+corresponding *.aco files.
