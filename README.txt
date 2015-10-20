@@ -1,4 +1,4 @@
-          Matt Asnes, Fury, Mike Yang, Taus, and John Gallagher
+﻿          Matt Asnes, Fury, Mike Yang, Taus, and John Gallagher
 
                                 Proudly Present
                                    BITSHIFT 
@@ -79,3 +79,5 @@ recent versions of Chrome / Firefox / Opera, as of the due date (10/20/2015).
 [1] http://phaser.io/
 
 ================================================================================
+
+Our game has multiple levels and realistic physics
