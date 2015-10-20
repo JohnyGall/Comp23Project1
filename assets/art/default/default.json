@@ -118,6 +118,12 @@
                                "sizeY":48,
                                "number":2
                        },
+                       "iceboulder":{
+                               "url":"assets/art/default/ice/ice_boulder_spritesheet.png",
+                               "sizeX":80,
+                               "sizeY":80,
+                               "number":2
+                       },
                        "player":{
                                "url":"assets/art/default/protag_spritesheet.png",
                                "sizeX":37,

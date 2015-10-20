@@ -39,7 +39,7 @@ preload: function() {
 
 
         // Object and player Sprites and stuff
-        game.load.spritesheet('boulder',playerObjectSprites.boulder.url ,playerObjectSprites.boulder.sizeX, playerObjectSprites.boulder.sizeY, playerObjectSprites.boulder.number);
+        game.load.spritesheet('boulder',playerObjectSprites.iceboulder.url ,playerObjectSprites.iceboulder.sizeX, playerObjectSprites.iceboulder.sizeY, playerObjectSprites.iceboulder.number);
         game.load.spritesheet('player', playerObjectSprites.player.url, playerObjectSprites.player.sizeX, playerObjectSprites.player.sizeY);
         game.load.spritesheet('turret', playerObjectSprites.turret.url ,playerObjectSprites.turret.sizeX, playerObjectSprites.turret.sizeY, playerObjectSprites.turret.number);
         game.load.spritesheet('bullet', playerObjectSprites.bullet.url ,playerObjectSprites.bullet.sizeX, playerObjectSprites.bullet.sizeY, playerObjectSprites.bullet.number);
@@ -50,7 +50,7 @@ preload: function() {
         // Level background sprites
         game.load.spritesheet('cave', backgroundSprites.cave.url, backgroundSprites.cave.sizeX, backgroundSprites.cave.sizeY, backgroundSprites.cave.number);
         game.load.spritesheet('hice', backgroundSprites.hice.url,backgroundSprites.hice.sizeX, backgroundSprites.hice.sizeY, backgroundSprites.hice.number);
-        game.load.spritesheet('vice', backgroundSprites.vice.url, backgroundSprites.vice.sizeX, backgroundSprites.vice.sizeY, backgroundSprites.vice.number);
+        game.load.spritesheet('vgrass', backgroundSprites.vice.url, backgroundSprites.vice.sizeX, backgroundSprites.vice.sizeY, backgroundSprites.vice.number);
         game.load.spritesheet('onegrass', backgroundSprites.onegrass.url, backgroundSprites.onegrass.sizeX, backgroundSprites.onegrass.sizeY, backgroundSprites.onegrass.number);
         game.load.spritesheet('darkice', backgroundSprites.darkice.url, backgroundSprites.darkice.sizeX, backgroundSprites.darkice.sizeY, backgroundSprites.darkice.number);
         game.load.spritesheet('floatice', backgroundSprites.floatice.url, backgroundSprites.floatice.sizeX, backgroundSprites.floatice.sizeY, backgroundSprites.floatice.number);
@@ -240,29 +240,29 @@ create: function() {
         this.controls.P.onDown.add(this.pause);
 
         // ALL CLOUDS GO HERE
-        clouds = game.add.group();
+        this.clouds = game.add.group();
         // cloud puzzle
         var cloud = new Cloud(this, 725, 625); // bottom cloud
-        clouds.add(cloud);
+        this.clouds.add(cloud);
         cloud = new Cloud(this, 625, 475); // middle left cloud
-        clouds.add(cloud);
+        this.clouds.add(cloud);
         cloud = new Cloud(this, 725, 475); // middle right cloud
-        clouds.add(cloud);
+        this.clouds.add(cloud);
         cloud = new Cloud(this, 525, 325); // top left cloud
-        clouds.add(cloud);
+        this.clouds.add(cloud);
         cloud = new Cloud(this, 625, 325); // top middle cloud
-        clouds.add(cloud);
+        this.clouds.add(cloud);
         cloud = new Cloud(this, 725, 325); // top right cloud
-        clouds.add(cloud);
+        this.clouds.add(cloud);
 
         //second puzzle
         cloud = new Cloud(this, 1100, 200); // top right cloud
-        clouds.add(cloud);
+        this.clouds.add(cloud);
 
         //third puzzle
         for (var i = 2405; i < 3100; i += 105) {
                 cloud = new Cloud(this, i, 300); // top right cloud
-                clouds.add(cloud);
+                this.clouds.add(cloud);
         }
 
         // PLAYER IS MADE HERE
@@ -373,7 +373,7 @@ update: function() {
         game.physics.arcade.collide(this.boulders, this.turrets);
 
         if(game.shifted){
-                game.physics.arcade.collide(this.player, clouds);
+                game.physics.arcade.collide(this.player, this.clouds);
                 game.physics.arcade.collide(this.player, this.spikes);
         }
 
