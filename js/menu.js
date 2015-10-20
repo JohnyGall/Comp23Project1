@@ -3,7 +3,7 @@ var menuState = {
 	preload: function(){
 		// load menu images
 		game.load.spritesheet('menu', 'assets/menu_spritesheet.png', 800, 600, 3);
-        game.load.audio('typing', ['assets/music/menuaudio2.wav', 'assets/music/menuaudio.ogg']);
+        	game.load.audio('typing', ['assets/music/default/menuaudio2.wav', 'assets/music/menuaudio.ogg']);
 
 	},
 
@@ -59,18 +59,18 @@ var menuState = {
         if(controls.up.isDown && controls.down.isDown) {
 				console.log("SKIP");
                 this.music.stop();
-				game.state.start('play2');            
+				game.state.start('play2');
         }
 	},
 
 	/*// when correctly prompted,
 	// call the function that starts the game
 	start: function (){
-		
+
 	},
 	// when correctly prompted,
 	// call the function that loads a JSON file
 	maps: function(){
-		
+
 	},*/
 };

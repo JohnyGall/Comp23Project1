@@ -1,0 +1,55 @@
+{
+        "music":{
+                "world1_l":{
+                        "trackName": "wordl1_l",
+                        "wavURL": "assets/music/default/bitshift2_lr.wav",
+                        "oggURL":"assets/music/default/bitshift2_lr.ogg"
+                },
+                "world1":{
+                        "trackName": "wordl1",
+                        "wavURL": "assets/music/default/bitshift2.wav",
+                        "oggURL":"assets/music/default/bitshift2.ogg"
+
+                },
+                "world2_l":{
+                        "trackName":"world2_l",
+                        "wavURL": "assets/music/default/bitshift3_lr.wav",
+                        "oggURL":"assets/music/default/bitshift3_lr.ogg"
+                },
+                "world2":{
+                        "trackName":"world2",
+                        "wavURL": "assets/music/default/bitshift3.wav",
+                        "oggURL":"assets/music/default/bitshift3.ogg"
+                }
+
+        },
+        "SFX":{
+                "player_jump":{
+                        "trackName":"player_jump",
+                        "wavURL":"assets/music/default/player_jump.wav",
+                        "oggURL":"assets/music/default/player_jump.ogg"
+                },
+                "player_spawn":{
+                        "trackName":"player_spawn",
+                        "wavURL":"assets/music/default/player_spawn.wav",
+                        "oggURL":"assets/music/default/player_spawn.ogg"
+                },
+                "turret_charge_hr":{
+                        "trackName":"turrent_charge_hr",
+                        "wavURL":"assets/music/default/turret_charge_hr.wav",
+                        "oggURL":"assets/music/default/turret_charge_hr.ogg"
+
+                },
+                "turret_fire_hr":{
+                        "trackName":"turrent_fire_hr",
+                        "wavURL":"assets/music/default/turret_fire_hr.wav",
+                        "oggURL":"assets/music/default/turret_fire_hr.ogg"
+                },
+                "turret_fire_lr":{
+                        "trackName":"turrent_fire_lr",
+                        "wavURL":"assets/music/default/turret_fire_lr.wav",
+                        "oggURL":"assets/music/default/turret_fire_lr.ogg"
+                }
+
+        }
+}

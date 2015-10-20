@@ -1,124 +1,58 @@
 var playState = {
 
 preload: function() {
+        // Load the chosen music and SFX
+        var currentSoundSet = window.prompt("Choose the sound and music set you would like to use","default");
+        console.log(currentSoundSet);
+        var loadSounds = new XMLHttpRequest();
+        loadSounds.open("GET", "/assets/music/"+currentSoundSet+"/"+currentSoundSet+".json", false);
+        loadSounds.send(null);
+        var sounds = JSON.parse(loadSounds.responseText);
+        var music = sounds.music;
+        var soundEffects = sounds.SFX;
+
+
+
         // Music
-        game.load.audio('wordl1_l', ['assets/music/bitshift2_lr.wav', 'assets/music/bitshift2_lr.ogg']);
-        game.load.audio('wordl1', ['assets/music/bitshift2.wav', 'assets/music/bitshift2.ogg']);   
-        game.load.audio('wordl2_l', ['assets/music/bitshift3_lr.wav', 'assets/music/bitshift3_lr.ogg']);
-        game.load.audio('wordl2', ['assets/music/bitshift3.wav', 'assets/music/bitshift3.ogg']);
-    
+        game.load.audio('wordl1_l', [music.world1_l.wavURL, music.world1_l.oggURL]);
+        game.load.audio('wordl1', [music.world1.wavURL, music.world1.oggURL]);
+        game.load.audio('wordl2_l', [music.world2_l.wavURL, music.world2_l.oggURL]);
+        game.load.audio('wordl2', [music.world2.wavURL, music.world2.oggURL]);
+
         // Other sfx
-        game.load.audio('player_jump', ['assets/music/player_jump.wav', 'assets/music/player_jump.ogg']);
-        game.load.audio('player_spawn', ['assets/music/player_spawn.wav', 'assets/music/player_spawn.ogg']);
+        game.load.audio('player_jump', [soundEffects.player_jump.wavURL, soundEffects.player_jump.oggURL]);
+        game.load.audio('player_spawn', [soundEffects.player_jump.wavURL, soundEffects.player_jump.oggURL]);
 
-        game.load.audio('turret_charge_hr', ['assets/music/turret_charge_hr.wav', 'assets/music/turret_charge_hr.ogg']);
-        game.load.audio('turret_fire_hr', ['assets/music/turret_fire_hr.wav', 'assets/music/turret_fire_hr.ogg']); 
-        game.load.audio('turret_fire_lr', ['assets/music/turret_fire_lr.wav', 'assets/music/turret_fire_lr.ogg']); 
+        game.load.audio('turret_charge_hr', [soundEffects.turret_charge_hr.wavURL, soundEffects.turret_charge_hr.oggURL]);
+        game.load.audio('turret_fire_hr', [soundEffects.turret_fire_hr.wavURL, soundEffects.turret_fire_hr.oggURL]);
+        game.load.audio('turret_fire_lr', [soundEffects.turret_fire_lr.wavURL, soundEffects.turret_fire_lr.oggURL]);
 
-        // Customise the sprites used
-        var backgroundSprites = {
-                "sky":{
-                        "url":"assets/art/default/sky_spritesheet.png",
-                        "sizeX":1920,
-                        "sizeY":1080,
-                        "number":2
-                },
-                "backgrass":{
-                        "url":"assets/art/default/background_grass_spritesheet.png",
-                        "sizeX":1008,
-                        "sizeY":311,
-                        "number":2
-                },
-                "hgrass":{
-                        "url":"assets/art/default/grass_h_spritesheet.png",
-                        "sizeX":252,
-                        "sizeY":48,
-                        "number":2
-                },
-                "vgrass":{
-                        "url":"assets/art/default/grass_v_spritesheet.png",
-                        "sizeX":144,
-                        "sizeY":144,
-                        "number":2
-                },
-                "onegrass":{
-                        "url":"assets/art/default/grass_one_spritesheet.png",
-                        "sizeX":1,
-                        "sizeY":144,
-                        "number":2
-                },
-                "darkgrass":{
-                        "url":"assets/art/default/darkgrass.png",
-                        "sizeX":252,
-                        "sizeY":48,
-                        "number":2
+        // Load the chosen set of sprites
+        var currentArtSet = window.prompt("Choose the art set you would like to use","default");
+        var loadSprites = new XMLHttpRequest();
+        loadSprites.open("GET", "assets/art/"+currentArtSet+"/"+currentArtSet+".json", false);
+        loadSprites.send(null);
+        var sprites = JSON.parse(loadSprites.responseText);
+        var playerObjectSprites = sprites.playerObjectSprites;
+        var backgroundSprites = sprites.backgroundSprites;
 
-                },
-                "floatgrass":{
-                        "url":"assets/art/default/floating_spritesheet.png",
-                        "sizeX":252,
-                        "sizeY":48,
-                        "number":2
-                },
-                "floatright":{
-                        "url":"assets/art/default/floatingledge_spritesheet.png",
-                        "sizeX":64,
-                        "sizeY":48,
-                        "number":2
-                },
-                "floatleft":{
-                        "url":"assets/art/default/floatingledge1_spritesheet.png",
-                        "sizeX":64,
-                        "sizeY":48,
-                        "number":2
-                },
-                "miniledge":{
-                        "url":"assets/art/default/mini_floating_spritesheet.png",
-                        "sizeX":48,
-                        "sizeY":48,
-                        "number":2
-                }
-        }
+        // Object and player sprites
+        game.load.spritesheet('boulder',playerObjectSprites.boulder.url ,playerObjectSprites.boulder.sizeX, playerObjectSprites.boulder.sizeY, playerObjectSprites.boulder.number);
+        game.load.spritesheet('player', playerObjectSprites.player.url, playerObjectSprites.player.sizeX, playerObjectSprites.player.sizeY);
+        game.load.spritesheet('turret', playerObjectSprites.turret.url ,playerObjectSprites.turret.sizeX, playerObjectSprites.turret.sizeY, playerObjectSprites.turret.number);
+        game.load.spritesheet('bullet', playerObjectSprites.bullet.url ,playerObjectSprites.bullet.sizeX, playerObjectSprites.bullet.sizeY, playerObjectSprites.bullet.number);
+        game.load.spritesheet('cloud', playerObjectSprites.cloud.url ,playerObjectSprites.cloud.sizeX, playerObjectSprites.cloud.sizeY, playerObjectSprites.cloud.number);
 
-        var playerObjectSprites = {
-                "boulder":{
-                        "url":"assets/art/default/boulder_spritesheet.png",
-                        "sizeX":48,
-                        "sizeY":48,
-                        "number":2
-                },
-                "player":{
-                        "url":"assets/art/default/protag_spritesheet.png",
-                        "sizeX":37,
-                        "sizeY":65,
-                        // no "number" because the player sprite uses the defualt value (1)
-                },
-                "checkpoint":{
-                        "url":"assets/art/default/checkpoint_spritesheet.png",
-                        "sizeX":37,
-                        "sizeY":65,
-                        "number":4
-                },
-                "turret":{
-                        "url":"assets/art/default/turretspritesheet.png",
-                        "sizeX":96,
-                        "sizeY":96,
-                        "number":6
-                },
-                "bullet":{
-                        "url":"assets/art/default/bullet_spritesheet.png",
-                        "sizeX":16,
-                        "sizeY":16,
-                        "number":2
-                },
-                "cloud":{
-                        "url":"assets/art/default/cloud_spritesheet.png",
-                        "sizeX":96,
-                        "sizeY":32,
-                        "number":2
-
-                }
-        }
+        // Level background sprites
+        game.load.spritesheet('sky', backgroundSprites.sky.url, backgroundSprites.sky.sizeX, backgroundSprites.sky.sizeY, backgroundSprites.sky.number);
+        game.load.spritesheet('backgrass', backgroundSprites.backgrass.url,backgroundSprites.backgrass.sizeX, backgroundSprites.backgrass.sizeY, backgroundSprites.backgrass.number);
+        game.load.spritesheet('hgrass', backgroundSprites.hgrass.url,backgroundSprites.hgrass.sizeX, backgroundSprites.hgrass.sizeY, backgroundSprites.hgrass.number);
+        game.load.spritesheet('vgrass', backgroundSprites.vgrass.url, backgroundSprites.vgrass.sizeX, backgroundSprites.vgrass.sizeY, backgroundSprites.vgrass.number);
+        game.load.spritesheet('darkgrass', backgroundSprites.darkgrass.url, backgroundSprites.darkgrass.sizeX, backgroundSprites.darkgrass.sizeY, backgroundSprites.darkgrass.number);
+        game.load.spritesheet('floatgrass', backgroundSprites.floatgrass.url, backgroundSprites.floatgrass.sizeX, backgroundSprites.floatgrass.sizeY, backgroundSprites.floatgrass.number);
+        game.load.spritesheet('floatright', backgroundSprites.floatright.url, backgroundSprites.floatright.sizeX, backgroundSprites.floatright.sizeY, backgroundSprites.floatright.number);
+        game.load.spritesheet('floatleft', backgroundSprites.floatleft.url, backgroundSprites.floatleft.sizeX, backgroundSprites.floatleft.sizeY, backgroundSprites.floatleft.number);
+        game.load.spritesheet('miniledge', backgroundSprites.miniledge.url, backgroundSprites.miniledge.sizeX, backgroundSprites.miniledge.sizeY, backgroundSprites.miniledge.number);
 
         // Object and player Sprites and stuff
         game.load.spritesheet('boulder',playerObjectSprites.boulder.url ,playerObjectSprites.boulder.sizeX, playerObjectSprites.boulder.sizeY, playerObjectSprites.boulder.number);
@@ -139,7 +73,7 @@ preload: function() {
         game.load.spritesheet('floatright', backgroundSprites.floatright.url, backgroundSprites.floatright.sizeX, backgroundSprites.floatright.sizeY, backgroundSprites.floatright.number);
         game.load.spritesheet('floatleft', backgroundSprites.floatleft.url, backgroundSprites.floatleft.sizeX, backgroundSprites.floatleft.sizeY, backgroundSprites.floatleft.number);
         game.load.spritesheet('miniledge', backgroundSprites.miniledge.url, backgroundSprites.miniledge.sizeX, backgroundSprites.miniledge.sizeY, backgroundSprites.miniledge.number);
-        game.load.spritesheet('hice', "assets/art/ice/ice_h_spritesheet.png",backgroundSprites.hgrass.sizeX, backgroundSprites.hgrass.sizeY, backgroundSprites.hgrass.number);
+        game.load.spritesheet('hice', backgroundSprites.hice.url, backgroundSprites.hice.sizeX, backgroundSprites.hice.sizeY, backgroundSprites.hice.number);
 
 
         // Makes FPS counter work
@@ -154,11 +88,11 @@ create: function() {
 	this.then = Date.now();
 	// Are we in debug mode?
 	this.debug_toggle = 0;
-    
+
         // Create world
         game.physics.startSystem(Phaser.Physics.ARCADE);
         game.world.setBounds(0, 0, 8191, 800);
-    
+
         // Make wonderful this.music
         this.music = game.add.audio('wordl1');
         this.music.volume = 0.15;
@@ -167,7 +101,7 @@ create: function() {
         this.music_l.volume = 0.15;
         this.music_l.mute = true;
         this.music_l.loop = true;
-    
+
         // Create looping background images
         this.background = game.add.group();
         for (var i = 0; i <= game.world.width; i += 1920) {
@@ -196,7 +130,7 @@ create: function() {
                 ground.body.setSize(252, 37, 0, 6);
                 groundshadow.body.immovable = true;
         }
-    
+
         //second long stretch of ground
         for(var i = 0; i < 6; i++) {
                 var ground = this.platforms.create(1648 + 252*i, game.world.height - 64, 'hgrass');
@@ -205,7 +139,7 @@ create: function() {
                 ground.body.setSize(252, 37, 0, 6);
                 groundshadow.body.immovable = true;
         }
-        
+
         // turret cliff
                 var ground = this.platforms.create(930-252, game.world.height - 290, 'hgrass');
                 var groundshadow = this.platforms.create(930-252, game.world.height - 270, 'darkgrass');
@@ -251,7 +185,7 @@ create: function() {
                 var groundshadow = this.platforms.create(3096, i, 'darkgrass');
                 groundshadow.body.immovable = true;
         }
-    
+
         var ground = this.platforms.create(4120-504, 657, 'hgrass');
         ground.body.immovable = true;
         for (var i = 675; i < game.world.height; i += 48) {
@@ -288,7 +222,7 @@ create: function() {
         var ledge = this.platforms.create(474-228, game.world.height - 250, 'floatright');
         ledge.body.immovable = true;
         ledge.body.setSize(64, 54, 0, 6);
-        
+
         //second boulder ledge
         for(var i = 0; i < 1; i++) {
                 var floating = this.platforms.create(2200-502+240 * i, game.world.height - 300, 'floatgrass');
@@ -318,7 +252,7 @@ create: function() {
         var floating = this.platforms.create(6990-504, 600, 'floatright');
         floating.body.immovable = true;
         floating.body.setSize(64, 54, 0, 6);
-    
+
         // Add this.controls to the game
         this.controls = game.input.keyboard.createCursorKeys();
         this.controls.space = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -352,7 +286,7 @@ create: function() {
 
         // PLAYER IS MADE HERE
         this.player = new Player(game, this.controls, this);
-    
+
         // ALL CHECKPOINTS GO HERE
         checkpoints = game.add.group();
         var checkpoint = new CheckPoint(game, 6845-502, 573.5, this.player);
@@ -376,13 +310,13 @@ create: function() {
         this.boulders.add(boulder);
         boulder = new Boulder(game, 2420-502, 300);
         this.boulders.add(boulder);
-    
+
         // ALL SLOPES GO HERE
         this.slopes = game.add.group();
         for(var i = 0; i < 2; i++) {
                 var slope = new Slope(this, 860-128-252+128 * i, 482+128-128*i, this.boulders, this);
                 this.slopes.add(slope);
-        }    
+        }
         for(var i = 0; i < 2; i++) {
                 var slope = new Slope(this, 3924-504+128 * i, 400+128*i, this.boulders, this);
                 this.slopes.add(slope);
@@ -399,12 +333,12 @@ create: function() {
         }
         var slope = new Slope(this, 8072-504, 556, this.boulders, this);
         this.slopes.add(slope);
-    
+
         // ALL TURRETS GO HERE
         this.turrets = game.add.group();
         turret = new Turret(game, this.player, this.platforms, this.slopes, this, 975-252, 475);
         turret.scale.x *= -1;
-        this.turrets.add(turret); 
+        this.turrets.add(turret);
         turret = new Turret(game, this.player, this.platforms, this.slopes, this, 2470-504, 700);
         this.turrets.add(turret);
         turret = new Turret(game, this.player, this.platforms, this.slopes, this, 3200-504, 700);
@@ -425,7 +359,7 @@ update: function() {
             this.music.play()
             this.music_l.play()
         }
-    
+
         // Collision detection for all objects
         game.physics.arcade.collide(this.player, this.platforms);
         game.physics.arcade.collide(this.platforms, this.boulders);
@@ -451,7 +385,7 @@ update: function() {
                                 this.bitshift();
                 }
         }
-    
+
         if (this.player.x > this.world.width) {
             this.music.stop();
             this.music_l.stop();
