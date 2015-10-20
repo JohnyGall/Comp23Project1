@@ -1,23 +1,13 @@
-                    ====================================
-                            ====================        
-                                    ====        
-                                     ==
-                                     ==
-
           Matt Asnes, Fury, Mike Yang, Taus, and John Gallagher
 
                                 Proudly Present
-
-
-================================== BITSHIFT ====================================
+                                   BITSHIFT 
 
 Bitshift is a 2-D sidescrolling platformer focused around the mechanic of 
 changing the resolution of the game world. You play as a troubled Tufts 
 Computer Science student trying to finish your Game Development project on time.
 You must exploit the resolution bug in your game in order to get to the end
 and fix the bug before your Game Development project is due.
-
-================================= HOW TO PLAY ==================================
 
 --------------------
 Controls:
@@ -76,7 +66,9 @@ Levels:
 Level 1 — Grass
 Level 2 — Ice
 
-=============================== COMPATIBILITY ==================================
+--------------------
+Compatibility:
+--------------------
 
 Bitshift was written in JavaScript using the Phaser game engine [1]. It depends
 externally on Google Web Fonts, though this is not a game-making functionality.
