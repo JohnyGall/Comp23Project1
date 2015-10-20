@@ -23,8 +23,6 @@ var menuState = {
                 if (!this.music.isPlaying)
                 this.music.play();
 
-		var select = 'neutral';
-
 		// if player is still being a jackass
 		if(this.controls.right.isDown && this.controls.left.isDown){
 			menu.frame = 0;
@@ -32,18 +30,17 @@ var menuState = {
 		// if player presses right
 		else if(this.controls.right.isDown){
 			menu.frame = 2;
-			select = 'right';
 		}
 		// if player presses left
 		else if(this.controls.left.isDown){
 			menu.frame = 1;
-			select = 'left';		}
+		}
 
 		// what happens when enter is pressed
 		if(this.controls.enter.isDown){
 			if(menu.frame === 1){
                                 this.music.stop();
-				game.state.start('play');
+				game.state.start('pre1');
 			}
 			else if(menu.frame === 2){
                                 this.music.stop();
@@ -53,7 +50,7 @@ var menuState = {
 
 		if(this.controls.up.isDown && this.controls.down.isDown) {
 			this.music.stop();
-			game.state.start('play2');
+			game.state.start('pre2');
 		}
 	},
 

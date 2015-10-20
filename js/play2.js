@@ -139,16 +139,6 @@ create: function() {
                 groundshadow.body.immovable = true;
         }
 
-        // intangible slope filler bars
-        /*
-        for (var i = 626; i < game.world.height; i += 48) {
-                this.background.create(552, i, 'darkice');
-        }
-        for (var i = 700; i < game.world.height; i += 48) {
-                var groundshadow = this.platforms.create(552, i, 'darkice');
-                groundshadow.body.immovable = true;
-        }*/
-
         this.slopefill(3348,440);
         this.slopefill(3444,536);
         this.slopefill(3540,632);
@@ -162,6 +152,7 @@ create: function() {
         ground.body.setSize(252, 37, 0, 6);
         ground.body.immovable = true;
         */
+
         var ground = this.platforms.create(3096, 300, 'hice');
         ground.body.immovable = true;
         for (var i = 323; i < game.world.height; i += 48) {

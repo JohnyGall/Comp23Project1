@@ -16,6 +16,9 @@ WebFontConfig = {
 
 // menu state
 game.state.add('menu', menuState);
+// dialogue states
+game.state.add('pre1', pre1State);
+game.state.add('pre2', pre2State);
 // gameplay states
 game.state.add('play', playState);
 game.state.add('play2', playState2);
