@@ -1,15 +1,7 @@
-                    ====================================
-                            ====================        
-                                    ====        
-                                     ==
-                                     ==
-
           Matt Asnes, Fury, Mike Yang, Taus, and John Gallagher
 
                                 Proudly Present
-
-
-================================== BITSHIFT ====================================
+                                   BITSHIFT 
 
 Bitshift is a 2-D sidescrolling platformer focused around the mechanic of 
 changing the resolution of the game world. You play as a troubled Tufts 
