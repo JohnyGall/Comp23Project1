@@ -47,8 +47,8 @@ preload: function() {
         /* Uncomment for variable art
         var currentArtSet = window.prompt(
                 "Choose the art set you would like to use","default");
-        var loadSprites = new XMLHttpRequest();
         */
+        var loadSprites = new XMLHttpRequest();
         var currentArtSet = "default";
         loadSprites.open("GET", "assets/art/" + currentArtSet + "/" + 
                                                 currentArtSet + ".json", false);

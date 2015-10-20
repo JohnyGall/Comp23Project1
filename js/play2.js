@@ -6,9 +6,10 @@ preload: function() {
         /* Uncomment for variable music
         var currentSoundSet = window.prompt("Choose the sound and music set you would like to use","default");
         console.log(currentSoundSet);
-        var loadSounds = new XMLHttpRequest();
         */
+
         var currentSoundSet = "default";
+        var loadSounds = new XMLHttpRequest();
         loadSounds.open("GET", "assets/music/"+currentSoundSet+"/"+currentSoundSet+".json", false);
         loadSounds.send(null);
         var sounds = JSON.parse(loadSounds.responseText);
@@ -34,8 +35,8 @@ preload: function() {
         //Customize sprites used
         /* Uncomment for variable art
         var currentArtSet = window.prompt("Choose the art set you would like to use","default");
-        var loadSprites = new XMLHttpRequest();
         */
+        var loadSprites = new XMLHttpRequest();
         var currentArtSet = "default";
         loadSprites.open("GET", "assets/art/"+currentArtSet+"/"+currentArtSet+".json", false);
         loadSprites.send(null);
