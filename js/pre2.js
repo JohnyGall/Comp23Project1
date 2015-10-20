@@ -4,7 +4,7 @@ var pre2State = {
 		// load menu images
 		game.load.spritesheet('dialogue', 'assets/lv2_intro.png', 257, 165, 18);
 		game.load.spritesheet('player', 'assets/art/default/protag_spritesheet.png', 37, 65);
-		game.load.spritesheet('sky', 'assets/art/ice/ice_bg_spritesheet.png', 1920, 1080, 2);
+		game.load.spritesheet('sky', 'assets/art/default/ice/ice_bg_spritesheet.png', 1920, 1080, 2);
 		game.load.spritesheet('hgrass', 'assets/art/ice/ice_h_spritesheet.png', 252, 48, 2);
 
 	},
