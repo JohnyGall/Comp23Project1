@@ -323,7 +323,7 @@ create: function() {
         // ALL SLOPES GO HERE
         this.slopes = game.add.group();
         for(var i = 0; i < 4; i++) {
-                var slope = new Slope(this, 3720 - 100 * i, 599 - 100 * i,
+                var slope = new Slope(this, 3720 - 100 * i, 600 - 100 * i,
                                                            this.boulders, this);
                 this.slopes.add(slope);
                 slope.scale.x = -1;
