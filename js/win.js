@@ -44,8 +44,8 @@ var winState = {
                                 this.scream.play();
                                 segfault.visible = true;
                                 segfault.animations.play('spooked');
+                                setTimeout(function(){ game.state.start('menu'); }, 1500);
 
-                                //game.state.start('menu');
                         }
 	},
 
