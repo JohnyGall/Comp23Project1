@@ -12,8 +12,6 @@ var winState = {
 	create: function(){
 
 		// display menu images
-		sky = game.add.sprite(0,0, 'sky');
-		grass1 = game.add.sprite(0, 500, 'hgrass');
 		player = game.add.sprite(100, 450, 'player');
 		player.frame = 9;
 		dialogue = game.add.sprite(200, 250, 'dialogue');
