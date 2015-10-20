@@ -44,13 +44,13 @@
                                "number":2
                        },
                        "floatright":{
-                               "url":"assets/art/default/floatingledge_spritesheet.png",
+                               "url":"assets/art/default/floating_spritesheet.png",
                                "sizeX":64,
                                "sizeY":48,
                                "number":2
                        },
                        "floatleft":{
-                               "url":"assets/art/default/floatingledge1_spritesheet.png",
+                               "url":"assets/art/default/floating1_spritesheet.png",
                                "sizeX":64,
                                "sizeY":48,
                                "number":2

@@ -61,7 +61,8 @@ preload: function() {
         // Makes FPS counter work
         game.time.advancedTiming = true;
         // Allows Google Fonts to be used remotely
-        game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
+        game.load.script('webfont',
+                    '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
 
 },
 
@@ -108,7 +109,6 @@ create: function() {
         ground.body.immovable = true;
         ground.body.setSize(252, 37, 0, 6);
         groundshadow.body.immovable = true;
-
         ground = this.platforms.create(586, game.world.height - 64, 'hice');
         var groundshadow = this.platforms.create(586, game.world.height - 21, 'darkice');
         ground.body.immovable = true;
@@ -130,7 +130,7 @@ create: function() {
         }
         for (var i = game.world.height - 700; i < game.world.height; i += 48) {
                 var groundshadow = this.platforms.create(778, i, 'darkice');
-                groundshadow.body.immovable = true;
+                groundshadow.body.immovable = true;;
         }
 
         // second puzle blocker
@@ -148,13 +148,12 @@ create: function() {
                 var groundshadow = this.platforms.create(552, i, 'darkice');
                 groundshadow.body.immovable = true;
         }*/
+
         this.slopefill(3348,440);
         this.slopefill(3448,540);
         this.slopefill(3548,640);
         this.slopefill(3648,740);
-
         this.slopefill(4011,740);
-
         /*
         var ground = this.platforms.create(930-252, game.world.height - 533, 'hice');
         ground.body.setSize(252, 37, 0, 6);
@@ -190,7 +189,6 @@ create: function() {
         var floating = this.platforms.create(0, 175, 'floatice');
         floating.body.immovable = true;
         floating.body.setSize(252, 56, 0, 6);
-
         var floating = this.platforms.create(1050, 400, 'floatice');
         floating.body.immovable = true;
         floating.body.setSize(252, 56, 0, 6);
@@ -210,10 +208,9 @@ create: function() {
         for (var i = 500; i > -200; i -= 48) {
                 var groundshadow = this.platforms.create(2100, i, 'darkice');
                 groundshadow.body.immovable = true;
+                var groundshadow = this.platforms.create(2004, 500, 'darkice');
+                groundshadow.body.immovable = true;
         }
-        var groundshadow = this.platforms.create(2004, 500, 'darkice');
-        groundshadow.body.immovable = true;
-
 
         var ledge = this.platforms.create(252 - 20, 175, 'floaticeRight');
         ledge.body.immovable = true;
@@ -221,15 +218,20 @@ create: function() {
 
         // Add this.controls to the game
         this.controls = game.input.keyboard.createCursorKeys();
-        this.controls.space = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
+        this.controls.space =
+                game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         this.controls.space.onDown.add(this.bitshift);
+
         this.controls.V = game.input.keyboard.addKey(Phaser.Keyboard.V);
+
         this.controls.tilde = game.input.keyboard.addKey(Phaser.Keyboard.TILDE);
         // Tilde toggles debug mode
         this.controls.tilde.onDown.add(function() {
                 this.debug_toggle = this.debug_toggle ? false : true;
-                // If debug is turned off, we want to clear the bounding boxes and make the FPS
-                // counter invisible. This code is put here because in render it would be called
+                // If debug is turned off, we want to clear the bounding
+                // boxes and make the FPS counter invisible. This code is
+                // put here because in render it would be called
                 // at every frame.
                 this.framerate.visible = false;
                 game.debug.reset();
@@ -240,7 +242,7 @@ create: function() {
         // ALL CLOUDS GO HERE
         clouds = game.add.group();
         // cloud puzzle
-        cloud = new Cloud(this, 725, 625); // bottom cloud
+        var cloud = new Cloud(this, 725, 625); // bottom cloud
         clouds.add(cloud);
         cloud = new Cloud(this, 625, 475); // middle left cloud
         clouds.add(cloud);
@@ -264,28 +266,31 @@ create: function() {
         }
 
         // PLAYER IS MADE HERE
-        this.player = new Player(game, this.controls, this);
-        this.player.x = 0;
+        this.player = new Player(game, this.controls, 50,
+                                 this.game.world.height - 100, this);
+
         this.player.DEFAULT_SPEED = 175;
         this.player.SLIDE_SPEED = 125;
 
         // ALL SPIKES GO HERE
         this.spikes = game.add.group()
-        var spike = new Spike(game,1075,360,this.player);
+        var spike = new Spike(game, 1075, 360, this.player);
         spike.scale.y = -1;
         this.spikes.add(spike);
-        var spike = new Spike(game,1125,360,this.player);
+        spike = new Spike(game, 1125, 360, this.player);
         spike.scale.y = -1;
         this.spikes.add(spike);
 
         //spikes in second puzzle w/ spikes
         for (var i = 0; i < 3; i++) {
-                var spike = new Spike(game,2900+50*i, 700,this.player);
+                spike = new Spike(game, 2900 + 50 * i,
+                                      700, this.player);
                 spike.scale.y = -1;
                 this.spikes.add(spike);
         }
+
         for (var i = 0; i < 3; i++) {
-                var spike = new Spike(game,2600+50*i, 500,this.player);
+                spike = new Spike(game,2600 + 50 * i, 500, this.player);
                 spike.scale.y = -1;
                 this.spikes.add(spike);
                 var floating = this.platforms.create(2579+47*i, 540, 'miniledgeice');
@@ -301,12 +306,13 @@ create: function() {
 
         var checkpoint = new CheckPoint(game, 800, 60, this.player);
         this.checkpoints.add(checkpoint);
-        var checkpoint = new CheckPoint(game, 1700, 173.5, this.player);
+        checkpoint = new CheckPoint(game, 1700, 173.5, this.player);
         this.checkpoints.add(checkpoint);
-        var checkpoint = new CheckPoint(game, 2120, 709.5, this.player);
+        checkpoint = new CheckPoint(game, 2120, 709.5, this.player);
         this.checkpoints.add(checkpoint);
-        var checkpoint = new CheckPoint(game, 3200, 267.5, this.player);
+        checkpoint = new CheckPoint(game, 3200, 267.5, this.player);
         this.checkpoints.add(checkpoint);
+
         /*
         var checkpoint = new CheckPoint(game, 5259-502, 573.5, this.player);
         checkpoints.add(checkpoint);
@@ -324,38 +330,28 @@ create: function() {
         this.boulders = game.add.group();
         var boulder = new Boulder(game, 350, 0);
         this.boulders.add(boulder);
-        boulder = new Boulder(game, 1700-252, -100);
+        boulder = new Boulder(game, 1700 - 252, -100);
         this.boulders.add(boulder);
 
         // ALL SLOPES GO HERE
         this.slopes = game.add.group();
         for(var i = 0; i < 4; i++) {
-                var slope = new Slope(this, 3720-100 * i, 599-100*i, this.boulders, this);
+                var slope = new Slope(this, 3720 - 100 * i, 599 - 100 * i,
+                                                           this.boulders, this);
                 this.slopes.add(slope);
                 slope.scale.x = -1;
         }
+
         var ground = this.platforms.create(3770, 720, 'hice');
         ground.body.immovable = true;
         for (var i = 750; i < game.world.height; i += 48) {
                 var groundshadow = this.platforms.create(3770, i, 'darkice');
                 groundshadow.body.immovable = true;
         }
+
         var slope = new Slope(this, 4080, 599, this.boulders, this);
         this.slopes.add(slope);
 
-    /*
-        var slope = new Slope(this, 4438-504, 528, this.boulders, this);
-        this.slopes.add(slope);
-        for(var i = 0; i < 3; i++) {
-                var slope = new Slope(this, 7440-504+128 * i, 300+128*i, this.boulders, this);
-                this.slopes.add(slope);
-                slope.scale.x = -1;
-                var wall = this.platforms.create(7440-504-72, 556-110*i, 'onegrass');
-                wall.body.immovable = true;
-        }
-        var slope = new Slope(this, 8072-504, 556, this.boulders, this);
-        this.slopes.add(slope);
-        */
         // ALL TURRETS GO HERE
         this.turrets = game.add.group();
 
@@ -370,16 +366,6 @@ create: function() {
         var floating = this.platforms.create(2352, 238, 'floatice');
         floating.body.immovable = true;
         floating.body.setSize(252, 56, 0, 6);
-        /*
-        turret = new Turret(game, this.player, this.platforms, this.slopes, this, 2470-504, 700);
-        this.turrets.add(turret);
-        turret = new Turret(game, this.player, this.platforms, this.slopes, this, 3200-504, 700);
-        turret.scale.x = -1;
-        this.turrets.add(turret);
-        turret = new Turret(game, this.player, this.platforms, this.slopes, this, 6730-504, 560);
-        turret.scale.x = -1;
-        this.turrets.add(turret);
-        */
 
         // Set up UI text
         this.createUI();
@@ -408,8 +394,12 @@ update: function() {
         if(this.player.health < 2) {
                 this.respawnCount.visible = true;
                 this.respawnText.visible = true;
-                this.respawnCount.text = Math.ceil((this.player.RESPAWN_TIME - (Date.now() - this.player.killTime)) / 500);
-                if (Date.now() - this.player.killTime >= this.player.RESPAWN_TIME) {
+                this.respawnCount.text = Math.ceil((this.player.RESPAWN_TIME -
+                                         (Date.now() -
+                                                  this.player.killTime)) / 500);
+                if (Date.now() - this.player.killTime >=
+                        this.player.RESPAWN_TIME) {
+
                         this.respawnCount.visible = false;
                         this.respawnText.visible = false;
                         this.player.respawn();
@@ -430,19 +420,32 @@ render: function() {
         // Don't render anything unless the user wants to debug
         if (this.debug_toggle === true) {
                 // Clear the debug render screen, so there isn't any flicker
-                game.debug.context.clearRect(0, 0, game.world.width, game.world.height);
+                game.debug.context.clearRect(0, 0, game.world.width,
+                                             game.world.height);
                 // Show and update the this.framerate
                 this.framerate.visible = true;
                 this.framerate.text = game.time.fps;
                 // Draw bounding boxes
                 game.debug.body(this.player);
-                this.boulders.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
-                this.turrets.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
-                this.spikes.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
-                this.platforms.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
-                clouds.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
+                this.boulders.forEach(game.debug.body,
+                                      game.debug, game.debug,
+                                      'rgba(255, 30, 30, 0.3)');
+                this.turrets.forEach(game.debug.body,
+                                     game.debug, game.debug,
+                                     'rgba(255, 30, 30, 0.3)');
+                this.spikes.forEach(game.debug.body,
+                                    game.debug, game.debug,
+                                    'rgba(255, 30, 30, 0.3)');
+                this.platforms.forEach(game.debug.body,
+                                       game.debug, game.debug,
+                                       'rgba(255, 30, 30, 0.3)');
+                this.clouds.forEach(game.debug.body,
+                                    game.debug, game.debug,
+                                    'rgba(255, 30, 30, 0.3)');
+                this.slopes.forEach(game.debug.body,
+                                    game.debug, game.debug,
+                                    'rgba(255, 30, 30, 0.3)');
 
-                this.slopes.forEach(game.debug.body, game.debug, game.debug, 'rgba(255, 30, 30, 0.3)');
                 // Animate the favicon, for fun
                 if(Date.now() - this.then >= 50) {
                         this.then = Date.now();

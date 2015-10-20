@@ -1,3 +1,6 @@
+// This class is for our very deadly spikes, which sit and do nothing
+// particularly interesting. 
+
 function Spike(game, x, y, target) {
 
         // Store variables, mostly for accessing the bitshift value
@@ -18,12 +21,13 @@ Spike.prototype = Object.create(Phaser.Sprite.prototype);
 Spike.prototype.constructor = Spike;
 
 Spike.prototype.update = function() {
+        // If the game is in high-res, the spikes kill the player.
         if (!game.shifted) {
                 this.body.immovable = false;
-                if (game.physics.arcade.overlap(this.target, this) ) {
-                        if (this.target.health >= 2)
+                if (game.physics.arcade.overlap(this.target, this)) {
+                        if (this.target.health >= this.target.MAX_HEALTH)
                             this.target.kill();
                 }
-        } else 
+        } else // If the game is in low res, the spikes become platforms.
                 this.body.immovable = true;
 }

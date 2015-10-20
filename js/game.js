@@ -1,11 +1,13 @@
 var Bitshift = Bitshift || {};
 
 var gameWidth = 800, gameHeight = 600;
-var game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, "game", playState);
+var game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, "game",
+                            playState);
 
 var fontname = 'Raleway';
 WebFontConfig = {
-        // The Google Fonts we want to load (specify as many as you like in the array)
+        // The Google Fonts we want to load
+        // (specify as many as you like in the array)
         // the :100 determines font weight
         google: {
                 families: [fontname + ':100']
