@@ -2,13 +2,13 @@ var playState2 = {
 
 preload: function() {
         // Load the chosen music and SFX
-        
-        /* Uncomment for variable music
-        var currentSoundSet = window.prompt("Choose the sound and music set you would like to use","default");
-        console.log(currentSoundSet);
-        */
 
-        var currentSoundSet = "default";
+        var currentSoundSet = JSON.parse(localStorage.getItem('currentSoundSetStorage'));
+
+        if (currentSoundSet == undefined){
+                currentSoundSet = "default";
+        }
+
         var loadSounds = new XMLHttpRequest();
         loadSounds.open("GET", "assets/music/"+currentSoundSet+"/"+currentSoundSet+".json", false);
         loadSounds.send(null);
@@ -32,12 +32,13 @@ preload: function() {
         game.load.audio('turret_fire_hr', [soundEffects.turret_fire_hr.wavURL, soundEffects.turret_fire_hr.oggURL]);
         game.load.audio('turret_fire_lr', [soundEffects.turret_fire_lr.wavURL, soundEffects.turret_fire_lr.oggURL]);
 
-        //Customize sprites used
-        /* Uncomment for variable art
-        var currentArtSet = window.prompt("Choose the art set you would like to use","default");
-        */
+
+        var currentArtSet = JSON.parse(localStorage.getItem('currentArtSetStorage'));
+        if (currentArtSet == undefined){
+                currentArtSet = "default";
+        }
+
         var loadSprites = new XMLHttpRequest();
-        var currentArtSet = "default";
         loadSprites.open("GET", "assets/art/"+currentArtSet+"/"+currentArtSet+".json", false);
         loadSprites.send(null);
         var sprites = JSON.parse(loadSprites.responseText);

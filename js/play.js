@@ -4,15 +4,14 @@ var playState = {
 
 preload: function() {
         // Load the chosen music and SFX
+        var currentSoundSet = JSON.parse(localStorage.getItem('currentSoundSetStorage'));
 
-        /* Uncomment for variable music
-        var currentSoundSet = window.prompt(
-              "Choose the sound and music set you would like to use","default");
-        console.log(currentSoundSet);
-        */ 
-        var currentSoundSet = "default";
+        if (currentSoundSet == undefined){
+                currentSoundSet = "default";
+        }
+
         var loadSounds = new XMLHttpRequest();
-        loadSounds.open("GET", "assets/music/" + currentSoundSet + 
+        loadSounds.open("GET", "assets/music/" + currentSoundSet +
                                         "/" + currentSoundSet + ".json", false);
         loadSounds.send(null);
         var sounds = JSON.parse(loadSounds.responseText);
@@ -20,37 +19,36 @@ preload: function() {
         var soundEffects = sounds.SFX;
 
         // Music
-        game.load.audio('wordl1_l', [music.world1_l.wavURL, 
+        game.load.audio('wordl1_l', [music.world1_l.wavURL,
                                      music.world1_l.oggURL]);
-        game.load.audio('wordl1', [music.world1.wavURL, 
+        game.load.audio('wordl1', [music.world1.wavURL,
                                    music.world1.oggURL]);
-        game.load.audio('wordl2_l', [music.world2_l.wavURL, 
+        game.load.audio('wordl2_l', [music.world2_l.wavURL,
                                      music.world2_l.oggURL]);
-        game.load.audio('wordl2', [music.world2.wavURL, 
+        game.load.audio('wordl2', [music.world2.wavURL,
                                    music.world2.oggURL]);
 
         // Other sfx
-        game.load.audio('player_jump', [soundEffects.player_jump.wavURL, 
+        game.load.audio('player_jump', [soundEffects.player_jump.wavURL,
                                         soundEffects.player_jump.oggURL]);
-        game.load.audio('player_spawn', [soundEffects.player_jump.wavURL, 
+        game.load.audio('player_spawn', [soundEffects.player_jump.wavURL,
                                          soundEffects.player_jump.oggURL]);
 
-        game.load.audio('turret_charge_hr', 
-                        [soundEffects.turret_charge_hr.wavURL, 
+        game.load.audio('turret_charge_hr',
+                        [soundEffects.turret_charge_hr.wavURL,
                          soundEffects.turret_charge_hr.oggURL]);
-        game.load.audio('turret_fire_hr', [soundEffects.turret_fire_hr.wavURL, 
+        game.load.audio('turret_fire_hr', [soundEffects.turret_fire_hr.wavURL,
                                            soundEffects.turret_fire_hr.oggURL]);
-        game.load.audio('turret_fire_lr', [soundEffects.turret_fire_lr.wavURL, 
+        game.load.audio('turret_fire_lr', [soundEffects.turret_fire_lr.wavURL,
                                            soundEffects.turret_fire_lr.oggURL]);
 
-        // Load the chosen set of sprites
-        /* Uncomment for variable art
-        var currentArtSet = window.prompt(
-                "Choose the art set you would like to use","default");
-        */
+        // Load art
+        var currentArtSet = JSON.parse(localStorage.getItem('currentArtSetStorage'));
+        if (currentArtSet == undefined){
+                currentArtSet = "default";
+        }
         var loadSprites = new XMLHttpRequest();
-        var currentArtSet = "default";
-        loadSprites.open("GET", "assets/art/" + currentArtSet + "/" + 
+        loadSprites.open("GET", "assets/art/" + currentArtSet + "/" +
                                                 currentArtSet + ".json", false);
         loadSprites.send(null);
         var sprites = JSON.parse(loadSprites.responseText);
@@ -92,9 +90,9 @@ preload: function() {
                               playerObjectSprites.cloud.sizeY,
                               playerObjectSprites.cloud.number);
 
-        game.load.spritesheet('hice', backgroundSprites.hice.url, 
-                              backgroundSprites.hice.sizeX, 
-                              backgroundSprites.hice.sizeY, 
+        game.load.spritesheet('hice', backgroundSprites.hice.url,
+                              backgroundSprites.hice.sizeX,
+                              backgroundSprites.hice.sizeY,
                               backgroundSprites.hice.number);
 
         // sky

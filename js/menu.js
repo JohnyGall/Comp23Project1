@@ -47,7 +47,12 @@ var menuState = {
 				game.state.start('pre1');
 			}
 			else if(menu.frame === 2){
-				this.fart.play();
+				var currentArtSet = window.prompt("What art set would you like to use?","default");
+				var currentSoundSet = window.prompt("What sound set would you like to use?","default");
+				localStorage.setItem('currentArtSetStorage', JSON.stringify(currentArtSet));
+				localStorage.setItem('currentSoundSetStorage', JSON.stringify(currentSoundSet));
+				this.music.stop();
+				game.state.start('pre1');
 			}
 		}
 
