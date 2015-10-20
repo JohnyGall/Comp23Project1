@@ -19,6 +19,7 @@ var menuState = {
                 this.fart.volume = 0.25;
                 this.controls = game.input.keyboard.createCursorKeys();
                 this.controls.enter = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+                this.controls.space = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
 	},
 
@@ -39,8 +40,8 @@ var menuState = {
 			menu.frame = 1;
 		}
 
-		// what happens when enter is pressed
-		if(this.controls.enter.isDown){
+		// what happens when enter or space is pressed
+		if(this.controls.enter.isDown || this.controls.space.isDown){
 			if(menu.frame === 1){
                                 this.music.stop();
 				game.state.start('pre1');
