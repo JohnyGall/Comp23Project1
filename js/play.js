@@ -393,17 +393,17 @@ create: function() {
         this.controls.P.onDown.add(this.pause);
 
         // ALL CLOUDS GO HERE
-        clouds = game.add.group();
+        this.clouds = game.add.group();
         var cloud = new Cloud(this, 3500 - 502, 600);
-        clouds.add(cloud);
+        this.clouds.add(cloud);
         cloud = new Cloud(this, 5900 - 502, 600);
-        clouds.add(cloud);
+        this.clouds.add(cloud);
         cloud = new Cloud(this, 6200 - 502, 600);
-        clouds.add(cloud);
+        this.clouds.add(cloud);
         cloud = new Cloud(this, 6500 - 502, 600);
-        clouds.add(cloud);
+        this.clouds.add(cloud);
         cloud = new Cloud(this, 7200 - 502, 450);
-        clouds.add(cloud);
+        this.clouds.add(cloud);
 
         // ALL BOULDERS GO HERE
         this.boulders = game.add.group();
@@ -507,7 +507,7 @@ update: function() {
         game.physics.arcade.collide(this.boulders, this.turrets);
 
         if(game.shifted){
-                game.physics.arcade.collide(this.player, clouds);
+                game.physics.arcade.collide(this.player, this.clouds);
         }
 
         // Update UI
