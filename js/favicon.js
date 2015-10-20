@@ -13,7 +13,7 @@ function favicon() {
         oldLink = document.getElementById('favicon');
         if (oldLink) document.getElementsByTagName('head')[0].removeChild(oldLink);
         // Make a new favicon html link
-        link.href = '/assets/favicon/pro' + faviconFrame + '.png';
+        link.href = 'assets/favicon/pro' + faviconFrame + '.png';
         // Increment the frame (and loop)
         faviconFrame = faviconFrame % 9 + 1;
         // Add the link to the html
