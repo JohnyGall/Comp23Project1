@@ -33,13 +33,6 @@ Slope.prototype.update = function() {
                 var rel_y = (rel_x / this.width) * this.height + this.y - thing.anchor.y*thing.height;
 
 
-//            if (thing.x >= this.x + this.width-5) {
-//                thing.x += 1;
-//                if (thing.body.velocity.x < 0) {
-//                    thing.body.velocity.x = 0;  
-//                }
-//            } else 
-
             if (thing.y > rel_y) {
                     thing.y = rel_y;
 
@@ -67,13 +60,6 @@ if (game.physics.arcade.overlap(thing, this) && this.scale.x*thing.x >= this.sca
             else
                 var rel_y = (rel_x / this.width) * this.height + this.y - thing.anchor.y*thing.height-.25*thing.width;
 
-
-//            if (thing.x >= this.x + this.width-5) {
-//                thing.x += 1;
-//                if (thing.body.velocity.x < 0) {
-//                    thing.body.velocity.x = 0;  
-//                }
-//            } else 
 
             if (thing.y > rel_y) {
                     thing.y = rel_y;
