@@ -390,7 +390,7 @@ update: function() {
         if (this.player.x > this.world.width) {
             this.music.stop();
             this.music_l.stop();
-            game.state.start('menu');
+            game.state.start('win');
         }
 },
 

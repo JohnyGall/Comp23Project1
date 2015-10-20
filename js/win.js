@@ -74,5 +74,3 @@ var winState = {
 		}
 	},
 };
-
-}
