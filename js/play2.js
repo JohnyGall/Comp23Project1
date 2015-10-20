@@ -150,10 +150,10 @@ create: function() {
         }*/
 
         this.slopefill(3348,440);
-        this.slopefill(3448,540);
-        this.slopefill(3548,640);
-        this.slopefill(3648,740);
-        this.slopefill(4011,740);
+        this.slopefill(3444,536);
+        this.slopefill(3540,632);
+        this.slopefill(3636,728);
+        this.slopefill(3999,728);
         /*
         var ground = this.platforms.create(930-252, game.world.height - 533, 'hice');
         ground.body.setSize(252, 37, 0, 6);
@@ -323,20 +323,20 @@ create: function() {
         // ALL SLOPES GO HERE
         this.slopes = game.add.group();
         for(var i = 0; i < 4; i++) {
-                var slope = new Slope(this, 3720 - 100 * i, 600 - 100 * i,
+                var slope = new Slope(this, 3708 - 96 * i, 588 - 96 * i,
                                                            this.boulders, this);
                 this.slopes.add(slope);
                 slope.scale.x = -1;
         }
 
-        var ground = this.platforms.create(3770, 720, 'hice');
+        var ground = this.platforms.create(3758, 708, 'hice');
         ground.body.immovable = true;
         for (var i = 750; i < game.world.height; i += 48) {
-                var groundshadow = this.platforms.create(3770, i, 'darkice');
+                var groundshadow = this.platforms.create(3758, i, 'darkice');
                 groundshadow.body.immovable = true;
         }
 
-        var slope = new Slope(this, 4080, 599, this.boulders, this);
+        var slope = new Slope(this, 4068, 588, this.boulders, this);
         this.slopes.add(slope);
 
         // ALL TURRETS GO HERE
