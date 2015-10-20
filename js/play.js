@@ -411,25 +411,7 @@ create: function() {
         clouds.add(cloud);
         cloud = new Cloud(this, 7200 - 502, 450);
         clouds.add(cloud);
-
-        // PLAYER IS MADE HERE
-        this.player = new Player(game, this.controls, this);
-
-        // ALL CHECKPOINTS GO HERE
-        checkpoints = game.add.group();
-        var checkpoint = new CheckPoint(game, 6845-502, 573.5, this.player);
-        checkpoints.add(checkpoint);
-        var checkpoint = new CheckPoint(game, 5259-502, 573.5, this.player);
-        checkpoints.add(checkpoint);
-        var checkpoint = new CheckPoint(game, 3300-502, 709.5, this.player);
-        checkpoints.add(checkpoint);
-        var checkpoint = new CheckPoint(game, 2100-252, 709.5, this.player);
-        checkpoints.add(checkpoint);
-        var checkpoint = new CheckPoint(game, 1173-252, 240.5, this.player);
-        checkpoints.add(checkpoint);
-        var checkpoint = new CheckPoint(game, 300-252, 523.5, this.player);
-        checkpoints.add(checkpoint);
-
+        
         // ALL BOULDERS GO HERE
         this.boulders = game.add.group();
         var boulder = new Boulder(game, 500 - 252, 150);
@@ -708,5 +690,5 @@ slopefill: function(x,y) {
                         var fill = this.background.create(x, i, 'darkgrass');
                         fill.scale.x = 0.56;
                 }
-        },
+        }
 };
