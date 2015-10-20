@@ -529,7 +529,7 @@ update: function() {
         if (this.player.x > this.world.width) {
             this.music.stop();
             this.music_l.stop();
-            game.state.start('play2');
+            game.state.start('pre2');
         }
 },
 
