@@ -7,7 +7,7 @@
                                "number":2
                        },
                        "backgrass":{
-                               "url":"assets/art/default/background_grass_spritesheet.png",
+                               "url":"assets/art/default/backgrass_spritesheet.png",
                                "sizeX":1008,
                                "sizeY":311,
                                "number":2
@@ -35,7 +35,6 @@
                                "sizeX":252,
                                "sizeY":48,
                                "number":2
-
                        },
                        "floatgrass":{
                                "url":"assets/art/default/floating_spritesheet.png",
@@ -44,7 +43,7 @@
                                "number":2
                        },
                        "floatright":{
-                               "url":"assets/art/default/floating_spritesheet.png",
+                               "url":"assets/art/default/floating2_spritesheet.png",
                                "sizeX":64,
                                "sizeY":48,
                                "number":2
@@ -56,7 +55,7 @@
                                "number":2
                        },
                        "miniledge":{
-                               "url":"assets/art/default/mini_floating_spritesheet.png",
+                               "url":"assets/art/default/minifloating_spritesheet.png",
                                "sizeX":48,
                                "sizeY":48,
                                "number":2
@@ -76,12 +75,6 @@
                        "vice":{
                                "url":"assets/art/default/ice/ice_v_spritesheet.png",
                                "sizeX":144,
-                               "sizeY":144,
-                               "number":2
-                       },
-                       "oneice":{
-                               "url":"assets/art/default/ice/grass_one_spritesheet.png",
-                               "sizeX":1,
                                "sizeY":144,
                                "number":2
                        },
