@@ -6,6 +6,7 @@ var menuState = {
 		// load menu images
 		game.load.spritesheet('menu', 'assets/menu_spritesheet.png', 800, 600, 3);
         	game.load.audio('typing', ['assets/music/default/menuaudio2.wav', 'assets/music/menuaudio.ogg']);
+        	game.load.audio('fart', ['assets/music/default/menu_fart.wav', 'assets/music/menu_fart.ogg']);
 	},
 
 	create: function(){
@@ -14,6 +15,8 @@ var menuState = {
 		menu = game.add.sprite(0, 0, 'menu');
                 this.music = game.add.audio('typing');
                 this.music.volume = 0.25;
+                this.fart = game.add.audio('fart');
+                this.fart.volume = 0.25;
                 this.controls = game.input.keyboard.createCursorKeys();
                 this.controls.enter = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
 
@@ -43,14 +46,13 @@ var menuState = {
 				game.state.start('pre1');
 			}
 			else if(menu.frame === 2){
-                                this.music.stop();
-				game.state.start('loadmap');
+				this.fart.play();
 			}
 		}
 
 		if(this.controls.up.isDown && this.controls.down.isDown) {
 			this.music.stop();
-			game.state.start('pre2');
+			game.state.start('win');
 		}
 	},
 
