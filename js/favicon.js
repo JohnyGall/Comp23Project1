@@ -1,3 +1,4 @@
+
 // This file creates an easter egg in the game, wherein the favicon
 // is animated when debug mode is on.
 // The frame starts at 1.
