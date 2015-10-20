@@ -26,7 +26,7 @@ var winState = {
 		segfault.animations.add('spooked', [0,3,5,1,3,4,2,3,0,1,2,3,4,5], 11, false);
 		segfault.visible = false;
 		this.scream = game.add.audio('scream');
-        this.scream.volume = 0.5;
+                this.scream.volume = 0.5;
 
 		// creates menu controls
 		controls = game.input.keyboard.createCursorKeys();
@@ -34,10 +34,19 @@ var winState = {
 		controls.left.onDown.add(this.toLow);
 		controls.right.onDown.add(this.toHigh);
 		controls.space.onDown.add(this.shift);
+                this.scary = false;
 
 	},
 
 	update: function(){
+                if(dialogue.frame === (frames-1) && !this.scary){
+                                this.scary = true
+                                this.scream.play();
+                                segfault.visible = true;
+                                segfault.animations.play('spooked');
+
+                                //game.state.start('menu');
+                        }
 	},
 
 	shift: function(){
