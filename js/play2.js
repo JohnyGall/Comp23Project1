@@ -313,19 +313,6 @@ create: function() {
         checkpoint = new CheckPoint(game, 3200, 267.5, this.player);
         this.checkpoints.add(checkpoint);
 
-        /*
-        var checkpoint = new CheckPoint(game, 5259-502, 573.5, this.player);
-        checkpoints.add(checkpoint);
-        var checkpoint = new CheckPoint(game, 3300-502, 709.5, this.player);
-        checkpoints.add(checkpoint);
-        var checkpoint = new CheckPoint(game, 2100-252, 709.5, this.player);
-        checkpoints.add(checkpoint);
-        var checkpoint = new CheckPoint(game, 1173-252, 240.5, this.player);
-        checkpoints.add(checkpoint);
-        var checkpoint = new CheckPoint(game, 300-252, 523.5, this.player);
-        checkpoints.add(checkpoint);
-        */
-
         // ALL BOULDERS GO HERE
         this.boulders = game.add.group();
         var boulder = new Boulder(game, 350, 0);
