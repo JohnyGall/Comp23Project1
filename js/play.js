@@ -8,7 +8,7 @@ preload: function() {
               "Choose the sound and music set you would like to use","default");
         console.log(currentSoundSet);
         var loadSounds = new XMLHttpRequest();
-        loadSounds.open("GET", "/assets/music/" + currentSoundSet + 
+        loadSounds.open("GET", "assets/music/" + currentSoundSet + 
                                         "/" + currentSoundSet + ".json", false);
         loadSounds.send(null);
         var sounds = JSON.parse(loadSounds.responseText);
