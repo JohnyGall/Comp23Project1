@@ -53,7 +53,7 @@ var menuState = {
 
 		if(this.controls.up.isDown && this.controls.down.isDown) {
 			this.music.stop();
-			game.state.start('win');
+			game.state.start('pre2');
 		}
 	},
 
