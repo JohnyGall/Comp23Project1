@@ -11,9 +11,6 @@ var pre1State = {
 
 	create: function(){
 
-//		var controls = game.input.keyboard.createCursorKeys();
-//		controls.enter = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
-
 		// display menu images
 		sky = game.add.sprite(0,0, 'sky');
 		grass1 = game.add.sprite(0, 500, 'hgrass');
