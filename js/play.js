@@ -4,9 +4,13 @@ var playState = {
 
 preload: function() {
         // Load the chosen music and SFX
+
+        /* Uncomment for variable music
         var currentSoundSet = window.prompt(
               "Choose the sound and music set you would like to use","default");
         console.log(currentSoundSet);
+        */ 
+        var currentSoundSet = "default";
         var loadSounds = new XMLHttpRequest();
         loadSounds.open("GET", "assets/music/" + currentSoundSet + 
                                         "/" + currentSoundSet + ".json", false);
@@ -40,9 +44,12 @@ preload: function() {
                                            soundEffects.turret_fire_lr.oggURL]);
 
         // Load the chosen set of sprites
+        /* Uncomment for variable art
         var currentArtSet = window.prompt(
                 "Choose the art set you would like to use","default");
         var loadSprites = new XMLHttpRequest();
+        */
+        var currentArtSet = "default";
         loadSprites.open("GET", "assets/art/" + currentArtSet + "/" + 
                                                 currentArtSet + ".json", false);
         loadSprites.send(null);

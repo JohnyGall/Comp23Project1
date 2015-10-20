@@ -2,9 +2,13 @@ var playState2 = {
 
 preload: function() {
         // Load the chosen music and SFX
+        
+        /* Uncomment for variable music
         var currentSoundSet = window.prompt("Choose the sound and music set you would like to use","default");
         console.log(currentSoundSet);
         var loadSounds = new XMLHttpRequest();
+        */
+        var currentSoundSet = "default";
         loadSounds.open("GET", "assets/music/"+currentSoundSet+"/"+currentSoundSet+".json", false);
         loadSounds.send(null);
         var sounds = JSON.parse(loadSounds.responseText);
@@ -28,8 +32,11 @@ preload: function() {
         game.load.audio('turret_fire_lr', [soundEffects.turret_fire_lr.wavURL, soundEffects.turret_fire_lr.oggURL]);
 
         //Customize sprites used
+        /* Uncomment for variable art
         var currentArtSet = window.prompt("Choose the art set you would like to use","default");
         var loadSprites = new XMLHttpRequest();
+        */
+        var currentArtSet = "default";
         loadSprites.open("GET", "assets/art/"+currentArtSet+"/"+currentArtSet+".json", false);
         loadSprites.send(null);
         var sprites = JSON.parse(loadSprites.responseText);
